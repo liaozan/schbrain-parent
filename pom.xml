@@ -10,8 +10,12 @@
   <packaging>pom</packaging>
 
   <properties>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
+
+    <schbrain-dubbo.version>1.0.0-SNAPSHOT</schbrain-dubbo.version>
+    <schbrain-common.version>1.0.0-SNAPSHOT</schbrain-common.version>
 
     <spring-cloud.version>2020.0.4</spring-cloud.version>
     <spring-boot.version>2.5.5</spring-boot.version>
@@ -25,6 +29,19 @@
 
   <dependencyManagement>
     <dependencies>
+      <!-- 二方包 -->
+      <dependency>
+        <groupId>com.schbrain.framework</groupId>
+        <artifactId>dubbo-spring-boot-starter</artifactId>
+        <version>${schbrain-dubbo.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.schbrain.common</groupId>
+        <artifactId>schbrain-common</artifactId>
+        <version>${schbrain-common.version}</version>
+      </dependency>
+
+      <!-- 三方包 -->
       <!-- dubbo -->
       <dependency>
         <groupId>org.apache.dubbo</groupId>
@@ -86,5 +103,23 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.2.1</version>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

@@ -17,7 +17,6 @@
     <schbrain-dubbo.version>1.0.0-SNAPSHOT</schbrain-dubbo.version>
     <schbrain-common.version>1.0.0-SNAPSHOT</schbrain-common.version>
 
-    <spring-cloud.version>2020.0.4</spring-cloud.version>
     <spring-boot.version>2.5.5</spring-boot.version>
     <dubbo.version>2.7.14</dubbo.version>
     <mybatis-plus.version>3.4.3.4</mybatis-plus.version>

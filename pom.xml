@@ -19,7 +19,7 @@
         <schbrain-mybatis.version>1.0.0-SNAPSHOT</schbrain-mybatis.version>
         <schbrain-common.version>1.0.0-SNAPSHOT</schbrain-common.version>
 
-        <spring-boot.version>2.5.5</spring-boot.version>
+        <spring-boot.version>2.5.6</spring-boot.version>
         <dubbo.version>2.7.14</dubbo.version>
         <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
         <mybatis.version>3.5.7</mybatis.version>

@@ -128,4 +128,15 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>libs-releases</id>
+            <url>http://maven.schbrain.com/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>libs-snapshots</id>
+            <url>http://maven.schbrain.com/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>

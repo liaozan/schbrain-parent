@@ -32,7 +32,7 @@
         <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
 
         <!-- dubbo related -->
-        <dubbo.version>2.7.14</dubbo.version>
+        <dubbo.version>3.0.4</dubbo.version>
         <curator.version>5.2.0</curator.version>
         <zookeeper.version>3.7.0</zookeeper.version>
 

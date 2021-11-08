@@ -30,7 +30,7 @@
         <!-- utils -->
         <jsr305.version>3.0.2</jsr305.version>
         <guava.version>31.0.1-jre</guava.version>
-        <hutool.version>5.7.15</hutool.version>
+        <hutool.version>5.7.16</hutool.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.11.0</commons-io.version>
 

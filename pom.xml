@@ -39,6 +39,9 @@
 
         <!-- database related -->
         <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
+        <druid.version>1.2.8</druid.version>
+        <!-- 5.x for jdk11, 4.x for jdk8-->
+        <hikaricp.version>5.0.0</hikaricp.version>
 
         <!-- dubbo related -->
         <dubbo.version>3.0.4</dubbo.version>
@@ -170,6 +173,16 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>${hikaricp.version}</version>
             </dependency>
             <!-- apollo -->
             <dependency>

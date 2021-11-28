@@ -247,16 +247,25 @@
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
-                <configuration>
-                    <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
-                </configuration>
+                <executions>
+                    <execution>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                        <configuration>
+                            <verbose>false</verbose>
+                            <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>jar-no-fork</goal>
                         </goals>
@@ -270,7 +279,7 @@
                 <executions>
                     <execution>
                         <id>flatten</id>
-                        <phase>process-resources</phase>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>flatten</goal>
                         </goals>
@@ -324,7 +333,7 @@
                         </execution>
                         <execution>
                             <id>buildInfo</id>
-                            <phase>compile</phase>
+                            <phase>deploy</phase>
                             <goals>
                                 <goal>build-info</goal>
                             </goals>

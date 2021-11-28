@@ -163,6 +163,10 @@
                         <groupId>org.springframework</groupId>
                         <artifactId>spring-web</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <artifactId>dubbo-monitor-api</artifactId>
+                        <groupId>org.apache.dubbo</groupId>
+                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
@@ -187,6 +191,10 @@
                     <exclusion>
                         <artifactId>log4j</artifactId>
                         <groupId>log4j</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.dubbo</groupId>
+                        <artifactId>dubbo-container-api</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>

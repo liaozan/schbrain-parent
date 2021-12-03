@@ -39,7 +39,7 @@
         <schbrain-mybatis.version>1.0.0</schbrain-mybatis.version>
         <schbrain-apollo.version>1.0.0</schbrain-apollo.version>
         <schbrain-logger.version>1.0.0</schbrain-logger.version>
-        <schbrain-oss.version>1.0.0</schbrain-oss.version>
+        <schbrain-oss.version>1.0.0-SNAPSHOT</schbrain-oss.version>
         <schbrain-common.version>1.0.0</schbrain-common.version>
         <schbrain-web-common.version>1.0.0</schbrain-web-common.version>
 

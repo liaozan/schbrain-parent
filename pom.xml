@@ -39,6 +39,7 @@
         <schbrain-mybatis.version>1.0.0</schbrain-mybatis.version>
         <schbrain-apollo.version>1.0.0</schbrain-apollo.version>
         <schbrain-logger.version>1.0.0</schbrain-logger.version>
+        <schbrain-oss.version>1.0.0</schbrain-oss.version>
         <schbrain-common.version>1.0.0</schbrain-common.version>
         <schbrain-web-common.version>1.0.0</schbrain-web-common.version>
 
@@ -67,6 +68,9 @@
 
         <!-- apollo -->
         <apollo.version>1.9.1</apollo.version>
+
+        <!-- aliyun -->
+        <aliyun.oss.version>3.13.2</aliyun.oss.version>
 
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
@@ -99,6 +103,11 @@
                 <groupId>com.schbrain.framework</groupId>
                 <artifactId>logger-spring-boot-starter</artifactId>
                 <version>${schbrain-logger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.framework</groupId>
+                <artifactId>oss-spring-boot-starter</artifactId>
+                <version>${schbrain-oss.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.schbrain.common</groupId>
@@ -153,6 +162,10 @@
                     <exclusion>
                         <artifactId>log4j</artifactId>
                         <groupId>log4j</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -265,6 +278,12 @@
                 <artifactId>guice</artifactId>
                 <version>${guice.version}</version>
             </dependency>
+            <!-- aliyun -->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun.oss.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -275,6 +294,8 @@
                 <artifactId>git-commit-id-plugin</artifactId>
                 <configuration>
                     <verbose>false</verbose>
+                    <failOnNoGitDirectory>false</failOnNoGitDirectory>
+                    <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
                     <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
                 </configuration>
             </plugin>

@@ -70,6 +70,9 @@
         <!-- aliyun -->
         <aliyun.oss.version>3.13.2</aliyun.oss.version>
 
+        <!-- logstash-logback-encoder -->
+        <logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
+
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
     </properties>
@@ -272,7 +275,7 @@
                 <artifactId>guice</artifactId>
                 <version>${guice.version}</version>
             </dependency>
-            <!-- aliyun -->
+            <!-- aliyun oss-->
             <dependency>
                 <groupId>com.aliyun.oss</groupId>
                 <artifactId>aliyun-sdk-oss</artifactId>
@@ -283,6 +286,12 @@
                         <groupId>commons-logging</groupId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <!-- logstash-logback-encoder -->
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash-logback-encoder.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

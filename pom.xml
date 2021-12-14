@@ -57,6 +57,7 @@
 
         <!-- database related -->
         <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
+        <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
         <druid.version>1.2.8</druid.version>
 
         <!-- dubbo related -->
@@ -251,6 +252,11 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic-datasource.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>

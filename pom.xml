@@ -4,6 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- When changing the version of parent, remember to modify the springboot.version in the properties at the same time -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -31,6 +32,8 @@
     </developers>
 
     <properties>
+        <springboot.version>2.6.1</springboot.version>
+
         <java.version>1.8</java.version>
 
         <!-- 2th part version -->

@@ -45,14 +45,14 @@
         <schbrain-web-common.version>1.0.1-SNAPSHOT</schbrain-web-common.version>
 
         <!-- fastjson 被 aliyun 系列 sdk 强依赖,所以定在父 pom,方便统一进行版本管理,方便快速响应 bug 版本升级 -->
-        <fastjson.version>1.2.78</fastjson.version>
+        <fastjson.version>1.2.79</fastjson.version>
 
         <!-- utils -->
         <jsr305.version>3.0.2</jsr305.version>
         <guava.version>31.0.1-jre</guava.version>
         <!-- used for apollo -->
         <guice.version>5.0.1</guice.version>
-        <hutool.version>5.7.16</hutool.version>
+        <hutool.version>5.7.17</hutool.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.11.0</commons-io.version>
 

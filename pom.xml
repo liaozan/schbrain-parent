@@ -34,8 +34,6 @@
     <properties>
         <springboot.version>2.6.2</springboot.version>
 
-        <java.version>1.8</java.version>
-
         <!-- 2th part version -->
         <schbrain-spring-support.version>1.0.1-SNAPSHOT</schbrain-spring-support.version>
         <schbrain-dubbo.version>1.0.1-SNAPSHOT</schbrain-dubbo.version>
@@ -401,6 +399,26 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+
+        <profile>
+            <id>jdk8</id>
+            <properties>
+                <java.version>1.8</java.version>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        <profile>
+            <id>jdk11</id>
+            <properties>
+                <java.version>11</java.version>
+            </properties>
+        </profile>
+    </profiles>
 
     <distributionManagement>
         <repository>

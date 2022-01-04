@@ -408,6 +408,49 @@
     <profiles>
 
         <profile>
+            <id>dev</id>
+            <properties>
+                <profiletag>dev</profiletag>
+                <spring.profile>dev</spring.profile>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 本地local环境 -->
+        <profile>
+            <id>local</id>
+            <properties>
+                <profiletag>local</profiletag>
+                <spring.profile>local</spring.profile>
+            </properties>
+        </profile>
+        <!-- 测试环境 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <profiletag>test</profiletag>
+                <spring.profile>test</spring.profile>
+            </properties>
+        </profile>
+        <!-- 预发布环境 -->
+        <profile>
+            <id>pre</id>
+            <properties>
+                <profiletag>pre</profiletag>
+                <spring.profile>pre</spring.profile>
+            </properties>
+        </profile>
+        <!-- 生产环境 -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profiletag>prod</profiletag>
+                <spring.profile>prod</spring.profile>
+            </properties>
+        </profile>
+
+        <profile>
             <id>jdk8</id>
             <properties>
                 <java.version>1.8</java.version>

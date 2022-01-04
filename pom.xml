@@ -460,12 +460,10 @@
         <repository>
             <id>libs-releases</id>
             <url>https://maven.schbrain.com/repository/maven-releases/</url>
-            <uniqueVersion>false</uniqueVersion>
         </repository>
         <snapshotRepository>
             <id>libs-snapshots</id>
             <url>https://maven.schbrain.com/repository/maven-snapshots/</url>
-            <uniqueVersion>false</uniqueVersion>
         </snapshotRepository>
     </distributionManagement>
 

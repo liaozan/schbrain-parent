@@ -67,7 +67,7 @@
         <zookeeper.version>3.4.14</zookeeper.version>
 
         <!-- apollo -->
-        <apollo.version>1.9.1</apollo.version>
+        <apollo.version>1.9.2</apollo.version>
 
         <!-- aliyun -->
         <aliyun.oss.version>3.13.2</aliyun.oss.version>

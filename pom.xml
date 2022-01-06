@@ -56,6 +56,8 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.11.0</commons-io.version>
 
+        <easyexcel.version>3.0.5</easyexcel.version>
+
         <!-- database related -->
         <mybatis-plus.version>3.5.0</mybatis-plus.version>
         <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
@@ -154,6 +156,11 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
             </dependency>
             <!-- dubbo related -->
             <!-- user single dependency instead of dubbo-bom,because dubbo-bom set the spring version-->
@@ -313,6 +320,15 @@
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>commitInfo</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
                     <verbose>false</verbose>
                     <failOnNoGitDirectory>false</failOnNoGitDirectory>

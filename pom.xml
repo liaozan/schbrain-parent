@@ -389,15 +389,24 @@
                             <id>repackage</id>
                             <phase>package</phase>
                             <goals>
-                                <goal>repackage</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>buildInfo</id>
-                            <phase>deploy</phase>
-                            <goals>
                                 <goal>build-info</goal>
+                                <goal>repackage</goal>
+                                <goal>build-image</goal>
                             </goals>
+                            <configuration>
+                                <imageName>${docker.repository}/${project.parent.artifactId}:${project.parent.version}</imageName>
+                                <cleanCache>true</cleanCache>
+                                <pullPolicy>IF_NOT_PRESENT</pullPolicy>
+                                <publish>false</publish>
+                                <docker>
+                                    <publishRegistry>
+                                        <username>liwu@1890587021077463</username>
+                                        <!--suppress UnresolvedMavenProperty -->
+                                        <password><![CDATA[9H7ny!QPW@!L6@n ]]> </password>
+                                        <url>registry.cn-hangzhou.aliyuncs.com</url>
+                                    </publishRegistry>
+                                </docker>
+                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
@@ -411,6 +420,7 @@
             <id>dev</id>
             <properties>
                 <spring.profile>dev</spring.profile>
+                <docker.repository>registry.cn-hangzhou.aliyuncs.com/schoolbrain</docker.repository>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -421,6 +431,7 @@
             <id>test</id>
             <properties>
                 <spring.profile>test</spring.profile>
+                <docker.repository>registry.cn-hangzhou.aliyuncs.com/schoolbrain</docker.repository>
             </properties>
         </profile>
         <!-- 预发布环境 -->
@@ -428,6 +439,7 @@
             <id>pre</id>
             <properties>
                 <spring.profile>pre</spring.profile>
+                <docker.repository>registry.cn-hangzhou.aliyuncs.com/schoolbrain</docker.repository>
             </properties>
         </profile>
         <!-- 生产环境 -->
@@ -435,6 +447,7 @@
             <id>prod</id>
             <properties>
                 <spring.profile>prod</spring.profile>
+                <docker.repository>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain</docker.repository>
             </properties>
         </profile>
         <!-- Java8 -->

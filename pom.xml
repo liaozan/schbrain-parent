@@ -41,6 +41,8 @@
         <schbrain-apollo.version>1.0.1-SNAPSHOT</schbrain-apollo.version>
         <schbrain-logger.version>1.0.1-SNAPSHOT</schbrain-logger.version>
         <schbrain-oss.version>1.0.1-SNAPSHOT</schbrain-oss.version>
+        <schbrain.xxl.version>1.0.0-SNAPSHOT</schbrain.xxl.version>
+
         <schbrain-common.version>1.0.1-SNAPSHOT</schbrain-common.version>
         <schbrain-web-common.version>1.0.1-SNAPSHOT</schbrain-web-common.version>
 
@@ -55,27 +57,24 @@
         <hutool.version>5.7.18</hutool.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.11.0</commons-io.version>
-
+        <!-- excel -->
         <easyexcel.version>3.0.5</easyexcel.version>
-
         <!-- database related -->
         <mybatis-plus.version>3.5.0</mybatis-plus.version>
         <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
         <druid.version>1.2.8</druid.version>
-
         <!-- dubbo related -->
         <dubbo.version>3.0.5</dubbo.version>
         <curator.version>4.2.0</curator.version>
         <zookeeper.version>3.4.14</zookeeper.version>
-
         <!-- apollo -->
         <apollo.version>1.9.2</apollo.version>
-
         <!-- aliyun -->
         <aliyun.oss.version>3.13.2</aliyun.oss.version>
-
         <!-- logstash-logback-encoder -->
         <logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
+        <!-- xxl-job -->
+        <xxl-job.version>2.0.2</xxl-job.version>
 
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
@@ -113,6 +112,11 @@
                 <groupId>com.schbrain.framework</groupId>
                 <artifactId>oss-spring-boot-starter</artifactId>
                 <version>${schbrain-oss.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.framework</groupId>
+                <artifactId>xxl-job-spring-boot-starter</artifactId>
+                <version>${schbrain-xxl.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.schbrain.common</groupId>
@@ -320,6 +324,11 @@
                 <groupId>net.logstash.logback</groupId>
                 <artifactId>logstash-logback-encoder</artifactId>
                 <version>${logstash-logback-encoder.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

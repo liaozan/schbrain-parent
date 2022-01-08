@@ -428,7 +428,7 @@
                         </execution>
                         <execution>
                             <id>buildInfo</id>
-                            <phase>deploy</phase>
+                            <phase>compile</phase>
                             <goals>
                                 <goal>build-info</goal>
                             </goals>

@@ -41,7 +41,7 @@
         <schbrain-apollo.version>1.0.1-SNAPSHOT</schbrain-apollo.version>
         <schbrain-logger.version>1.0.1-SNAPSHOT</schbrain-logger.version>
         <schbrain-oss.version>1.0.1-SNAPSHOT</schbrain-oss.version>
-        <schbrain.xxl.version>1.0.0-SNAPSHOT</schbrain.xxl.version>
+        <schbrain-xxl.version>1.0.0-SNAPSHOT</schbrain-xxl.version>
 
         <schbrain-common.version>1.0.1-SNAPSHOT</schbrain-common.version>
         <schbrain-web-common.version>1.0.1-SNAPSHOT</schbrain-web-common.version>

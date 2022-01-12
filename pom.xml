@@ -78,6 +78,8 @@
 
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
+        <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
+        <integration-maven-plugin.version>1.0.0-SNAPSHOT</integration-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -431,6 +433,54 @@
                             <phase>compile</phase>
                             <goals>
                                 <goal>build-info</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.schbrain.maven.plugin</groupId>
+                    <artifactId>integration-maven-plugin</artifactId>
+                    <version>${integration-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>prepare-dockerfile</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>prepare-dockerfile</goal>
+                            </goals>
+                            <configuration>
+                                <repositoryGitUrl>http://gitlab.schbrain.com/gitlab/liaozan/helloworld.git</repositoryGitUrl>
+                                <branch>main</branch>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>dockerfile-maven-plugin</artifactId>
+                    <version>${dockerfile-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>buildImage</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                            <configuration>
+                                <dockerfile>${project.build.directory}/dockerfile/Dockerfile</dockerfile>
+                                <repository>registry.cn-hangzhou.aliyuncs.com/schbrain-dev/${project.parent.artifactId}</repository>
+                                <tag>${project.version}</tag>
+                                <buildArgs>
+                                    <APP_NAME>${project.parent.artifactId}</APP_NAME>
+                                    <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                                </buildArgs>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>pushImage</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>push</goal>
                             </goals>
                         </execution>
                     </executions>

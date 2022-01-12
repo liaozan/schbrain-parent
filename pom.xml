@@ -471,7 +471,7 @@
                                 <repository>${docker.repository}/${project.parent.artifactId}</repository>
                                 <writeTestMetadata>false</writeTestMetadata>
                                 <skipDockerInfo>true</skipDockerInfo>
-                                <tag>${project.version}</tag>
+                                <tag>${version}</tag>
                                 <pullNewerImage>false</pullNewerImage>
                                 <noCache>false</noCache>
                             </configuration>

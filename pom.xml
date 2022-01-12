@@ -472,7 +472,7 @@
                                 <tag>${project.version}</tag>
                                 <buildArgs>
                                     <APP_NAME>${project.parent.artifactId}</APP_NAME>
-                                    <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                                    <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
                                 </buildArgs>
                             </configuration>
                         </execution>

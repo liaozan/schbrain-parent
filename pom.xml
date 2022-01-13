@@ -466,24 +466,28 @@
                             <goals>
                                 <goal>build</goal>
                             </goals>
-                            <configuration>
-                                <dockerfile>${project.build.directory}/dockerfile/Dockerfile</dockerfile>
-                                <repository>${docker.repository}/${project.parent.artifactId}</repository>
-                                <writeTestMetadata>false</writeTestMetadata>
-                                <skipDockerInfo>true</skipDockerInfo>
-                                <tag>${version}</tag>
-                                <pullNewerImage>false</pullNewerImage>
-                                <noCache>false</noCache>
-                            </configuration>
                         </execution>
                         <execution>
                             <id>pushImage</id>
-                            <phase>deploy</phase>
+                            <phase>package</phase>
                             <goals>
                                 <goal>push</goal>
                             </goals>
                         </execution>
                     </executions>
+                    <configuration>
+                        <dockerfile>${project.build.directory}/dockerfile/Dockerfile</dockerfile>
+                        <repository>${docker.repository}/${project.parent.artifactId}</repository>
+                        <writeTestMetadata>false</writeTestMetadata>
+                        <skipDockerInfo>true</skipDockerInfo>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <tag>${BUILD_TAG}</tag>
+                        <pullNewerImage>false</pullNewerImage>
+                        <googleContainerRegistryEnabled>false</googleContainerRegistryEnabled>
+                        <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+                        <noCache>false</noCache>
+                        <verbose>true</verbose>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

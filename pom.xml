@@ -448,12 +448,12 @@
                             <goals>
                                 <goal>prepare-dockerfile</goal>
                             </goals>
-                            <configuration>
-                                <repositoryGitUrl>http://gitlab.schbrain.com/gitlab/liaozan/helloworld.git</repositoryGitUrl>
-                                <branch>main</branch>
-                            </configuration>
                         </execution>
                     </executions>
+                    <configuration>
+                        <repositoryGitUrl>http://gitlab.schbrain.com/gitlab/liaozan/helloworld.git</repositoryGitUrl>
+                        <branch>main</branch>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>com.spotify</groupId>
@@ -476,12 +476,10 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <dockerfile>${project.build.directory}/dockerfile/Dockerfile</dockerfile>
+                        <dockerfile>${project.build.directory}/Dockerfile</dockerfile>
                         <repository>${docker.repository}/${project.parent.artifactId}</repository>
                         <writeTestMetadata>false</writeTestMetadata>
                         <skipDockerInfo>true</skipDockerInfo>
-                        <!--suppress UnresolvedMavenProperty -->
-                        <tag>${BUILD_TAG}</tag>
                         <pullNewerImage>false</pullNewerImage>
                         <googleContainerRegistryEnabled>false</googleContainerRegistryEnabled>
                         <useMavenSettingsForAuth>true</useMavenSettingsForAuth>

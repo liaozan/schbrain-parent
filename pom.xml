@@ -70,7 +70,7 @@
         <!-- apollo -->
         <apollo.version>1.9.2</apollo.version>
         <!-- aliyun -->
-        <aliyun.oss.version>3.13.2</aliyun.oss.version>
+        <aliyun.oss.version>3.14.0</aliyun.oss.version>
         <!-- logstash-logback-encoder -->
         <logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
         <!-- xxl-job -->
@@ -78,7 +78,6 @@
 
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
-        <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
         <integration-maven-plugin.version>1.0.0-SNAPSHOT</integration-maven-plugin.version>
     </properties>
 
@@ -451,40 +450,8 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <repositoryGitUrl>http://gitlab.schbrain.com/gitlab/liaozan/helloworld.git</repositoryGitUrl>
+                        <gitRepository>http://gitlab.schbrain.com/gitlab/framework/Dockerfile.git</gitRepository>
                         <branch>main</branch>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>com.spotify</groupId>
-                    <artifactId>dockerfile-maven-plugin</artifactId>
-                    <version>${dockerfile-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>buildImage</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>build</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>pushImage</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>push</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <dockerfile>${project.build.directory}/Dockerfile</dockerfile>
-                        <repository>${docker.repository}/${project.parent.artifactId}</repository>
-                        <writeTestMetadata>false</writeTestMetadata>
-                        <skipDockerInfo>true</skipDockerInfo>
-                        <pullNewerImage>false</pullNewerImage>
-                        <googleContainerRegistryEnabled>false</googleContainerRegistryEnabled>
-                        <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
-                        <noCache>false</noCache>
-                        <verbose>true</verbose>
                     </configuration>
                 </plugin>
             </plugins>
@@ -497,7 +464,7 @@
             <id>dev</id>
             <properties>
                 <spring.profile>dev</spring.profile>
-                <docker.repository>registry.cn-hangzhou.aliyuncs.com/schbrain-dev</docker.repository>
+                <docker.registry>registry.cn-hangzhou.aliyuncs.com/schbrain-dev</docker.registry>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -508,7 +475,7 @@
             <id>prod</id>
             <properties>
                 <spring.profile>prod</spring.profile>
-                <docker.repository>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain</docker.repository>
+                <docker.registry>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain</docker.registry>
             </properties>
         </profile>
         <!-- Java8 -->

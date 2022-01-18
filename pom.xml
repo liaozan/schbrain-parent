@@ -464,7 +464,7 @@
             <id>dev</id>
             <properties>
                 <spring.profile>dev</spring.profile>
-                <docker.registry>registry.cn-hangzhou.aliyuncs.com/schbrain-dev</docker.registry>
+                <docker.registry>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain-dev</docker.registry>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>

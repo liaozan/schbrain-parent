@@ -78,7 +78,7 @@
 
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
-        <integration-maven-plugin.version>1.0.0</integration-maven-plugin.version>
+        <integration-maven-plugin.version>1.0.0-SNAPSHOT</integration-maven-plugin.version>
 
         <maven.repository.url>https://maven.schbrain.com/repository</maven.repository.url>
     </properties>

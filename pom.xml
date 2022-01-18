@@ -79,6 +79,8 @@
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
         <integration-maven-plugin.version>1.0.0-SNAPSHOT</integration-maven-plugin.version>
+
+        <maven.repository.url>https://maven.schbrain.com/repository</maven.repository.url>
     </properties>
 
     <dependencyManagement>
@@ -500,12 +502,54 @@
     <distributionManagement>
         <repository>
             <id>libs-releases</id>
-            <url>https://maven.schbrain.com/repository/maven-releases/</url>
+            <url>${maven.repository.url}/maven-releases</url>
         </repository>
         <snapshotRepository>
             <id>libs-snapshots</id>
-            <url>https://maven.schbrain.com/repository/maven-snapshots/</url>
+            <url>${maven.repository.url}/maven-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>libs-releases</id>
+            <url>${maven.repository.url}/maven-releases</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>libs-snapshots</id>
+            <url>${maven.repository.url}/maven-snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>plugin-release</id>
+            <url>${maven.repository.url}/maven-releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>plugin-snapshot</id>
+            <url>${maven.repository.url}/maven-snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>

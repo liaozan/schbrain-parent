@@ -32,7 +32,7 @@
     </developers>
 
     <properties>
-        <springboot.version>${project.parent.version}</springboot.version>
+        <springboot.version>2.6.3</springboot.version>
 
         <!-- 2th part version -->
         <schbrain-spring-support.version>1.0.0-SNAPSHOT</schbrain-spring-support.version>

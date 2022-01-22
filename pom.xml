@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.2</version>
+        <version>2.6.3</version>
     </parent>
 
     <groupId>com.schbrain.framework</groupId>
@@ -32,7 +32,7 @@
     </developers>
 
     <properties>
-        <springboot.version>2.6.2</springboot.version>
+        <springboot.version>${project.parent.version}</springboot.version>
 
         <!-- 2th part version -->
         <schbrain-spring-support.version>1.0.0-SNAPSHOT</schbrain-spring-support.version>

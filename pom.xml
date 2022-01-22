@@ -438,7 +438,7 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <gitRepository>git@gitlab.schbrain.com:tools/Dockerfile.git</gitRepository>
+                        <gitRepository>git@gitlab.schbrain.com:tools/build-script.git</gitRepository>
                         <branch>main</branch>
                     </configuration>
                 </plugin>

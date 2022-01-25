@@ -60,7 +60,7 @@
         <!-- excel -->
         <easyexcel.version>3.0.5</easyexcel.version>
         <!-- database related -->
-        <mybatis-plus.version>3.5.0</mybatis-plus.version>
+        <mybatis-plus.version>3.5.1</mybatis-plus.version>
         <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
         <druid.version>1.2.8</druid.version>
         <!-- dubbo related -->

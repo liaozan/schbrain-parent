@@ -53,14 +53,14 @@
         <jsr305.version>3.0.2</jsr305.version>
         <guava.version>31.0.1-jre</guava.version>
         <!-- used for apollo -->
-        <guice.version>5.0.1</guice.version>
+        <guice.version>5.1.0</guice.version>
         <hutool.version>5.7.20</hutool.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.11.0</commons-io.version>
         <!-- excel -->
         <easyexcel.version>3.0.5</easyexcel.version>
         <!-- database related -->
-        <mybatis-plus.version>3.5.0</mybatis-plus.version>
+        <mybatis-plus.version>3.5.1</mybatis-plus.version>
         <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
         <druid.version>1.2.8</druid.version>
         <!-- dubbo related -->
@@ -78,7 +78,7 @@
 
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
-        <integration-maven-plugin.version>1.0.0</integration-maven-plugin.version>
+        <integration-maven-plugin.version>1.0.1-SNAPSHOT</integration-maven-plugin.version>
 
         <maven.repository.url>https://maven.schbrain.com/repository</maven.repository.url>
     </properties>
@@ -433,7 +433,7 @@
                             <id>prepare-dockerfile</id>
                             <phase>package</phase>
                             <goals>
-                                <goal>prepare-dockerfile</goal>
+                                <goal>prepare</goal>
                             </goals>
                         </execution>
                     </executions>

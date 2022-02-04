@@ -427,20 +427,12 @@
                 <plugin>
                     <groupId>pl.project13.maven</groupId>
                     <artifactId>git-commit-id-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>commitInfo</id>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>revision</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                     <configuration>
                         <verbose>false</verbose>
                         <failOnNoGitDirectory>false</failOnNoGitDirectory>
                         <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
                         <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
+                        <dateFormatTimeZone>GMT+8</dateFormatTimeZone>
                     </configuration>
                 </plugin>
                 <plugin>

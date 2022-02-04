@@ -491,9 +491,6 @@
             <properties>
                 <java.version>1.8</java.version>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
         <!-- Java11 -->
         <profile>
@@ -501,6 +498,9 @@
             <properties>
                 <java.version>11</java.version>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
     </profiles>
 

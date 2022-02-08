@@ -33,6 +33,7 @@
 
     <properties>
         <springboot.version>2.6.3</springboot.version>
+        <spring.cloud-version>2021.0.0</spring.cloud-version>
 
         <!-- 2th part version -->
         <schbrain-spring-support.version>1.0.1-SNAPSHOT</schbrain-spring-support.version>
@@ -75,8 +76,6 @@
         <logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
         <!-- xxl-job -->
         <xxl-job.version>2.0.2</xxl-job.version>
-        <!-- spring cloud -->
-        <spring.cloud-version>2021.0.0</spring.cloud-version>
 
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
@@ -133,7 +132,6 @@
                 <artifactId>web-common</artifactId>
                 <version>${schbrain-web-common.version}</version>
             </dependency>
-
             <!-- 三方包 -->
             <!-- utils -->
             <dependency>
@@ -285,11 +283,6 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-                <version>${dynamic-datasource.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>${druid.version}</version>
@@ -305,7 +298,6 @@
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.version}</version>
             </dependency>
-
             <!-- apollo -->
             <dependency>
                 <groupId>com.ctrip.framework.apollo</groupId>
@@ -335,12 +327,12 @@
                 <artifactId>logstash-logback-encoder</artifactId>
                 <version>${logstash-logback-encoder.version}</version>
             </dependency>
+            <!-- xxl-job -->
             <dependency>
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
             </dependency>
-
             <!--spring cloud-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -386,7 +378,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- 资源打包插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -452,7 +443,7 @@
                     <version>${integration-maven-plugin.version}</version>
                     <executions>
                         <execution>
-                            <id>prepare-dockerfile</id>
+                            <id>prepare-build-script</id>
                             <phase>package</phase>
                             <goals>
                                 <goal>prepare</goal>

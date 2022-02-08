@@ -443,17 +443,13 @@
                     <version>${integration-maven-plugin.version}</version>
                     <executions>
                         <execution>
-                            <id>prepare-build-script</id>
+                            <id>prepare</id>
                             <phase>package</phase>
                             <goals>
                                 <goal>prepare</goal>
                             </goals>
                         </execution>
                     </executions>
-                    <configuration>
-                        <gitRepository>git@gitlab.schbrain.com:tools/build-script.git</gitRepository>
-                        <branch>main</branch>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

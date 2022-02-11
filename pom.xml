@@ -539,7 +539,7 @@
         </pluginRepository>
         <pluginRepository>
             <id>plugin-snapshots</id>
-            <url>${maven.repository.url}/maven-snapshot</url>
+            <url>${maven.repository.url}/maven-snapshots</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>

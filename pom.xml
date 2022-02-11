@@ -531,14 +531,14 @@
 
     <pluginRepositories>
         <pluginRepository>
-            <id>plugin-release</id>
+            <id>plugin-releases</id>
             <url>${maven.repository.url}/maven-releases</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
         <pluginRepository>
-            <id>plugin-snapshot</id>
+            <id>plugin-snapshots</id>
             <url>${maven.repository.url}/maven-snapshot</url>
             <snapshots>
                 <enabled>true</enabled>

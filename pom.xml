@@ -33,7 +33,7 @@
 
     <properties>
         <springboot.version>2.6.3</springboot.version>
-        <spring.cloud-version>2021.0.0</spring.cloud-version>
+        <spring.cloud-version>2021.0.1</spring.cloud-version>
 
         <!-- 2th part version -->
         <schbrain-spring-support.version>1.0.1</schbrain-spring-support.version>

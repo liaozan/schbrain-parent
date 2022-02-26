@@ -32,7 +32,7 @@
     </developers>
 
     <properties>
-        <springboot.version>2.6.3</springboot.version>
+        <springboot.version>2.6.4</springboot.version>
         <spring.cloud-version>2021.0.1</spring.cloud-version>
 
         <!-- 2th part version -->

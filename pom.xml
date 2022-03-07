@@ -65,7 +65,7 @@
         <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
         <druid.version>1.2.8</druid.version>
         <!-- dubbo related -->
-        <dubbo.version>3.0.5</dubbo.version>
+        <dubbo.version>3.0.6</dubbo.version>
         <curator.version>4.3.0</curator.version>
         <zookeeper.version>3.4.14</zookeeper.version>
         <!-- apollo -->

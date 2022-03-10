@@ -32,6 +32,8 @@
     </developers>
 
     <properties>
+        <java.version>11</java.version>
+
         <springboot.version>2.6.4</springboot.version>
         <spring.cloud-version>2021.0.1</spring.cloud-version>
 
@@ -40,7 +42,7 @@
         <schbrain-dubbo.version>1.0.1</schbrain-dubbo.version>
         <schbrain-mybatis.version>1.0.2</schbrain-mybatis.version>
         <schbrain-apollo.version>1.0.1</schbrain-apollo.version>
-        <schbrain-logger.version>1.0.1</schbrain-logger.version>
+        <schbrain-logger.version>1.0.2-SNAPSHOT</schbrain-logger.version>
         <schbrain-oss.version>1.0.1</schbrain-oss.version>
         <schbrain-xxl.version>1.0.1</schbrain-xxl.version>
 
@@ -466,6 +468,14 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
+        <!-- 测试环境 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.profile>test</spring.profile>
+                <docker.registry>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain-dev</docker.registry>
+            </properties>
+        </profile>
         <!-- 生产环境 -->
         <profile>
             <id>prod</id>
@@ -473,23 +483,6 @@
                 <spring.profile>prod</spring.profile>
                 <docker.registry>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain</docker.registry>
             </properties>
-        </profile>
-        <!-- Java8 -->
-        <profile>
-            <id>jdk8</id>
-            <properties>
-                <java.version>1.8</java.version>
-            </properties>
-        </profile>
-        <!-- Java11 -->
-        <profile>
-            <id>jdk11</id>
-            <properties>
-                <java.version>11</java.version>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
     </profiles>
 

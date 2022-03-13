@@ -171,6 +171,16 @@
                 <version>${easyexcel.version}</version>
             </dependency>
             <!-- dubbo related -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
             <!-- user single dependency instead of dubbo-bom,because dubbo-bom set the spring version-->
             <dependency>
                 <groupId>org.apache.dubbo</groupId>

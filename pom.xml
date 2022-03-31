@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- When changing the version of parent, remember to modify the springboot.version in the properties at the same time -->
+    <!-- When changing the version of parent, remember to modify the version attributes in the properties at the same time -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -38,7 +38,7 @@
         <spring.cloud-version>2021.0.1</spring.cloud-version>
 
         <!-- 2th part version -->
-        <schbrain-common.version>1.0.6</schbrain-common.version>
+        <schbrain-common.version>1.0.7-SNAPSHOT</schbrain-common.version>
         <schbrain-spring-support.version>1.0.2</schbrain-spring-support.version>
         <schbrain-dubbo.version>1.0.1</schbrain-dubbo.version>
         <schbrain-mybatis.version>1.0.5</schbrain-mybatis.version>

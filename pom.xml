@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.5</version>
+        <version>2.6.6</version>
     </parent>
 
     <groupId>com.schbrain.framework</groupId>
@@ -34,7 +34,7 @@
     <properties>
         <java.version>11</java.version>
 
-        <springboot.version>2.6.5</springboot.version>
+        <springboot.version>2.6.6</springboot.version>
         <spring.cloud-version>2021.0.1</spring.cloud-version>
 
         <!-- 2th part version -->
@@ -42,8 +42,8 @@
         <schbrain-spring-support.version>1.0.2</schbrain-spring-support.version>
         <schbrain-dubbo.version>1.0.1</schbrain-dubbo.version>
         <schbrain-mybatis.version>1.0.5</schbrain-mybatis.version>
-        <schbrain-apollo.version>1.0.2</schbrain-apollo.version>
-        <schbrain-logger.version>1.0.2</schbrain-logger.version>
+        <schbrain-apollo.version>1.0.3</schbrain-apollo.version>
+        <schbrain-logger.version>1.0.3</schbrain-logger.version>
         <schbrain-oss.version>1.0.3</schbrain-oss.version>
         <schbrain-xxl.version>1.0.1</schbrain-xxl.version>
 

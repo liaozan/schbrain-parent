@@ -73,7 +73,7 @@
         <!-- aliyun -->
         <aliyun.oss.version>3.14.0</aliyun.oss.version>
         <!-- logstash-logback-encoder -->
-        <logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
+        <logstash-logback-encoder.version>7.1</logstash-logback-encoder.version>
         <!-- xxl-job -->
         <xxl-job.version>2.0.2</xxl-job.version>
 

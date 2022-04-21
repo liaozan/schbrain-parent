@@ -39,13 +39,13 @@
 
         <!-- 2th part version -->
         <schbrain-common.version>1.0.8-SNAPSHOT</schbrain-common.version>
-        <schbrain-spring-support.version>1.0.5-SNAPSHOT</schbrain-spring-support.version>
+        <schbrain-spring-support.version>1.0.5</schbrain-spring-support.version>
         <schbrain-dubbo.version>1.0.1</schbrain-dubbo.version>
         <schbrain-mybatis.version>1.0.6</schbrain-mybatis.version>
-        <schbrain-apollo.version>1.0.5-SNAPSHOT</schbrain-apollo.version>
+        <schbrain-apollo.version>1.0.5</schbrain-apollo.version>
         <schbrain-logger.version>1.0.5</schbrain-logger.version>
         <schbrain-oss.version>1.0.3</schbrain-oss.version>
-        <schbrain-xxl.version>1.0.4-SNAPSHOT</schbrain-xxl.version>
+        <schbrain-xxl.version>1.0.4</schbrain-xxl.version>
 
         <!-- fastjson 被 aliyun 系列 sdk 强依赖,所以定在父 pom,方便统一进行版本管理,方便快速响应 bug 版本升级 -->
         <fastjson.version>1.2.80</fastjson.version>

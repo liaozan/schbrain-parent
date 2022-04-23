@@ -76,6 +76,7 @@
         <logstash-logback-encoder.version>7.1.1</logstash-logback-encoder.version>
         <!-- xxl-job -->
         <xxl-job.version>2.0.2</xxl-job.version>
+        <redisoon.version>3.5.0</redisoon.version>
 
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
@@ -336,6 +337,11 @@
                 <groupId>net.logstash.logback</groupId>
                 <artifactId>logstash-logback-encoder</artifactId>
                 <version>${logstash-logback-encoder.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>${redisoon.version}</version>
             </dependency>
             <!-- xxl-job -->
             <dependency>

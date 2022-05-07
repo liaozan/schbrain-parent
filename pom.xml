@@ -122,7 +122,7 @@
             <id>dev</id>
             <properties>
                 <spring.profile>dev</spring.profile>
-                <docker.registry>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain-dev</docker.registry>
+                <docker.registry>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain_dev</docker.registry>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -133,7 +133,7 @@
             <id>test</id>
             <properties>
                 <spring.profile>test</spring.profile>
-                <docker.registry>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain-dev</docker.registry>
+                <docker.registry>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain_dev</docker.registry>
             </properties>
         </profile>
         <!-- 生产环境 -->
@@ -141,7 +141,7 @@
             <id>prod</id>
             <properties>
                 <spring.profile>prod</spring.profile>
-                <docker.registry>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain</docker.registry>
+                <docker.registry>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain_online</docker.registry>
             </properties>
         </profile>
     </profiles>

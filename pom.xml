@@ -144,6 +144,14 @@
                 <docker.registry>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain_online</docker.registry>
             </properties>
         </profile>
+        <!-- 魔方 -->
+        <profile>
+            <id>mf</id>
+            <properties>
+                <spring.profile>mf</spring.profile>
+                <docker.registry>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain_online</docker.registry>
+            </properties>
+        </profile>
     </profiles>
 
 </project>

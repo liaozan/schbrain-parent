@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.schbrain</groupId>
         <artifactId>schbrain-dependency-bom</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
 
     <groupId>com.schbrain.framework</groupId>

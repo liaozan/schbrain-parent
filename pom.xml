@@ -39,7 +39,7 @@
         <schbrain-apollo.version>2.1.0</schbrain-apollo.version>
         <schbrain-base-dao.version>2.1.0</schbrain-base-dao.version>
         <schbrain-cache.version>2.1.0</schbrain-cache.version>
-        <schbrain-common-util.version>2.1.1</schbrain-common-util.version>
+        <schbrain-common-util.version>2.1.2</schbrain-common-util.version>
         <schbrain-common.version>2.1.0</schbrain-common.version>
         <schbrain-dubbo.version>2.1.0</schbrain-dubbo.version>
         <schbrain-logger.version>2.1.0</schbrain-logger.version>

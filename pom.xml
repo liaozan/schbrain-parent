@@ -45,7 +45,7 @@
         <schbrain-logger.version>2.1.0</schbrain-logger.version>
         <schbrain-module-tree.version>2.1.0</schbrain-module-tree.version>
         <schbrain-mybatis.version>2.1.0</schbrain-mybatis.version>
-        <schbrain-oss.version>2.1.0</schbrain-oss.version>
+        <schbrain-oss.version>2.1.1</schbrain-oss.version>
         <schbrain-spring-support.version>2.1.0</schbrain-spring-support.version>
         <schbrain-web-common.version>2.1.0</schbrain-web-common.version>
         <schbrain-xxl.version>2.1.0</schbrain-xxl.version>

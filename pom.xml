@@ -68,7 +68,7 @@
         <!-- excel -->
         <easyexcel.version>3.1.1</easyexcel.version>
         <!-- database related -->
-        <druid.version>1.2.11</druid.version>
+        <druid.version>1.2.13-SNSAPSHOT</druid.version>
         <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
         <pagehelper.version>5.3.1</pagehelper.version>
         <mybatis.starter.version>2.2.2</mybatis.starter.version>

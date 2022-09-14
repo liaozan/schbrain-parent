@@ -89,7 +89,7 @@
         <!-- logstash-logback-encoder -->
         <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
         <!-- xxl-job -->
-        <xxl-job.version>2.0.2</xxl-job.version>
+        <xxl-job.version>2.3.0</xxl-job.version>
 
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>

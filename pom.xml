@@ -60,7 +60,7 @@
         <fastjson.version>1.2.83</fastjson.version>
         <guava.version>31.1-jre</guava.version>
         <guice.version>5.1.0</guice.version>
-        <hutool.version>5.8.6</hutool.version>
+        <hutool.version>5.8.7</hutool.version>
         <jsr305.version>3.0.2</jsr305.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
         <redisson.version>3.5.0</redisson.version>

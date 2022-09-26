@@ -14,7 +14,7 @@
     <groupId>com.schbrain.framework</groupId>
     <artifactId>schbrain-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.4</version>
 
     <!-- used to replace spring's Apache Licence -->
     <licenses>
@@ -36,19 +36,19 @@
         <spring.cloud-version>2021.0.4</spring.cloud-version>
 
         <!-- 2th part versions -->
-        <schbrain-apollo.version>2.1.1-SNAPSHOT</schbrain-apollo.version>
-        <schbrain-base-dao.version>2.1.1-SNAPSHOT</schbrain-base-dao.version>
-        <schbrain-cache.version>2.1.1-SNAPSHOT</schbrain-cache.version>
-        <schbrain-common-util.version>2.1.4-SNAPSHOT</schbrain-common-util.version>
-        <schbrain-common.version>2.1.1-SNAPSHOT</schbrain-common.version>
-        <schbrain-dubbo.version>2.1.1-SNAPSHOT</schbrain-dubbo.version>
-        <schbrain-logger.version>2.1.1-SNAPSHOT</schbrain-logger.version>
-        <schbrain-module-tree.version>2.1.0</schbrain-module-tree.version>
-        <schbrain-mybatis.version>2.1.1-SNAPSHOT</schbrain-mybatis.version>
-        <schbrain-oss.version>2.1.3-SNAPSHOT</schbrain-oss.version>
-        <schbrain-spring-support.version>2.1.1-SNAPSHOT</schbrain-spring-support.version>
-        <schbrain-web-common.version>2.1.1-SNAPSHOT</schbrain-web-common.version>
-        <schbrain-xxl.version>2.1.1-SNAPSHOT</schbrain-xxl.version>
+        <schbrain-apollo.version>2.1.1</schbrain-apollo.version>
+        <schbrain-base-dao.version>2.1.1</schbrain-base-dao.version>
+        <schbrain-cache.version>2.1.1</schbrain-cache.version>
+        <schbrain-common-util.version>2.1.4</schbrain-common-util.version>
+        <schbrain-common.version>2.1.1</schbrain-common.version>
+        <schbrain-dubbo.version>2.1.1</schbrain-dubbo.version>
+        <schbrain-logger.version>2.1.1</schbrain-logger.version>
+        <schbrain-module-tree.version>2.1.1</schbrain-module-tree.version>
+        <schbrain-mybatis.version>2.1.1</schbrain-mybatis.version>
+        <schbrain-oss.version>2.1.3</schbrain-oss.version>
+        <schbrain-spring-support.version>2.1.1</schbrain-spring-support.version>
+        <schbrain-web-common.version>2.1.1</schbrain-web-common.version>
+        <schbrain-xxl.version>2.1.1</schbrain-xxl.version>
 
         <!--  3th part versions -->
         <bouncycastle.version>1.71.1</bouncycastle.version>
@@ -93,7 +93,7 @@
 
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.3.0</flatten-maven-plugin.version>
-        <integration-maven-plugin.version>1.0.4-SNAPSHOT</integration-maven-plugin.version>
+        <integration-maven-plugin.version>1.0.4</integration-maven-plugin.version>
         <maven.repository.url>https://maven.schbrain.com/repository</maven.repository.url>
     </properties>
 

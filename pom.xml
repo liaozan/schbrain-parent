@@ -51,7 +51,7 @@
         <schbrain-xxl.version>2.1.2-SNAPSHOT</schbrain-xxl.version>
 
         <!--  3th part versions -->
-        <bouncycastle.version>1.71.1</bouncycastle.version>
+        <bouncycastle.version>1.72</bouncycastle.version>
         <cglib.version>3.3.0</cglib.version>
         <com.google.zxing.version>3.5.0</com.google.zxing.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>

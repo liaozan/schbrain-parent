@@ -53,7 +53,7 @@
         <!--  3th part versions -->
         <bouncycastle.version>1.72</bouncycastle.version>
         <cglib.version>3.3.0</cglib.version>
-        <com.google.zxing.version>3.5.0</com.google.zxing.version>
+        <com.google.zxing.version>3.5.1</com.google.zxing.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.11.0</commons-io.version>

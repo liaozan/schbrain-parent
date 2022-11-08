@@ -76,7 +76,7 @@
 
         <!-- dubbo related -->
         <curator.version>4.3.0</curator.version>
-        <dubbo.version>3.1.1</dubbo.version>
+        <dubbo.version>3.1.2</dubbo.version>
         <zookeeper.version>3.4.14</zookeeper.version>
         <!-- apollo -->
         <apollo.version>2.0.1</apollo.version>

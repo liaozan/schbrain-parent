@@ -31,6 +31,12 @@
         </developer>
     </developers>
 
+    <scm>
+        <connection>scm:git:git@gitlab.schbrain.com:framework/schbrain-parent.git</connection>
+        <developerConnection>scm:git:git@gitlab.schbrain.com:framework/schbrain-parent.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
     <properties>
         <java.version>11</java.version>
         <spring.cloud-version>2021.0.5</spring.cloud-version>
@@ -562,6 +568,10 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

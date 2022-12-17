@@ -81,9 +81,9 @@
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
 
         <!-- dubbo related -->
-        <curator.version>4.3.0</curator.version>
+        <curator.version>5.4.0</curator.version>
         <dubbo.version>3.1.3</dubbo.version>
-        <zookeeper.version>3.4.14</zookeeper.version>
+        <zookeeper.version>3.7.1</zookeeper.version>
         <!-- apollo -->
         <apollo.version>2.0.1</apollo.version>
         <!-- aliyun -->
@@ -106,6 +106,7 @@
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.3.0</flatten-maven-plugin.version>
         <integration-maven-plugin.version>1.0.6-SNAPSHOT</integration-maven-plugin.version>
+        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <maven.repository.url>https://maven.schbrain.com/repository</maven.repository.url>
     </properties>
 
@@ -610,6 +611,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

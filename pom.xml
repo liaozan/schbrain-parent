@@ -39,7 +39,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <spring.cloud-version>2022.0.0</spring.cloud-version>
+        <spring.cloud-version>2021.0.5</spring.cloud-version>
 
         <!-- 2th part versions -->
         <schbrain-apollo.version>2.1.4-SNAPSHOT</schbrain-apollo.version>
@@ -98,6 +98,9 @@
         <alibabacloud-oss20190517.version>1.0.2</alibabacloud-oss20190517.version>
         <alibabacloud-vod20170321.version>1.0.2</alibabacloud-vod20170321.version>
         <alibabacloud-dysmsapi20170525.version>2.0.22</alibabacloud-dysmsapi20170525.version>
+        <!-- dingtalk -->
+        <aliyun-dingtalk-sdk.version>1.4.96</aliyun-dingtalk-sdk.version>
+        <alibaba-dingtalk-sdk.version>2.0.0</alibaba-dingtalk-sdk.version>
         <!-- logstash-logback-encoder -->
         <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
         <!-- xxl-job -->
@@ -474,6 +477,23 @@
                 <groupId>com.aliyun</groupId>
                 <artifactId>alibabacloud-dysmsapi20170525</artifactId>
                 <version>${alibabacloud-dysmsapi20170525.version}</version>
+            </dependency>
+            <!-- dingtalk sdk -->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>alibaba-dingtalk-service-sdk</artifactId>
+                <version>${alibaba-dingtalk-sdk.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>dingtalk</artifactId>
+                <version>${aliyun-dingtalk-sdk.version}</version>
             </dependency>
             <dependency>
                 <groupId>net.logstash.logback</groupId>

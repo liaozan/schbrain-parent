@@ -78,7 +78,7 @@
         <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
         <pagehelper.version>5.3.2</pagehelper.version>
         <mybatis.starter.version>2.2.2</mybatis.starter.version>
-        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <mybatis-plus.version>3.5.3</mybatis-plus.version>
 
         <!-- dubbo related -->
         <curator.version>5.4.0</curator.version>

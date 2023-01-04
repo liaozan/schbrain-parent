@@ -71,7 +71,7 @@
         <redisson.version>3.19.0</redisson.version>
 
         <!-- excel -->
-        <easyexcel.version>3.1.4</easyexcel.version>
+        <easyexcel.version>3.1.5</easyexcel.version>
         <!-- database related -->
         <druid.version>1.2.15</druid.version>
         <dynamic-datasource.version>3.5.0</dynamic-datasource.version>

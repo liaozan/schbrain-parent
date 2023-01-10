@@ -98,7 +98,7 @@
         <alibabacloud-vod20170321.version>1.0.3</alibabacloud-vod20170321.version>
         <alibabacloud-dysmsapi20170525.version>2.0.22</alibabacloud-dysmsapi20170525.version>
         <!-- dingtalk -->
-        <aliyun-dingtalk-sdk.version>1.5.21</aliyun-dingtalk-sdk.version>
+        <aliyun-dingtalk-sdk.version>1.5.22</aliyun-dingtalk-sdk.version>
         <alibaba-dingtalk-sdk.version>2.0.0</alibaba-dingtalk-sdk.version>
         <!-- logstash-logback-encoder -->
         <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>

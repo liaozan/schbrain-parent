@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,7 +12,7 @@
     <groupId>com.schbrain.framework</groupId>
     <artifactId>schbrain-parent</artifactId>
     <packaging>pom</packaging>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>${revision}</version>
 
     <!-- used to replace spring's Apache Licence -->
     <licenses>
@@ -31,29 +29,27 @@
         </developer>
     </developers>
 
-    <scm>
-        <connection>scm:git:git@gitlab.schbrain.com:framework/schbrain-parent.git</connection>
-        <developerConnection>scm:git:git@gitlab.schbrain.com:framework/schbrain-parent.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
-
     <properties>
+        <revision>3.0.0</revision>
+
+        <java.version>11</java.version>
+
         <spring.cloud-version>2021.0.5</spring.cloud-version>
 
         <!-- 2th part versions -->
-        <schbrain-apollo.version>${project.version}</schbrain-apollo.version>
-        <schbrain-base-dao.version>${project.version}</schbrain-base-dao.version>
-        <schbrain-cache.version>${project.version}</schbrain-cache.version>
-        <schbrain-common-util.version>${project.version}</schbrain-common-util.version>
-        <schbrain-common.version>${project.version}</schbrain-common.version>
-        <schbrain-dubbo.version>${project.version}</schbrain-dubbo.version>
-        <schbrain-logger.version>${project.version}</schbrain-logger.version>
-        <schbrain-module-tree.version>${project.version}</schbrain-module-tree.version>
-        <schbrain-mybatis.version>${project.version}</schbrain-mybatis.version>
-        <schbrain-oss.version>${project.version}</schbrain-oss.version>
-        <schbrain-spring-support.version>${project.version}</schbrain-spring-support.version>
-        <schbrain-web-common.version>${project.version}</schbrain-web-common.version>
-        <schbrain-xxl.version>${project.version}</schbrain-xxl.version>
+        <schbrain-apollo.version>${revision}</schbrain-apollo.version>
+        <schbrain-base-dao.version>${revision}</schbrain-base-dao.version>
+        <schbrain-cache.version>${revision}</schbrain-cache.version>
+        <schbrain-common-util.version>${revision}</schbrain-common-util.version>
+        <schbrain-common.version>${revision}</schbrain-common.version>
+        <schbrain-dubbo.version>${revision}</schbrain-dubbo.version>
+        <schbrain-logger.version>${revision}</schbrain-logger.version>
+        <schbrain-module-tree.version>${revision}</schbrain-module-tree.version>
+        <schbrain-mybatis.version>${revision}</schbrain-mybatis.version>
+        <schbrain-oss.version>${revision}</schbrain-oss.version>
+        <schbrain-spring-support.version>${revision}</schbrain-spring-support.version>
+        <schbrain-web-common.version>${revision}</schbrain-web-common.version>
+        <schbrain-xxl.version>${revision}</schbrain-xxl.version>
 
         <!--  3th part versions -->
         <bouncycastle.version>1.72</bouncycastle.version>
@@ -69,6 +65,8 @@
         <jsr305.version>3.0.2</jsr305.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
         <redisson.version>3.19.3</redisson.version>
+
+        <elasticsearch.version>7.17.9</elasticsearch.version>
 
         <!-- excel -->
         <easyexcel.version>3.2.1</easyexcel.version>
@@ -109,8 +107,7 @@
 
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.3.0</flatten-maven-plugin.version>
-        <integration-maven-plugin.version>${project.version}</integration-maven-plugin.version>
-        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+        <integration-maven-plugin.version>${revision}</integration-maven-plugin.version>
         <maven.repository.url>https://maven.schbrain.com/repository</maven.repository.url>
     </properties>
 
@@ -293,6 +290,11 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-remoting-zookeeper-curator5</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-rpc-triple</artifactId>
                 <version>${dubbo.version}</version>
             </dependency>
@@ -306,10 +308,6 @@
                 <artifactId>dubbo-registry-zookeeper</artifactId>
                 <version>${dubbo.version}</version>
                 <exclusions>
-                    <exclusion>
-                        <groupId>org.apache.dubbo</groupId>
-                        <artifactId>dubbo-remoting-zookeeper-curator5</artifactId>
-                    </exclusion>
                     <exclusion>
                         <artifactId>log4j</artifactId>
                         <groupId>log4j</groupId>
@@ -639,11 +637,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>${maven-release-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

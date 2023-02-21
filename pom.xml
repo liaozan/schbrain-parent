@@ -32,7 +32,7 @@
     <properties>
         <revision>3.0.0</revision>
 
-        <spring.cloud-version>2021.0.5</spring.cloud-version>
+        <spring.cloud-version>2022.0.1</spring.cloud-version>
 
         <!-- 2th part versions -->
         <schbrain-apollo.version>${revision}</schbrain-apollo.version>

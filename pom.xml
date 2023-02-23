@@ -30,7 +30,7 @@
     </developers>
 
     <properties>
-        <revision>3.0.0</revision>
+        <revision>3.0.1-SNAPSHOT</revision>
 
         <java.version>11</java.version>
 

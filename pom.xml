@@ -84,7 +84,7 @@
         <!-- apollo -->
         <apollo.version>2.1.0</apollo.version>
         <!-- aliyun -->
-        <aliyun-java-sdk-vod.version>2.16.13</aliyun-java-sdk-vod.version>
+        <aliyun-java-sdk-vod.version>2.16.14</aliyun-java-sdk-vod.version>
         <aliyun-java-sdk-sts.version>3.1.0</aliyun-java-sdk-sts.version>
         <aliyun-java-sdk-dypnsapi.version>1.2.6</aliyun-java-sdk-dypnsapi.version>
         <aliyun-sdk-core.version>4.6.3</aliyun-sdk-core.version>

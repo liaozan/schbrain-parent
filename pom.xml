@@ -90,7 +90,7 @@
         <aliyun-sdk-core.version>4.6.3</aliyun-sdk-core.version>
         <aliyun-sdk-oss.version>3.16.1</aliyun-sdk-oss.version>
         <!-- alibabacloud new sdk -->
-        <aliyun-java-core.version>0.1.11-beta</aliyun-java-core.version>
+        <aliyun-java-core.version>0.1.12-beta</aliyun-java-core.version>
         <alibabacloud-sts20150401.version>1.0.3</alibabacloud-sts20150401.version>
         <alibabacloud-oss20190517.version>1.0.2</alibabacloud-oss20190517.version>
         <alibabacloud-vod20170321.version>1.0.4</alibabacloud-vod20170321.version>

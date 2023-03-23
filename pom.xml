@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.9</version>
+        <version>2.7.10</version>
     </parent>
 
     <groupId>com.schbrain.framework</groupId>
@@ -54,56 +54,53 @@
         <schbrain-xxl.version>${revision}</schbrain-xxl.version>
 
         <!--  3th part versions -->
+        <apollo.version>2.1.0</apollo.version>
         <bouncycastle.version>1.72</bouncycastle.version>
         <cglib.version>3.3.0</cglib.version>
+        <curator.version>5.4.0</curator.version>
         <com.google.zxing.version>3.5.1</com.google.zxing.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.11.0</commons-io.version>
+        <dubbo.version>3.1.8</dubbo.version>
+        <druid.version>1.2.16</druid.version>
+        <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
+        <easyexcel.version>3.2.1</easyexcel.version>
         <fastjson.version>1.2.83</fastjson.version>
         <guava.version>31.1-jre</guava.version>
         <guice.version>5.1.0</guice.version>
         <hutool.version>5.8.15</hutool.version>
         <jsr305.version>3.0.2</jsr305.version>
-        <pinyin4j.version>2.5.1</pinyin4j.version>
-        <redisson.version>3.20.0</redisson.version>
-
-        <!-- excel -->
-        <easyexcel.version>3.2.1</easyexcel.version>
-        <!-- database related -->
-        <druid.version>1.2.16</druid.version>
-        <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
-        <pagehelper.version>5.3.2</pagehelper.version>
-        <!-- mybatis related -->
+        <logstash-logback-encoder.version>7.3</logstash-logback-encoder.version>
         <mybatis.version>3.5.13</mybatis.version>
         <mybatis.starter.version>2.3.0</mybatis.starter.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-
-        <!-- dubbo related -->
-        <curator.version>5.4.0</curator.version>
-        <dubbo.version>3.1.8</dubbo.version>
+        <pinyin4j.version>2.5.1</pinyin4j.version>
+        <pagehelper.version>5.3.2</pagehelper.version>
+        <!-- 3.18.0 is the last version to support spring-boot 2.x -->
+        <!-- upgrade redisson if switch to spring-boot 3.x -->
+        <redisson.version>3.18.0</redisson.version>
+        <skywalking-tooklit.version>8.14.0</skywalking-tooklit.version>
+        <xxl-job.version>2.0.2</xxl-job.version>
         <zookeeper.version>3.8.1</zookeeper.version>
-        <!-- apollo -->
-        <apollo.version>2.1.0</apollo.version>
+
         <!-- aliyun -->
         <aliyun-java-sdk-vod.version>2.16.14</aliyun-java-sdk-vod.version>
         <aliyun-java-sdk-sts.version>3.1.1</aliyun-java-sdk-sts.version>
         <aliyun-java-sdk-dypnsapi.version>1.2.6</aliyun-java-sdk-dypnsapi.version>
         <aliyun-sdk-core.version>4.6.3</aliyun-sdk-core.version>
         <aliyun-sdk-oss.version>3.16.1</aliyun-sdk-oss.version>
+
         <!-- alibabacloud new sdk -->
         <aliyun-java-core.version>0.1.13-beta</aliyun-java-core.version>
         <alibabacloud-sts20150401.version>1.0.3</alibabacloud-sts20150401.version>
         <alibabacloud-oss20190517.version>1.0.2</alibabacloud-oss20190517.version>
         <alibabacloud-vod20170321.version>1.0.4</alibabacloud-vod20170321.version>
         <alibabacloud-dysmsapi20170525.version>2.0.23</alibabacloud-dysmsapi20170525.version>
+
         <!-- dingtalk -->
         <aliyun-dingtalk-sdk.version>1.5.58</aliyun-dingtalk-sdk.version>
         <alibaba-dingtalk-sdk.version>2.0.0</alibaba-dingtalk-sdk.version>
-        <!-- logstash-logback-encoder -->
-        <logstash-logback-encoder.version>7.3</logstash-logback-encoder.version>
-        <!-- xxl-job -->
-        <xxl-job.version>2.0.2</xxl-job.version>
 
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.4.0</flatten-maven-plugin.version>
@@ -518,11 +515,6 @@
                 <version>${aliyun-dingtalk-sdk.version}</version>
             </dependency>
             <dependency>
-                <groupId>net.logstash.logback</groupId>
-                <artifactId>logstash-logback-encoder</artifactId>
-                <version>${logstash-logback-encoder.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson</artifactId>
                 <version>${redisson.version}</version>
@@ -531,6 +523,16 @@
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-boot-starter</artifactId>
                 <version>${redisson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-logback-1.x</artifactId>
+                <version>${skywalking-tooklit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash-logback-encoder.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.xuxueli</groupId>

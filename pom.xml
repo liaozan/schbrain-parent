@@ -79,7 +79,7 @@
         <pagehelper.version>5.3.2</pagehelper.version>
         <!-- 3.18.0 is the last version to support spring-boot 2.x -->
         <!-- upgrade redisson if switch to spring-boot 3.x -->
-        <redisson.version>3.18.0</redisson.version>
+        <redisson.version>3.20.0</redisson.version>
         <skywalking-tooklit.version>8.14.0</skywalking-tooklit.version>
         <xxl-job.version>2.0.2</xxl-job.version>
         <zookeeper.version>3.8.1</zookeeper.version>

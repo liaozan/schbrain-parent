@@ -13,8 +13,8 @@
 
     <groupId>com.schbrain.framework</groupId>
     <artifactId>schbrain-parent</artifactId>
-    <packaging>pom</packaging>
     <version>${revision}</version>
+    <packaging>pom</packaging>
 
     <!-- used to replace spring's Apache Licence -->
     <licenses>
@@ -30,6 +30,17 @@
             <name>schbrain</name>
         </developer>
     </developers>
+
+    <distributionManagement>
+        <repository>
+            <id>libs-releases</id>
+            <url>${maven.repository.url}/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>libs-snapshots</id>
+            <url>${maven.repository.url}/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <properties>
         <revision>3.0.1-SNAPSHOT</revision>
@@ -255,8 +266,8 @@
                 <version>${dubbo.version}</version>
                 <exclusions>
                     <exclusion>
-                        <artifactId>log4j</artifactId>
                         <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
                     </exclusion>
                     <exclusion>
                         <groupId>commons-logging</groupId>
@@ -318,8 +329,8 @@
                 <version>${dubbo.version}</version>
                 <exclusions>
                     <exclusion>
-                        <artifactId>log4j</artifactId>
                         <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
                     </exclusion>
                     <exclusion>
                         <groupId>org.apache.dubbo</groupId>
@@ -404,8 +415,8 @@
                 <version>${druid.version}</version>
                 <exclusions>
                     <exclusion>
-                        <artifactId>javax.annotation-api</artifactId>
                         <groupId>javax.annotation</groupId>
+                        <artifactId>javax.annotation-api</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -430,8 +441,8 @@
                 <version>${aliyun-sdk-core.version}</version>
                 <exclusions>
                     <exclusion>
-                        <artifactId>commons-logging</artifactId>
                         <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
                     </exclusion>
                     <exclusion>
                         <groupId>org.bouncycastle</groupId>
@@ -445,8 +456,8 @@
                 <version>${aliyun-sdk-oss.version}</version>
                 <exclusions>
                     <exclusion>
-                        <artifactId>commons-logging</artifactId>
                         <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -554,6 +565,48 @@
         </dependencies>
     </dependencyManagement>
 
+    <repositories>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>libs-releases</id>
+            <url>${maven.repository.url}/maven-releases</url>
+        </repository>
+        <repository>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+            <id>libs-snapshots</id>
+            <url>${maven.repository.url}/maven-snapshots</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>plugin-releases</id>
+            <url>${maven.repository.url}/maven-releases</url>
+        </pluginRepository>
+        <pluginRepository>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+            <id>plugin-snapshots</id>
+            <url>${maven.repository.url}/maven-snapshots</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -563,17 +616,17 @@
                     <executions>
                         <execution>
                             <id>repackage</id>
-                            <phase>package</phase>
                             <goals>
                                 <goal>repackage</goal>
                             </goals>
+                            <phase>package</phase>
                         </execution>
                         <execution>
                             <id>buildInfo</id>
-                            <phase>compile</phase>
                             <goals>
                                 <goal>build-info</goal>
                             </goals>
+                            <phase>compile</phase>
                         </execution>
                     </executions>
                 </plugin>
@@ -582,13 +635,6 @@
                     <groupId>pl.project13.maven</groupId>
                     <artifactId>git-commit-id-plugin</artifactId>
                     <version>4.9.10</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>revision</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                     <configuration>
                         <verbose>false</verbose>
                         <generateGitPropertiesFile>true</generateGitPropertiesFile>
@@ -598,18 +644,18 @@
                         <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
                         <dateFormatTimeZone>GMT+8</dateFormatTimeZone>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>revision</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>io.github.git-commit-id</groupId>
                     <artifactId>git-commit-id-maven-plugin</artifactId>
                     <version>5.0.0</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>revision</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                     <configuration>
                         <verbose>false</verbose>
                         <generateGitPropertiesFile>true</generateGitPropertiesFile>
@@ -619,6 +665,13 @@
                         <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
                         <dateFormatTimeZone>GMT+8</dateFormatTimeZone>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>revision</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>com.schbrain.maven.plugin</groupId>
@@ -627,10 +680,10 @@
                     <executions>
                         <execution>
                             <id>prepare</id>
-                            <phase>package</phase>
                             <goals>
                                 <goal>prepare</goal>
                             </goals>
+                            <phase>package</phase>
                         </execution>
                     </executions>
                 </plugin>
@@ -643,10 +696,10 @@
                 <executions>
                     <execution>
                         <id>source</id>
-                        <phase>package</phase>
                         <goals>
                             <goal>jar-no-fork</goal>
                         </goals>
+                        <phase>package</phase>
                     </execution>
                 </executions>
             </plugin>
@@ -657,10 +710,10 @@
                 <executions>
                     <execution>
                         <id>flatten</id>
-                        <phase>process-resources</phase>
                         <goals>
                             <goal>flatten</goal>
                         </goals>
+                        <phase>process-resources</phase>
                         <configuration>
                             <updatePomFile>true</updatePomFile>
                             <outputDirectory>${project.build.directory}</outputDirectory>
@@ -675,10 +728,10 @@
                 <executions>
                     <execution>
                         <id>copy-resources</id>
-                        <phase>compile</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
+                        <phase>compile</phase>
                         <configuration>
                             <resources>
                                 <resource>
@@ -717,70 +770,17 @@
         </plugins>
     </build>
 
-    <distributionManagement>
-        <repository>
-            <id>libs-releases</id>
-            <url>${maven.repository.url}/maven-releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>libs-snapshots</id>
-            <url>${maven.repository.url}/maven-snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
-
-    <repositories>
-        <repository>
-            <id>libs-releases</id>
-            <url>${maven.repository.url}/maven-releases</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>libs-snapshots</id>
-            <url>${maven.repository.url}/maven-snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <updatePolicy>always</updatePolicy>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>plugin-releases</id>
-            <url>${maven.repository.url}/maven-releases</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>plugin-snapshots</id>
-            <url>${maven.repository.url}/maven-snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-
     <profiles>
         <!-- 开发环境 -->
         <profile>
             <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <spring.profile>dev</spring.profile>
                 <docker.registry>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain_dev</docker.registry>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
         <!-- 生产环境 -->
         <profile>

@@ -47,7 +47,7 @@
 
         <java.version>11</java.version>
 
-        <spring.cloud-version>2021.0.5</spring.cloud-version>
+        <spring.cloud-version>2022.0.2</spring.cloud-version>
 
         <!-- 2th part versions -->
         <schbrain-apollo.version>${revision}</schbrain-apollo.version>

@@ -69,7 +69,7 @@
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.11.0</commons-io.version>
-        <dubbo.version>3.1.9</dubbo.version>
+        <dubbo.version>3.2.0</dubbo.version>
         <druid.version>1.2.17</druid.version>
         <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
         <easyexcel.version>3.2.1</easyexcel.version>
@@ -100,6 +100,7 @@
 
         <!-- alibabacloud new sdk -->
         <aliyun-java-core.version>0.1.13-beta</aliyun-java-core.version>
+        <aliyun-gateway-pop.version>0.1.13-beta</aliyun-gateway-pop.version>
         <alibabacloud-sts20150401.version>1.0.3</alibabacloud-sts20150401.version>
         <alibabacloud-oss20190517.version>1.0.2</alibabacloud-oss20190517.version>
         <alibabacloud-vod20170321.version>1.0.4</alibabacloud-vod20170321.version>
@@ -260,28 +261,6 @@
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-common</artifactId>
                 <version>${dubbo.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>log4j</groupId>
-                        <artifactId>log4j</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>com.alibaba</groupId>
-                        <artifactId>fastjson</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>com.alibaba.fastjson2</groupId>
-                        <artifactId>fastjson2</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>com.google.code.gson</groupId>
-                        <artifactId>gson</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
@@ -292,12 +271,6 @@
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-config-spring</artifactId>
                 <version>${dubbo.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>spring-web</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
@@ -323,16 +296,6 @@
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-registry-zookeeper</artifactId>
                 <version>${dubbo.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>log4j</groupId>
-                        <artifactId>log4j</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.apache.dubbo</groupId>
-                        <artifactId>dubbo-container-api</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
@@ -341,33 +304,18 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-serialization-fastjson2</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-metadata-report-zookeeper</artifactId>
                 <version>${dubbo.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.apache.dubbo</groupId>
-                        <artifactId>dubbo-configcenter-zookeeper</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.zookeeper</groupId>
                 <artifactId>zookeeper</artifactId>
                 <version>${zookeeper.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>log4j</groupId>
-                        <artifactId>log4j</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-log4j12</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>io.netty</groupId>
-                        <artifactId>netty</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
@@ -409,12 +357,6 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>${druid.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>javax.annotation</groupId>
-                        <artifactId>javax.annotation-api</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -472,12 +414,11 @@
                 <groupId>com.aliyun</groupId>
                 <artifactId>aliyun-java-core</artifactId>
                 <version>${aliyun-java-core.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.github.tomakehurst</groupId>
-                        <artifactId>wiremock-standalone</artifactId>
-                    </exclusion>
-                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-gateway-pop</artifactId>
+                <version>${aliyun-gateway-pop.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.aliyun</groupId>
@@ -509,12 +450,6 @@
                 <groupId>com.aliyun</groupId>
                 <artifactId>alibaba-dingtalk-service-sdk</artifactId>
                 <version>${alibaba-dingtalk-sdk.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>log4j</groupId>
-                        <artifactId>log4j</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.aliyun</groupId>
@@ -556,16 +491,18 @@
 
     <repositories>
         <repository>
+            <id>libs-releases</id>
+            <url>${maven.repository.url}/maven-releases</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-            <id>libs-releases</id>
-            <url>${maven.repository.url}/maven-releases</url>
         </repository>
         <repository>
+            <id>libs-snapshots</id>
+            <url>${maven.repository.url}/maven-snapshots</url>
             <releases>
                 <enabled>false</enabled>
             </releases>
@@ -573,26 +510,24 @@
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
             </snapshots>
-            <id>libs-snapshots</id>
-            <url>${maven.repository.url}/maven-snapshots</url>
         </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
+            <id>plugin-releases</id>
+            <url>${maven.repository.url}/maven-releases</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-            <id>plugin-releases</id>
-            <url>${maven.repository.url}/maven-releases</url>
         </pluginRepository>
         <pluginRepository>
+            <id>plugin-snapshots</id>
+            <url>${maven.repository.url}/maven-snapshots</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
             </snapshots>
-            <id>plugin-snapshots</id>
-            <url>${maven.repository.url}/maven-snapshots</url>
         </pluginRepository>
     </pluginRepositories>
 
@@ -707,31 +642,6 @@
                             <updatePomFile>true</updatePomFile>
                             <outputDirectory>${project.build.directory}</outputDirectory>
                             <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <phase>compile</phase>
-                        <configuration>
-                            <resources>
-                                <resource>
-                                    <directory>${project.build.outputDirectory}/META-INF</directory>
-                                    <filtering>true</filtering>
-                                    <includes>
-                                        <include>spring-configuration-metadata.json</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                            <outputDirectory>${basedir}/src/main/resources/META-INF</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

@@ -74,6 +74,7 @@
         <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
         <easyexcel.version>3.2.1</easyexcel.version>
         <fastjson.version>1.2.83</fastjson.version>
+        <fastjson2.version>2.0.28</fastjson2.version>
         <guava.version>31.1-jre</guava.version>
         <guice.version>5.1.0</guice.version>
         <hutool.version>5.8.17</hutool.version>
@@ -242,6 +243,11 @@
                 <version>${fastjson.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson2.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.version}</version>
@@ -256,7 +262,7 @@
                 <artifactId>dubbo-spring-boot-starter</artifactId>
                 <version>${dubbo.version}</version>
             </dependency>
-            <!-- user single dependency instead of dubbo-bom,because dubbo-bom set the spring version-->
+            <!-- user single dependency instead of dubbo-bom, because dubbo-bom set the spring version-->
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-common</artifactId>

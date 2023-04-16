@@ -77,7 +77,7 @@
         <fastjson2.version>2.0.28</fastjson2.version>
         <guava.version>31.1-jre</guava.version>
         <guice.version>5.1.0</guice.version>
-        <hutool.version>5.8.17</hutool.version>
+        <hutool.version>5.8.18</hutool.version>
         <jsr305.version>3.0.2</jsr305.version>
         <logstash-logback-encoder.version>7.3</logstash-logback-encoder.version>
         <mybatis.version>3.5.13</mybatis.version>

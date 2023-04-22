@@ -66,8 +66,9 @@
         <cglib.version>3.3.0</cglib.version>
         <curator.version>5.4.0</curator.version>
         <com.google.zxing.version>3.5.1</com.google.zxing.version>
-        <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-collections4.version>4.4</commons-collections4.version>
+        <commons-compress.version>1.23.0</commons-compress.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-io.version>2.11.0</commons-io.version>
         <dubbo.version>3.2.0</dubbo.version>
         <druid.version>1.2.17</druid.version>
@@ -78,7 +79,6 @@
         <guava.version>31.1-jre</guava.version>
         <guice.version>5.1.0</guice.version>
         <hutool.version>5.8.18</hutool.version>
-        <jsr305.version>3.0.2</jsr305.version>
         <logstash-logback-encoder.version>7.3</logstash-logback-encoder.version>
         <mybatis.version>3.5.13</mybatis.version>
         <mybatis.starter.version>2.3.0</mybatis.starter.version>
@@ -108,7 +108,7 @@
         <alibabacloud-dysmsapi20170525.version>2.0.23</alibabacloud-dysmsapi20170525.version>
 
         <!-- dingtalk -->
-        <aliyun-dingtalk-sdk.version>1.5.64</aliyun-dingtalk-sdk.version>
+        <aliyun-dingtalk-sdk.version>1.5.65</aliyun-dingtalk-sdk.version>
         <alibaba-dingtalk-sdk.version>2.0.0</alibaba-dingtalk-sdk.version>
 
         <!-- maven plugins -->
@@ -208,11 +208,6 @@
                 <version>${guava.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.google.code.findbugs</groupId>
-                <artifactId>jsr305</artifactId>
-                <version>${jsr305.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io.version}</version>
@@ -226,6 +221,21 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>${commons-collections4.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons-compress.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commons-pool2.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.belerweb</groupId>

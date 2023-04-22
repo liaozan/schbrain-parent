@@ -74,7 +74,7 @@
         <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
         <easyexcel.version>3.2.1</easyexcel.version>
         <fastjson.version>1.2.83</fastjson.version>
-        <fastjson2.version>2.0.28</fastjson2.version>
+        <fastjson2.version>2.0.29</fastjson2.version>
         <guava.version>31.1-jre</guava.version>
         <guice.version>5.1.0</guice.version>
         <hutool.version>5.8.18</hutool.version>

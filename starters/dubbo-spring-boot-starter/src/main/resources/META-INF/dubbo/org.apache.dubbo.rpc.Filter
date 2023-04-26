@@ -1,0 +1,3 @@
+trace-consumer=com.schbrain.framework.autoconfigure.dubbo.filter.TraceConsumerRpcFilter
+trace-provider=com.schbrain.framework.autoconfigure.dubbo.filter.TraceProviderRpcFilter
+dubboException=com.schbrain.framework.autoconfigure.dubbo.filter.DubboExceptionFilter

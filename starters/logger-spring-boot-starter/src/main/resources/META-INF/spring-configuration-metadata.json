@@ -1,0 +1,94 @@
+{
+  "groups": [
+    {
+      "name": "schbrain.logging.file",
+      "type": "com.schbrain.framework.autoconfigure.logger.properties.LoggingFileProperties",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingFileProperties"
+    },
+    {
+      "name": "schbrain.logging.namespace",
+      "type": "com.schbrain.framework.autoconfigure.logger.properties.LoggingNamespaceProperties",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingNamespaceProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "schbrain.logging.file.enable-json-console-output",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingFileProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "schbrain.logging.file.enable-json-file-output",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingFileProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "schbrain.logging.file.enable-json-log-write-to-logstash",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingFileProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "schbrain.logging.file.log-path",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingFileProperties",
+      "defaultValue": "\/data\/logs"
+    },
+    {
+      "name": "schbrain.logging.file.logstash-address",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingFileProperties"
+    },
+    {
+      "name": "schbrain.logging.file.max-history",
+      "type": "java.lang.Integer",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingFileProperties",
+      "defaultValue": 0
+    },
+    {
+      "name": "schbrain.logging.file.name",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingFileProperties"
+    },
+    {
+      "name": "schbrain.logging.file.namespace",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingFileProperties"
+    },
+    {
+      "name": "schbrain.logging.file.prefix",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingFileProperties"
+    },
+    {
+      "name": "schbrain.logging.namespace.logger",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingNamespaceProperties",
+      "defaultValue": "logger-common"
+    },
+    {
+      "name": "schbrain.logging.namespace.logger-config-file",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingNamespaceProperties",
+      "defaultValue": "logback-spring"
+    },
+    {
+      "name": "schbrain.logging.namespace.name",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingNamespaceProperties"
+    },
+    {
+      "name": "schbrain.logging.namespace.namespace",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingNamespaceProperties"
+    },
+    {
+      "name": "schbrain.logging.namespace.prefix",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggingNamespaceProperties"
+    }
+  ],
+  "hints": []
+}

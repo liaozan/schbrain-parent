@@ -112,10 +112,19 @@
         <alibaba-dingtalk-sdk.version>2.0.0</alibaba-dingtalk-sdk.version>
 
         <!-- maven plugins -->
+        <maven.core.version>3.8.6</maven.core.version>
+        <maven.plugin.version>3.6.4</maven.plugin.version>
         <flatten-maven-plugin.version>1.4.1</flatten-maven-plugin.version>
         <integration-maven-plugin.version>${revision}</integration-maven-plugin.version>
         <maven.repository.url>https://maven.schbrain.com/repository</maven.repository.url>
     </properties>
+
+    <modules>
+        <module>commons</module>
+        <module>starters</module>
+        <module>support</module>
+        <module>integration</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>

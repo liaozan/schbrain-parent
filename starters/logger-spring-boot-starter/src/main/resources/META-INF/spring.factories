@@ -1,0 +1,4 @@
+org.springframework.context.ApplicationContextInitializer=\
+  com.schbrain.framework.autoconfigure.logger.JsonLoggerInitializer,\
+  com.schbrain.framework.autoconfigure.logger.logback.LogbackTraceIdConfiguration
+org.springframework.boot.env.EnvironmentPostProcessor=com.schbrain.framework.autoconfigure.logger.properties.LoggerPropertiesPreparer

@@ -1,0 +1,84 @@
+{
+  "groups": [
+    {
+      "name": "schbrain.oss",
+      "type": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties",
+      "sourceType": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties"
+    },
+    {
+      "name": "schbrain.oss.sts",
+      "type": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties$StsProperties",
+      "sourceType": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties",
+      "sourceMethod": "getSts()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "schbrain.oss.access-key-id",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties"
+    },
+    {
+      "name": "schbrain.oss.bucket-name",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties"
+    },
+    {
+      "name": "schbrain.oss.directory",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties"
+    },
+    {
+      "name": "schbrain.oss.domain",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties"
+    },
+    {
+      "name": "schbrain.oss.endpoint",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties"
+    },
+    {
+      "name": "schbrain.oss.name",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties"
+    },
+    {
+      "name": "schbrain.oss.namespace",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties"
+    },
+    {
+      "name": "schbrain.oss.prefix",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties"
+    },
+    {
+      "name": "schbrain.oss.secret-access-key",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties"
+    },
+    {
+      "name": "schbrain.oss.sts.duration-seconds",
+      "type": "java.lang.Long",
+      "sourceType": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties$StsProperties",
+      "defaultValue": 900
+    },
+    {
+      "name": "schbrain.oss.sts.endpoint",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties$StsProperties"
+    },
+    {
+      "name": "schbrain.oss.sts.role-arn",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties$StsProperties"
+    },
+    {
+      "name": "schbrain.oss.sts.role-session-name",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.oss.properties.OssProperties$StsProperties"
+    }
+  ],
+  "hints": []
+}

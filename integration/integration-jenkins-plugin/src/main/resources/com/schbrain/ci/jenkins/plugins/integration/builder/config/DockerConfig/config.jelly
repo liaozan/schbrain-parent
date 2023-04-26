@@ -1,0 +1,54 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
+
+    <f:entry/>
+
+    <f:entry title="构建脚本仓库地址" description="如未配置默认为内置的build-script">
+        <f:textbox field="buildScriptUrl"/>
+    </f:entry>
+
+    <f:entry title="构建脚本仓库分支" description="如未配置默认master分支">
+        <f:textbox field="buildScriptBranch"/>
+    </f:entry>
+
+    <f:entry>
+        <f:optionalBlock>
+            <f:checkbox title="构建镜像" field="buildImage" checked="${instance.buildImage}"/>
+        </f:optionalBlock>
+    </f:entry>
+
+    <f:entry title="JAVA_OPTS" description="配置Dockerfile中jvm参数">
+        <f:textbox field="javaOpts"/>
+    </f:entry>
+
+    <f:entry>
+        <f:optionalBlock>
+            <f:checkbox title="禁用Skywalking" field="disableSkywalking" checked="${instance.disableSkywalking}"/>
+        </f:optionalBlock>
+    </f:entry>
+
+    <f:entry>
+        <f:optionalBlock title="推送镜像" field="pushConfig" checked="${instance.pushConfig.pushImage}">
+
+            <f:invisibleEntry>
+                <f:checkbox field="pushImage" checked="true" value="${instance.pushConfig.pushImage}"/>
+            </f:invisibleEntry>
+
+            <f:entry/>
+
+            <f:entry title="镜像仓库" description="为空时默认获取 pom.xml 插件中配置的仓库地址,如项目未指定,则采用 parent pom 插件中的默认值(根据 profile 区分)">
+                <f:textbox field="registry" value="${instance.pushConfig.registry}"/>
+            </f:entry>
+
+        </f:optionalBlock>
+    </f:entry>
+
+    <f:entry>
+        <f:optionalBlock>
+            <f:checkbox title="构建后删除" field="deleteImageAfterBuild" checked="${instance.deleteImageAfterBuild}"/>
+        </f:optionalBlock>
+    </f:entry>
+
+    <f:entry/>
+
+</j:jelly>

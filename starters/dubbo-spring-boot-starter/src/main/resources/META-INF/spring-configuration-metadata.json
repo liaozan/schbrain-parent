@@ -1,0 +1,32 @@
+{
+  "groups": [
+    {
+      "name": "dubbo",
+      "type": "com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties",
+      "sourceType": "com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "dubbo.external-configurations",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties"
+    },
+    {
+      "name": "dubbo.name",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties"
+    },
+    {
+      "name": "dubbo.namespace",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties"
+    },
+    {
+      "name": "dubbo.prefix",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties"
+    }
+  ],
+  "hints": []
+}

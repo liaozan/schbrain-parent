@@ -1,0 +1,32 @@
+{
+  "groups": [
+    {
+      "name": "schbrain.cache",
+      "type": "com.schbrain.framework.autoconfigure.cache.properties.CacheProperties",
+      "sourceType": "com.schbrain.framework.autoconfigure.cache.properties.CacheProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "schbrain.cache.append-prefix",
+      "type": "java.lang.Boolean",
+      "description": "whatever to enable prefix append",
+      "sourceType": "com.schbrain.framework.autoconfigure.cache.properties.CacheProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "schbrain.cache.delimiter",
+      "type": "java.lang.String",
+      "description": "cache prefix delimiter",
+      "sourceType": "com.schbrain.framework.autoconfigure.cache.properties.CacheProperties",
+      "defaultValue": ":"
+    },
+    {
+      "name": "schbrain.cache.prefix",
+      "type": "java.lang.String",
+      "description": "cache prefix",
+      "sourceType": "com.schbrain.framework.autoconfigure.cache.properties.CacheProperties"
+    }
+  ],
+  "hints": []
+}

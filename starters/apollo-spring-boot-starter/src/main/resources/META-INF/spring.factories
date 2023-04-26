@@ -1,0 +1,3 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.schbrain.framework.autoconfigure.apollo.properties.ApolloPropertiesPreparer,\
+  com.schbrain.framework.autoconfigure.apollo.SchbrainApolloPropertiesEnvironmentPostProcessor

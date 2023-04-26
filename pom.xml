@@ -113,7 +113,7 @@
 
         <!-- maven plugins -->
         <maven.core.version>3.8.6</maven.core.version>
-        <maven.plugin.version>3.6.4</maven.plugin.version>
+        <maven.plugin.version>3.8.2</maven.plugin.version>
         <flatten-maven-plugin.version>1.4.1</flatten-maven-plugin.version>
         <integration-maven-plugin.version>${revision}</integration-maven-plugin.version>
         <maven.repository.url>https://maven.schbrain.com/repository</maven.repository.url>

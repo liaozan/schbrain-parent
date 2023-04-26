@@ -336,6 +336,12 @@
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-metadata-report-zookeeper</artifactId>
                 <version>${dubbo.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.dubbo</groupId>
+                        <artifactId>dubbo-configcenter-zookeeper</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.zookeeper</groupId>

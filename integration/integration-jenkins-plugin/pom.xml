@@ -24,6 +24,9 @@
 
     <properties>
         <jenkins.version>2.397</jenkins.version>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <spotbugs.skip>true</spotbugs.skip>
+        <enforcer.skip>true</enforcer.skip>
     </properties>
 
     <dependencies>

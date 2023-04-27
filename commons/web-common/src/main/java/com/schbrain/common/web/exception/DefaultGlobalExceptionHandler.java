@@ -2,6 +2,7 @@ package com.schbrain.common.web.exception;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.schbrain.common.constants.ResponseActionConstants;
 import com.schbrain.common.exception.BaseException;
 import com.schbrain.common.util.EnvUtils;
 import com.schbrain.common.web.result.ResponseDTO;
@@ -40,7 +41,8 @@ public class DefaultGlobalExceptionHandler implements GlobalExceptionHandler {
     /*************************************  Base Exception Handing  *************************************/
     @ExceptionHandler(BaseException.class)
     public ResponseDTO<String> handleBaseException(BaseException ex) {
-        return loggingThenBuildResponse(ex, ex.getCode());
+        log.error(ex.getMessage());
+        return buildResponse(ex, ex.getCode(), ex.getAction(), ex.getMessage());
     }
 
     /*************************************  Common Exception Handing  *************************************/
@@ -197,22 +199,23 @@ public class DefaultGlobalExceptionHandler implements GlobalExceptionHandler {
         return buildResponse(rootCause, errorCode, rootCause.getMessage());
     }
 
-    protected ResponseDTO<String> buildResponse(Throwable throwable, int errorCode, String message) {
-        boolean production = EnvUtils.isProduction();
-        ResponseDTO<String> responseDTO = getExceptionResponseMapping(throwable, production);
+    protected ResponseDTO<String> buildResponse(Throwable throwable, int code, String message) {
+        return buildResponse(throwable, code, ResponseActionConstants.ALERT, message);
+    }
+
+    protected ResponseDTO<String> buildResponse(Throwable throwable, int code, int action, String message) {
+        boolean isProduction = EnvUtils.isProduction();
+        ResponseDTO<String> responseDTO = getExceptionResponseMapping(throwable, isProduction);
         if (responseDTO != null) {
             return responseDTO;
         }
-        if (production) {
-            return ResponseDTO.error("系统错误", errorCode);
+        if (isProduction || StringUtils.isBlank(message)) {
+            return ResponseDTO.error("系统错误", code, action);
         }
-        if (StringUtils.isBlank(message)) {
-            return ResponseDTO.error("系统错误", errorCode);
-        }
-        return ResponseDTO.error(message, errorCode);
+        return ResponseDTO.error(message, code, action);
     }
 
-    protected ResponseDTO<String> getExceptionResponseMapping(Throwable throwable, boolean production) {
+    protected ResponseDTO<String> getExceptionResponseMapping(Throwable throwable, boolean isProduction) {
         return null;
     }
 

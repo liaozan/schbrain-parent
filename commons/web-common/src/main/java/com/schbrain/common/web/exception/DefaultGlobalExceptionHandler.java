@@ -2,7 +2,6 @@ package com.schbrain.common.web.exception;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.StrUtil;
-import com.schbrain.common.constants.ResponseActionConstants;
 import com.schbrain.common.exception.BaseException;
 import com.schbrain.common.util.EnvUtils;
 import com.schbrain.common.web.result.ResponseDTO;
@@ -41,8 +40,8 @@ public class DefaultGlobalExceptionHandler implements GlobalExceptionHandler {
     /*************************************  Base Exception Handing  *************************************/
     @ExceptionHandler(BaseException.class)
     public ResponseDTO<String> handleBaseException(BaseException ex) {
-        log.error(ex.getMessage());
-        return buildResponse(ex, ex.getCode(), ex.getAction(), ex.getMessage());
+        logError(ex);
+        return ResponseDTO.error(ex);
     }
 
     /*************************************  Common Exception Handing  *************************************/
@@ -200,19 +199,15 @@ public class DefaultGlobalExceptionHandler implements GlobalExceptionHandler {
     }
 
     protected ResponseDTO<String> buildResponse(Throwable throwable, int code, String message) {
-        return buildResponse(throwable, code, ResponseActionConstants.ALERT, message);
-    }
-
-    protected ResponseDTO<String> buildResponse(Throwable throwable, int code, int action, String message) {
         boolean isProduction = EnvUtils.isProduction();
         ResponseDTO<String> responseDTO = getExceptionResponseMapping(throwable, isProduction);
         if (responseDTO != null) {
             return responseDTO;
         }
         if (isProduction || StringUtils.isBlank(message)) {
-            return ResponseDTO.error("系统错误", code, action);
+            return ResponseDTO.error("系统错误", code);
         }
-        return ResponseDTO.error(message, code, action);
+        return ResponseDTO.error(message, code);
     }
 
     protected ResponseDTO<String> getExceptionResponseMapping(Throwable throwable, boolean isProduction) {

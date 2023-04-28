@@ -108,7 +108,7 @@
         <alibabacloud-dysmsapi20170525.version>2.0.23</alibabacloud-dysmsapi20170525.version>
 
         <!-- dingtalk -->
-        <aliyun-dingtalk-sdk.version>2.0.0</aliyun-dingtalk-sdk.version>
+        <aliyun-dingtalk-sdk.version>2.0.10</aliyun-dingtalk-sdk.version>
         <alibaba-dingtalk-sdk.version>2.0.0</alibaba-dingtalk-sdk.version>
 
         <!-- maven plugins -->

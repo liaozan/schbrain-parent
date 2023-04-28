@@ -26,7 +26,7 @@
     </build>
 ```
 
-**Second** specify build-script repository. 
+**Second** specify build-script repository.
 
 ```.xml
 <configuration>

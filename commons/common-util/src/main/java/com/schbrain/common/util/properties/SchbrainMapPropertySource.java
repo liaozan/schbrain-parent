@@ -1,8 +1,8 @@
 package com.schbrain.common.util.properties;
 
-import com.schbrain.common.util.ConfigurationPropertiesUtils;
 import org.springframework.core.env.MapPropertySource;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -13,12 +13,12 @@ import java.util.Map;
  */
 public class SchbrainMapPropertySource extends MapPropertySource {
 
-    public SchbrainMapPropertySource(String name, Object source) {
-        this(name, ConfigurationPropertiesUtils.toMap(source));
+    public SchbrainMapPropertySource(String name, Map<String, String> source) {
+        super(name, new LinkedHashMap<>(source));
     }
 
-    public SchbrainMapPropertySource(String name, Map<String, Object> source) {
-        super(name, source);
+    public void addProperties(Map<String, String> properties) {
+        getSource().putAll(properties);
     }
 
 }

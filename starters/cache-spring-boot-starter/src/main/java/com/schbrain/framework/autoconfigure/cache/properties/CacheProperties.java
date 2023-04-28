@@ -1,6 +1,8 @@
 package com.schbrain.framework.autoconfigure.cache.properties;
 
+import com.schbrain.common.util.support.ConfigurableProperties;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -8,8 +10,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @since 2022/7/26
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = "schbrain.cache")
-public class CacheProperties {
+public class CacheProperties extends ConfigurableProperties {
 
     /**
      * cache prefix
@@ -23,5 +26,10 @@ public class CacheProperties {
      * whatever to enable prefix append
      */
     private boolean appendPrefix = true;
+
+    @Override
+    public String getDefaultNamespace() {
+        return "cache-common";
+    }
 
 }

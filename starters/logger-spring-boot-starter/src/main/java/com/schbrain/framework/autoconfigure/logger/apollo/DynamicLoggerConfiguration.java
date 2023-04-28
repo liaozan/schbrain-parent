@@ -1,15 +1,11 @@
 package com.schbrain.framework.autoconfigure.logger.apollo;
 
-import com.ctrip.framework.apollo.*;
-import com.ctrip.framework.apollo.core.enums.ConfigFileFormat;
-import com.schbrain.framework.autoconfigure.apollo.util.ConfigUtils;
-import com.schbrain.framework.autoconfigure.logger.apollo.listener.LoggingConfigFileChangeListener;
+import com.ctrip.framework.apollo.Config;
+import com.ctrip.framework.apollo.ConfigService;
 import com.schbrain.framework.autoconfigure.logger.apollo.listener.LoggingLevelChangeListener;
-import com.schbrain.framework.autoconfigure.logger.properties.LoggingNamespaceProperties;
+import com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.logging.LoggingSystem;
-import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.StringUtils;
 
 /**
@@ -19,47 +15,14 @@ import org.springframework.util.StringUtils;
  * @since 2021/11/19
  **/
 @Slf4j
-@EnableConfigurationProperties(LoggingNamespaceProperties.class)
 public class DynamicLoggerConfiguration {
 
-    private final ConfigurableEnvironment environment;
-    private final LoggingSystem loggingSystem;
-    private final LoggingNamespaceProperties loggerProperties;
-
-    public DynamicLoggerConfiguration(ConfigurableEnvironment environment, LoggingSystem loggingSystem,
-                                      LoggingNamespaceProperties loggerProperties) {
-        this.environment = environment;
-        this.loggingSystem = loggingSystem;
-        this.loggerProperties = loggerProperties;
-        this.init();
+    public DynamicLoggerConfiguration(LoggingSystem loggingSystem, LoggerProperties loggerProperties) {
+        this.listenToLoggingLevelChange(loggingSystem, loggerProperties);
     }
 
-    private void init() {
-        if (ConfigUtils.isApolloDisabled()) {
-            return;
-        }
-        listenToLoggingLevelChange();
-        listenToLoggingConfigFileChange();
-    }
-
-    private void listenToLoggingConfigFileChange() {
-        String loggerConfigFileNamespace = loggerProperties.getLoggerConfigFile();
-        if (!StringUtils.hasText(loggerConfigFileNamespace)) {
-            log.debug("logger config file reload is disabled");
-            return;
-        }
-
-        log.debug("init logger config file listener, config file namespace: {}", loggerConfigFileNamespace);
-
-        ConfigFile loggingConfiguration = ConfigService.getConfigFile(loggerConfigFileNamespace, ConfigFileFormat.XML);
-        if (!loggingConfiguration.hasContent()) {
-            return;
-        }
-        loggingConfiguration.addChangeListener(new LoggingConfigFileChangeListener(loggingSystem, environment, loggerConfigFileNamespace));
-    }
-
-    private void listenToLoggingLevelChange() {
-        String loggerNamespace = loggerProperties.getLogger();
+    private void listenToLoggingLevelChange(LoggingSystem loggingSystem, LoggerProperties loggerProperties) {
+        String loggerNamespace = loggerProperties.getDefaultNamespace();
         if (!StringUtils.hasText(loggerNamespace)) {
             log.debug("logger level reload is disabled");
             return;

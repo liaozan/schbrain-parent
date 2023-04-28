@@ -1,1 +1,5 @@
-org.springframework.boot.diagnostics.FailureAnalyzer=com.schbrain.framework.autoconfigure.mybatis.constraint.TableConstraintCheckFailureAnalyzer
+org.springframework.boot.diagnostics.FailureAnalyzer=\
+  com.schbrain.framework.autoconfigure.mybatis.constraint.TableConstraintCheckFailureAnalyzer
+com.schbrain.common.util.support.ConfigurableProperties=\
+  com.schbrain.framework.autoconfigure.mybatis.properties.MybatisProperties,\
+  com.schbrain.framework.autoconfigure.mybatis.properties.DataSourceProperties

@@ -1,0 +1,2 @@
+com.schbrain.common.util.support.ConfigurableProperties=\
+  com.schbrain.common.web.properties.WebProperties

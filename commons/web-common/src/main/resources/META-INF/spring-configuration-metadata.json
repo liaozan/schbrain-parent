@@ -35,21 +35,6 @@
       "sourceType": "com.schbrain.common.web.properties.WebProperties"
     },
     {
-      "name": "schbrain.web.name",
-      "type": "java.lang.String",
-      "sourceType": "com.schbrain.common.web.properties.WebProperties"
-    },
-    {
-      "name": "schbrain.web.namespace",
-      "type": "java.lang.String",
-      "sourceType": "com.schbrain.common.web.properties.WebProperties"
-    },
-    {
-      "name": "schbrain.web.prefix",
-      "type": "java.lang.String",
-      "sourceType": "com.schbrain.common.web.properties.WebProperties"
-    },
-    {
       "name": "schbrain.web.wrap-response",
       "type": "java.lang.Boolean",
       "description": "whether to enable the response wrap",

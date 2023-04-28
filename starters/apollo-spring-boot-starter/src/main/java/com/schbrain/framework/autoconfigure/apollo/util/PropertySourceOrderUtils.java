@@ -1,10 +1,9 @@
 package com.schbrain.framework.autoconfigure.apollo.util;
 
 import com.schbrain.framework.autoconfigure.apollo.properties.ApolloProperties;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.boot.DefaultPropertiesPropertySource;
-import org.springframework.boot.context.properties.source.ConfigurationPropertySources;
 import org.springframework.core.env.*;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Set;
@@ -47,7 +46,6 @@ public class PropertySourceOrderUtils {
 
         // Make sure the default configurations always in the end
         DefaultPropertiesPropertySource.moveToEnd(environment);
-        ConfigurationPropertySources.attach(environment);
     }
 
 }

@@ -1,6 +1,5 @@
 package com.schbrain.framework.autoconfigure.oss;
 
-import com.schbrain.framework.autoconfigure.apollo.util.ConfigUtils;
 import com.schbrain.framework.autoconfigure.oss.properties.OssProperties;
 import com.schbrain.framework.autoconfigure.oss.util.OssUtils;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -16,13 +15,8 @@ import org.springframework.core.env.ConfigurableEnvironment;
 @EnableConfigurationProperties(OssProperties.class)
 public class OssAutoConfiguration {
 
-    public OssAutoConfiguration(ConfigurableApplicationContext applicationContext) {
-        initialize(applicationContext);
-    }
-
-    private void initialize(ConfigurableApplicationContext applicationContext) {
+    public OssAutoConfiguration(ConfigurableApplicationContext applicationContext, OssProperties ossProperties) {
         ConfigurableEnvironment environment = applicationContext.getEnvironment();
-        OssProperties ossProperties = ConfigUtils.loadConfig(environment, OssProperties.class);
         OssUtils.initialize(environment, ossProperties);
     }
 

@@ -4,6 +4,11 @@
       "name": "schbrain.cache",
       "type": "com.schbrain.framework.autoconfigure.cache.properties.CacheProperties",
       "sourceType": "com.schbrain.framework.autoconfigure.cache.properties.CacheProperties"
+    },
+    {
+      "name": "spring.redis",
+      "type": "com.schbrain.framework.autoconfigure.cache.provider.redis.RedisProperties",
+      "sourceType": "com.schbrain.framework.autoconfigure.cache.provider.redis.RedisProperties"
     }
   ],
   "properties": [

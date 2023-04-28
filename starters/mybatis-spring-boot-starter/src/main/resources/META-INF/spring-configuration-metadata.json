@@ -9,6 +9,11 @@
       "name": "schbrain.mybatis",
       "type": "com.schbrain.framework.autoconfigure.mybatis.properties.MybatisProperties",
       "sourceType": "com.schbrain.framework.autoconfigure.mybatis.properties.MybatisProperties"
+    },
+    {
+      "name": "spring.datasource",
+      "type": "com.schbrain.framework.autoconfigure.mybatis.properties.DataSourceProperties",
+      "sourceType": "com.schbrain.framework.autoconfigure.mybatis.properties.DataSourceProperties"
     }
   ],
   "properties": [
@@ -92,21 +97,6 @@
       "description": "是否开启表约束检查",
       "sourceType": "com.schbrain.framework.autoconfigure.mybatis.properties.MybatisProperties",
       "defaultValue": true
-    },
-    {
-      "name": "schbrain.mybatis.name",
-      "type": "java.lang.String",
-      "sourceType": "com.schbrain.framework.autoconfigure.mybatis.properties.MybatisProperties"
-    },
-    {
-      "name": "schbrain.mybatis.namespace",
-      "type": "java.lang.String",
-      "sourceType": "com.schbrain.framework.autoconfigure.mybatis.properties.MybatisProperties"
-    },
-    {
-      "name": "schbrain.mybatis.prefix",
-      "type": "java.lang.String",
-      "sourceType": "com.schbrain.framework.autoconfigure.mybatis.properties.MybatisProperties"
     }
   ],
   "hints": []

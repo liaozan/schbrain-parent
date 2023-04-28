@@ -1,0 +1,3 @@
+com.schbrain.common.util.support.ConfigurableProperties=\
+  com.schbrain.framework.autoconfigure.cache.properties.CacheProperties,\
+  com.schbrain.framework.autoconfigure.cache.provider.redis.RedisProperties

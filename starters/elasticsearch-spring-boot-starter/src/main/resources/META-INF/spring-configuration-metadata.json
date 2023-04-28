@@ -1,0 +1,11 @@
+{
+  "groups": [
+    {
+      "name": "spring.elasticsearch",
+      "type": "com.schbrain.framework.autoconfigure.elasticsearch.properties.ElasticsearchProperties",
+      "sourceType": "com.schbrain.framework.autoconfigure.elasticsearch.properties.ElasticsearchProperties"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}

@@ -52,6 +52,8 @@
         <schbrain-common-util.version>${revision}</schbrain-common-util.version>
         <schbrain-common.version>${revision}</schbrain-common.version>
         <schbrain-dubbo.version>${revision}</schbrain-dubbo.version>
+        <schbrain-elasticsearch.version>${revision}</schbrain-elasticsearch.version>
+        <schbrain-kafka.version>${revision}</schbrain-kafka.version>
         <schbrain-logger.version>${revision}</schbrain-logger.version>
         <schbrain-module-tree.version>${revision}</schbrain-module-tree.version>
         <schbrain-mybatis.version>${revision}</schbrain-mybatis.version>
@@ -151,8 +153,13 @@
             <!-- 二方包 -->
             <dependency>
                 <groupId>com.schbrain.framework</groupId>
-                <artifactId>schbrain-spring-support</artifactId>
-                <version>${schbrain-spring-support.version}</version>
+                <artifactId>apollo-spring-boot-starter</artifactId>
+                <version>${schbrain-apollo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.framework</groupId>
+                <artifactId>cache-spring-boot-starter</artifactId>
+                <version>${schbrain-cache.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.schbrain.framework</groupId>
@@ -161,18 +168,23 @@
             </dependency>
             <dependency>
                 <groupId>com.schbrain.framework</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${schbrain-mybatis.version}</version>
+                <artifactId>elasticsearch-spring-boot-starter</artifactId>
+                <version>${schbrain-elasticsearch.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.schbrain.framework</groupId>
-                <artifactId>apollo-spring-boot-starter</artifactId>
-                <version>${schbrain-apollo.version}</version>
+                <artifactId>kafka-spring-boot-starter</artifactId>
+                <version>${schbrain-kafka.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.schbrain.framework</groupId>
                 <artifactId>logger-spring-boot-starter</artifactId>
                 <version>${schbrain-logger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.framework</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${schbrain-mybatis.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.schbrain.framework</groupId>
@@ -186,13 +198,13 @@
             </dependency>
             <dependency>
                 <groupId>com.schbrain.framework</groupId>
-                <artifactId>cache-spring-boot-starter</artifactId>
-                <version>${schbrain-cache.version}</version>
+                <artifactId>schbrain-base-dao</artifactId>
+                <version>${schbrain-base-dao.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.schbrain.framework</groupId>
-                <artifactId>schbrain-base-dao</artifactId>
-                <version>${schbrain-base-dao.version}</version>
+                <artifactId>schbrain-spring-support</artifactId>
+                <version>${schbrain-spring-support.version}</version>
             </dependency>
 
             <!-- 三方包 -->
@@ -650,6 +662,32 @@
             </plugins>
         </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-configuration-metadata</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.outputDirectory}/META-INF</directory>
+                                    <includes>
+                                        <include>spring-configuration-metadata.json</include>
+                                    </includes>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${project.basedir}/src/main/resources/META-INF</outputDirectory>
+                            <overwrite>true</overwrite>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>

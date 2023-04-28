@@ -14,8 +14,7 @@ import com.schbrain.framework.autoconfigure.mybatis.datasource.customizer.DataSo
 import com.schbrain.framework.autoconfigure.mybatis.datasource.customizer.DefaultDataSourceCustomizer;
 import com.schbrain.framework.autoconfigure.mybatis.datasource.extractor.*;
 import com.schbrain.framework.autoconfigure.mybatis.listener.TableConstraintCheckerBean;
-import com.schbrain.framework.autoconfigure.mybatis.properties.DataSourceConnectionProperties;
-import com.schbrain.framework.autoconfigure.mybatis.properties.MybatisProperties;
+import com.schbrain.framework.autoconfigure.mybatis.properties.*;
 import com.schbrain.framework.autoconfigure.mybatis.sql.injector.DefaultMethodSqlInjector;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -33,7 +32,7 @@ import java.util.List;
  * @since 2021/10/14
  */
 @AutoConfiguration(before = MybatisPlusAutoConfiguration.class)
-@EnableConfigurationProperties({MybatisProperties.class, DataSourceConnectionProperties.class})
+@EnableConfigurationProperties({DataSourceProperties.class, MybatisProperties.class, DataSourceConnectionProperties.class})
 @Import({HikariDataSourcePropertiesExtractor.class, DruidDataSourcePropertiesExtractor.class})
 @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 public class MybatisAutoConfiguration {

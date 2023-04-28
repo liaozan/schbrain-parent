@@ -19,6 +19,8 @@
         <module>apollo-spring-boot-starter</module>
         <module>cache-spring-boot-starter</module>
         <module>dubbo-spring-boot-starter</module>
+        <module>elasticsearch-spring-boot-starter</module>
+        <module>kafka-spring-boot-starter</module>
         <module>logger-spring-boot-starter</module>
         <module>mybatis-spring-boot-starter</module>
         <module>oss-spring-boot-starter</module>

@@ -1,8 +1,7 @@
 package com.schbrain.framework.autoconfigure.xxl;
 
 import com.schbrain.common.util.ApplicationName;
-import com.schbrain.framework.autoconfigure.apollo.util.ConfigUtils;
-import com.schbrain.framework.autoconfigure.logger.properties.LoggingFileProperties;
+import com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties;
 import com.schbrain.framework.autoconfigure.xxl.condition.XxlJobShouldAvailableCondition;
 import com.schbrain.framework.autoconfigure.xxl.properties.XxlJobProperties;
 import com.xxl.job.core.executor.XxlJobExecutor;
@@ -26,9 +25,9 @@ public class XxlJobAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(XxlJobExecutor.class)
-    public SchbrainXxlJobExecutor schbrainXxlJobSpringExecutor(ConfigurableEnvironment environment) {
-        XxlJobProperties xxlJobProperties = ConfigUtils.loadConfig(environment, XxlJobProperties.class);
-        LoggingFileProperties loggingProperties = ConfigUtils.loadConfig(environment, LoggingFileProperties.class);
+    public SchbrainXxlJobExecutor schbrainXxlJobSpringExecutor(ConfigurableEnvironment environment,
+                                                               XxlJobProperties xxlJobProperties,
+                                                               LoggerProperties loggingProperties) {
         String applicationName = ApplicationName.get(environment);
         SchbrainXxlJobExecutor executor = new SchbrainXxlJobExecutor();
         executor.setAdminAddresses(xxlJobProperties.getAdminAddresses());

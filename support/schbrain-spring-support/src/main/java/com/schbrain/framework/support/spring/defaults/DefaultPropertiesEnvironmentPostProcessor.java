@@ -5,10 +5,11 @@ import cn.hutool.core.util.ArrayUtil;
 import com.schbrain.common.constants.DateTimeFormatters;
 import com.schbrain.common.util.EnvUtils;
 import com.schbrain.common.util.PortUtils;
-import com.schbrain.framework.support.spring.EnvironmentPostProcessorAdapter;
+import com.schbrain.framework.support.spring.EnvironmentPostProcessorLoggerAwareAdapter;
 import org.springframework.boot.*;
 import org.springframework.boot.actuate.autoconfigure.health.HealthProperties.Show;
 import org.springframework.boot.actuate.info.InfoPropertiesInfoContributor.Mode;
+import org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor;
 import org.springframework.boot.logging.DeferredLogFactory;
 import org.springframework.boot.web.server.Shutdown;
 import org.springframework.core.Ordered;
@@ -22,7 +23,12 @@ import java.util.*;
  * @author liaozan
  * @since 2021/12/18
  */
-public class DefaultPropertiesEnvironmentPostProcessor extends EnvironmentPostProcessorAdapter implements Ordered {
+public class DefaultPropertiesEnvironmentPostProcessor extends EnvironmentPostProcessorLoggerAwareAdapter implements Ordered {
+
+    /**
+     * set default properties after configData loaded
+     */
+    public static final Integer DEFAULT_ORDER = ConfigDataEnvironmentPostProcessor.ORDER + 1;
 
     private static final String SPRING_PROFILE_ACTIVE = "spring.profiles.active";
     private static final String DUBBO_REGISTER_KEY = "dubbo.registry.register";
@@ -67,7 +73,7 @@ public class DefaultPropertiesEnvironmentPostProcessor extends EnvironmentPostPr
 
     @Override
     public int getOrder() {
-        return Ordered.LOWEST_PRECEDENCE;
+        return DEFAULT_ORDER;
     }
 
     private void configureActiveProfileIfPresent(ConfigurableEnvironment environment, Map<String, Object> defaultProperties) {

@@ -66,7 +66,7 @@
         <apollo.version>2.1.0</apollo.version>
         <bouncycastle.version>1.73</bouncycastle.version>
         <cglib.version>3.3.0</cglib.version>
-        <curator.version>5.4.0</curator.version>
+        <curator.version>5.5.0</curator.version>
         <com.google.zxing.version>3.5.1</com.google.zxing.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-compress.version>1.23.0</commons-compress.version>

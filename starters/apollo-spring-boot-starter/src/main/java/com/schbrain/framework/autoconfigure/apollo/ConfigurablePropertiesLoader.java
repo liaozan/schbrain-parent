@@ -35,10 +35,13 @@ class ConfigurablePropertiesLoader {
      */
     private static final String PROPERTIES_PROPERTY_SOURCE = "ConfigurablePropertiesPropertySource";
 
+    private final DeferredLogFactory deferredLogFactory;
+
     private final Log log;
 
-    ConfigurablePropertiesLoader(DeferredLogFactory logFactory) {
-        this.log = logFactory.getLog(ConfigurablePropertiesLoader.class);
+    ConfigurablePropertiesLoader(DeferredLogFactory deferredLogFactory) {
+        this.deferredLogFactory = deferredLogFactory;
+        this.log = deferredLogFactory.getLog(ConfigurablePropertiesLoader.class);
     }
 
     void load(ConfigurableEnvironment environment, SpringApplication application) {
@@ -74,7 +77,7 @@ class ConfigurablePropertiesLoader {
             compositePropertySource.addPropertySource(propertySource);
 
             ConfigurableProperties boundProperties = properties.bind(environment);
-            eventMulticaster.multicastEvent(new PropertiesPreparedEvent(boundProperties, propertySource, environment, application));
+            eventMulticaster.multicastEvent(new PropertiesPreparedEvent(environment, deferredLogFactory, propertySource, boundProperties, application));
         });
     }
 

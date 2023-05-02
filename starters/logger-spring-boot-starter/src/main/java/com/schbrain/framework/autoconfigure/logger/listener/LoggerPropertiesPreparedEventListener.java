@@ -11,7 +11,6 @@ import com.schbrain.framework.autoconfigure.apollo.listener.PropertiesPreparedEv
 import com.schbrain.framework.autoconfigure.apollo.listener.PropertiesPreparedEventListenerAdapter;
 import com.schbrain.framework.autoconfigure.logger.LoggerConfigurationInitializer;
 import com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.StringUtils;
 
@@ -25,7 +24,6 @@ import static org.springframework.boot.context.logging.LoggingApplicationListene
  * @author liaozan
  * @since 2023-04-28
  */
-@Slf4j
 public class LoggerPropertiesPreparedEventListener extends PropertiesPreparedEventListenerAdapter<LoggerProperties> {
 
     @Override

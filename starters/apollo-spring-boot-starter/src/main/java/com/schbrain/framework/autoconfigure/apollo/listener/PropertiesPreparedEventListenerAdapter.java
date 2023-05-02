@@ -1,6 +1,7 @@
 package com.schbrain.framework.autoconfigure.apollo.listener;
 
 import com.schbrain.common.util.support.ConfigurableProperties;
+import org.apache.commons.logging.Log;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -14,6 +15,8 @@ public class PropertiesPreparedEventListenerAdapter<T extends ConfigurableProper
 
     private final Class<T> propertyType;
 
+    protected Log log;
+
     public PropertiesPreparedEventListenerAdapter() {
         ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
@@ -23,7 +26,8 @@ public class PropertiesPreparedEventListenerAdapter<T extends ConfigurableProper
     @Override
     public void onApplicationEvent(PropertiesPreparedEvent event) {
         if (event.getConfigurableProperties().getClass() == propertyType) {
-            onPropertiesPrepared(event, (T) event.getConfigurableProperties());
+            this.log = event.getDeferredLogFactory().getLog(this.getClass());
+            this.onPropertiesPrepared(event, (T) event.getConfigurableProperties());
         }
     }
 

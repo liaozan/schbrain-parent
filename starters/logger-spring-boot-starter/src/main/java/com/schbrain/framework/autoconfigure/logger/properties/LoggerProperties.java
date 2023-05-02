@@ -27,6 +27,8 @@ public class LoggerProperties extends ConfigurableProperties implements Priority
 
     private String logstashAddress;
 
+    private String logConfigNamespace = "logback-spring";
+
     private String logPath = DEFAULT_LOG_PATH;
 
     private int maxHistory = (int) Duration.ofDays(30).toDays();

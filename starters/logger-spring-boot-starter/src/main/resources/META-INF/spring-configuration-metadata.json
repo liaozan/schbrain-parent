@@ -26,6 +26,12 @@
       "defaultValue": false
     },
     {
+      "name": "schbrain.logging.file.log-config-namespace",
+      "type": "java.lang.String",
+      "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties",
+      "defaultValue": "logback-spring"
+    },
+    {
       "name": "schbrain.logging.file.log-path",
       "type": "java.lang.String",
       "sourceType": "com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties",

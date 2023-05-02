@@ -1,5 +1,6 @@
 package com.schbrain.framework.autoconfigure.logger.listener;
 
+import cn.hutool.core.text.StrPool;
 import cn.hutool.system.SystemUtil;
 import com.ctrip.framework.apollo.ConfigFile;
 import com.ctrip.framework.apollo.ConfigService;
@@ -31,7 +32,7 @@ public class LoggerPropertiesPreparedEventListener extends PropertiesPreparedEve
         ConfigurableEnvironment environment = event.getEnvironment();
         Map<String, String> hostInfoProperties = buildHostInfoProperties();
         event.getPropertySource().addProperties(hostInfoProperties);
-        configLoggingFileLocation(environment);
+        configLoggingFileLocation(environment, properties.getLogConfigNamespace());
         new LoggerConfigurationInitializer(environment, properties).init();
     }
 
@@ -49,11 +50,11 @@ public class LoggerPropertiesPreparedEventListener extends PropertiesPreparedEve
      * @see org.springframework.boot.context.logging.LoggingApplicationListener#initializeSystem(ConfigurableEnvironment, org.springframework.boot.logging.LoggingSystem, org.springframework.boot.logging.LogFile)
      */
     @SuppressWarnings("JavadocReference")
-    private void configLoggingFileLocation(ConfigurableEnvironment environment) {
+    private void configLoggingFileLocation(ConfigurableEnvironment environment, String logConfigNamespace) {
         if (environment.containsProperty(CONFIG_PROPERTY)) {
             return;
         }
-        ConfigFile loggingConfiguration = ConfigService.getConfigFile("logback-spring", ConfigFileFormat.XML);
+        ConfigFile loggingConfiguration = ConfigService.getConfigFile(logConfigNamespace, ConfigFileFormat.XML);
         String content = loggingConfiguration.getContent();
         if (!StringUtils.hasText(content)) {
             log.warn("empty logging configuration, reinitialize loggingSystem is disabled");
@@ -62,7 +63,7 @@ public class LoggerPropertiesPreparedEventListener extends PropertiesPreparedEve
 
         String loggerConfigurationLocation = null;
         String tempDir = SystemUtil.getUserInfo().getTempDir();
-        Path storeLocation = Paths.get(tempDir, "logback-spring.xml");
+        Path storeLocation = Paths.get(tempDir, logConfigNamespace + StrPool.DOT + ConfigFileFormat.XML.getValue());
         try {
             loggerConfigurationLocation = Files.writeString(storeLocation, content).toString();
         } catch (IOException e) {

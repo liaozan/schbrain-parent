@@ -3,13 +3,14 @@ package com.schbrain.framework.autoconfigure.dubbo.listener;
 import com.alibaba.fastjson2.JSONFactory;
 import com.google.common.collect.Maps;
 import com.schbrain.common.util.ApplicationName;
+import com.schbrain.framework.autoconfigure.apollo.listener.GenericPropertiesPreparedEventListener;
 import com.schbrain.framework.autoconfigure.apollo.listener.PropertiesPreparedEvent;
-import com.schbrain.framework.autoconfigure.apollo.listener.PropertiesPreparedEventListenerAdapter;
 import com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 import org.apache.dubbo.config.spring.ConfigCenterBean;
 import org.apache.dubbo.config.spring.util.EnvironmentUtils;
 import org.springframework.boot.SpringApplication;
+import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 import java.util.Map;
@@ -21,9 +22,14 @@ import static org.apache.dubbo.config.ConfigKeys.DUBBO_SCAN_BASE_PACKAGES;
  * @author liaozan
  * @since 2023-04-28
  */
-public class DubboPropertiesPreparedEventListener extends PropertiesPreparedEventListenerAdapter<DubboProperties> {
+public class DubboPropertiesPreparedEventListener extends GenericPropertiesPreparedEventListener<DubboProperties> {
 
     public static final String DUBBO_APPLICATION_NAME = "dubbo.application.name";
+
+    @Override
+    public int getOrder() {
+        return Ordered.HIGHEST_PRECEDENCE;
+    }
 
     @Override
     protected void onPropertiesPrepared(PropertiesPreparedEvent event, DubboProperties properties) {

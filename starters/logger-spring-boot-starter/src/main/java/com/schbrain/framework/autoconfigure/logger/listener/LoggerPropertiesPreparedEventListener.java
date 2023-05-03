@@ -8,8 +8,8 @@ import com.ctrip.framework.apollo.core.enums.ConfigFileFormat;
 import com.google.common.collect.Maps;
 import com.schbrain.common.util.InetUtils;
 import com.schbrain.common.util.InetUtils.HostInfo;
+import com.schbrain.framework.autoconfigure.apollo.listener.GenericPropertiesPreparedEventListener;
 import com.schbrain.framework.autoconfigure.apollo.listener.PropertiesPreparedEvent;
-import com.schbrain.framework.autoconfigure.apollo.listener.PropertiesPreparedEventListenerAdapter;
 import com.schbrain.framework.autoconfigure.logger.LoggerConfigurationInitializer;
 import com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -25,7 +25,7 @@ import static org.springframework.boot.context.logging.LoggingApplicationListene
  * @author liaozan
  * @since 2023-04-28
  */
-public class LoggerPropertiesPreparedEventListener extends PropertiesPreparedEventListenerAdapter<LoggerProperties> {
+public class LoggerPropertiesPreparedEventListener extends GenericPropertiesPreparedEventListener<LoggerProperties> {
 
     @Override
     protected void onPropertiesPrepared(PropertiesPreparedEvent event, LoggerProperties properties) {

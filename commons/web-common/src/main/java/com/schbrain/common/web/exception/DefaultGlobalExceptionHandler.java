@@ -242,7 +242,15 @@ public class DefaultGlobalExceptionHandler implements GlobalExceptionHandler {
 
     protected void logError(Throwable throwable) {
         String exMsg = ExceptionUtil.getMessage(throwable);
+        if (hasCause(throwable)) {
+            exMsg = exMsg + ", " + ExceptionUtil.getRootCauseMessage(throwable);
+            throwable = ExceptionUtil.getRootCause(throwable);
+        }
         log.error(exMsg, throwable);
+    }
+
+    private boolean hasCause(Throwable throwable) {
+        return throwable.getCause() != null;
     }
 
 }

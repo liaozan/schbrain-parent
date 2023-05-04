@@ -2,7 +2,7 @@ package com.schbrain.framework.autoconfigure.apollo.util;
 
 import com.ctrip.framework.apollo.Config;
 import com.google.common.collect.Maps;
-import com.schbrain.common.util.properties.SchbrainMapPropertySource;
+import com.schbrain.common.util.properties.OrderedMapPropertySource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.ConfigurableEnvironment;
 
@@ -19,7 +19,7 @@ import java.util.Set;
 public class ConfigUtils {
 
     @Nullable
-    public static SchbrainMapPropertySource toPropertySource(String name, Config config) {
+    public static OrderedMapPropertySource toPropertySource(String name, Config config) {
         Set<String> propertyNames = config.getPropertyNames();
         if (propertyNames.isEmpty()) {
             return null;
@@ -29,10 +29,10 @@ public class ConfigUtils {
             String property = config.getProperty(propertyName, null);
             configs.put(propertyName, property);
         }
-        return new SchbrainMapPropertySource(name, configs);
+        return new OrderedMapPropertySource(name, configs);
     }
 
-    public static void resolvePlaceHolders(ConfigurableEnvironment environment, SchbrainMapPropertySource propertySource) {
+    public static void resolvePlaceHolders(ConfigurableEnvironment environment, OrderedMapPropertySource propertySource) {
         Map<String, Object> source = propertySource.getSource();
         for (Entry<String, Object> entry : source.entrySet()) {
             Object value = entry.getValue();

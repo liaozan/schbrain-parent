@@ -6,7 +6,6 @@ import com.schbrain.common.exception.BaseException;
 import com.schbrain.common.util.ApplicationName;
 import org.redisson.api.*;
 import org.springframework.beans.BeansException;
-import org.springframework.core.env.Environment;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -19,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class DelayedQueueUtils {
 
-    private static final String APPLICATION_NAME = ApplicationName.get(SpringUtil.getBean(Environment.class));
+    private static final String APPLICATION_NAME = ApplicationName.get();
 
     private static final ConcurrentHashMap<String, RBlockingQueue<?>> blockingQueueCache = new ConcurrentHashMap<>();
 

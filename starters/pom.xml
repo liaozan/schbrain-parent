@@ -9,7 +9,6 @@
         <groupId>com.schbrain.framework</groupId>
         <artifactId>schbrain-parent</artifactId>
         <version>${revision}</version>
-
     </parent>
 
     <artifactId>starters</artifactId>

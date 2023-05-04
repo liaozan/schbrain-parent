@@ -24,8 +24,8 @@ public class BaseException extends RuntimeException {
         this(message, null);
     }
 
-    public BaseException(String message, Throwable throwable) {
-        this(message, throwable, SERVER_ERROR, ALERT);
+    public BaseException(String message, Throwable cause) {
+        this(message, cause, SERVER_ERROR, ALERT);
     }
 
     public BaseException(String message, int code, int action) {

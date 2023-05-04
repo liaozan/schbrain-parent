@@ -129,6 +129,9 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
             if (this.bizIdColumnField != null) {
                 throw new BaseException(String.format("@BizId can't more than one in Class: \"%s\"", entityClass.getName()));
             }
+            if (bizId.getType() != String.class) {
+                throw new BaseException("@BizId only support String field");
+            }
             this.bizIdColumnField = new BizIdColumnField(entityClass, bizId);
             BizIdHelper.putBizColumnField(entityClass, bizIdColumnField);
         }, field -> field.isAnnotationPresent(BizId.class));

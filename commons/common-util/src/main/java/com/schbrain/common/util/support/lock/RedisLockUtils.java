@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.BeansException;
-import org.springframework.core.env.Environment;
 
 import java.time.Duration;
 import java.util.concurrent.Callable;
@@ -21,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class RedisLockUtils {
 
-    private static final String APPLICATION_NAME = ApplicationName.get(SpringUtil.getBean(Environment.class));
+    private static final String APPLICATION_NAME = ApplicationName.get();
 
     private static RedissonClient CLIENT;
 

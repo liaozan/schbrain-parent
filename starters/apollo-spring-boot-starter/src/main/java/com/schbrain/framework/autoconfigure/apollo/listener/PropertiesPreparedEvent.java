@@ -1,6 +1,6 @@
 package com.schbrain.framework.autoconfigure.apollo.listener;
 
-import com.schbrain.common.util.properties.SchbrainMapPropertySource;
+import com.schbrain.common.util.properties.OrderedMapPropertySource;
 import com.schbrain.common.util.support.ConfigurableProperties;
 import lombok.Getter;
 import org.springframework.boot.SpringApplication;
@@ -21,13 +21,13 @@ public class PropertiesPreparedEvent extends ApplicationEvent {
 
     private final DeferredLogFactory deferredLogFactory;
 
-    private final SchbrainMapPropertySource propertySource;
+    private final OrderedMapPropertySource propertySource;
 
     private final SpringApplication application;
 
     public PropertiesPreparedEvent(ConfigurableEnvironment environment,
                                    DeferredLogFactory deferredLogFactory,
-                                   SchbrainMapPropertySource propertySource,
+                                   OrderedMapPropertySource propertySource,
                                    ConfigurableProperties properties,
                                    SpringApplication application) {
         super(properties);

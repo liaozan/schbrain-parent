@@ -6,14 +6,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * mark class to ensure property order
+ * ordered property source
  *
  * @author liaozan
  * @since 2021/12/6
  */
-public class SchbrainMapPropertySource extends MapPropertySource {
+public class OrderedMapPropertySource extends MapPropertySource {
 
-    public SchbrainMapPropertySource(String name, Map<String, String> source) {
+    public OrderedMapPropertySource(String name, Map<String, String> source) {
         super(name, new LinkedHashMap<>(source));
     }
 

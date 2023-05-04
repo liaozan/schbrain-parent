@@ -3,7 +3,7 @@ package com.schbrain.framework.autoconfigure.apollo;
 import com.ctrip.framework.foundation.Foundation;
 import com.schbrain.common.util.ApplicationName;
 import com.schbrain.common.util.EnvUtils;
-import com.schbrain.framework.support.spring.EnvironmentPostProcessorLoggerAwareAdapter;
+import com.schbrain.framework.support.spring.LoggerAwareEnvironmentPostProcessor;
 import com.schbrain.framework.support.spring.defaults.DefaultPropertiesEnvironmentPostProcessor;
 import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;
@@ -23,7 +23,7 @@ import static com.ctrip.framework.apollo.spring.config.PropertySourcesConstants.
  * @author liaozan
  * @since 2021/11/6
  */
-public class ApolloConfigurationInitializer extends EnvironmentPostProcessorLoggerAwareAdapter implements Ordered {
+public class ApolloConfigurationInitializerEnvironmentPostProcessor extends LoggerAwareEnvironmentPostProcessor implements Ordered {
 
     /**
      * load properties after set the default properties
@@ -36,9 +36,9 @@ public class ApolloConfigurationInitializer extends EnvironmentPostProcessorLogg
 
     private final ConfigurablePropertiesLoader configurablePropertiesLoader;
 
-    public ApolloConfigurationInitializer(DeferredLogFactory deferredLogFactory, ConfigurableBootstrapContext bootstrapContext) {
+    public ApolloConfigurationInitializerEnvironmentPostProcessor(DeferredLogFactory deferredLogFactory, ConfigurableBootstrapContext bootstrapContext) {
         super(deferredLogFactory, bootstrapContext);
-        this.configurablePropertiesLoader = new ConfigurablePropertiesLoader(getDeferredLogFactory());
+        this.configurablePropertiesLoader = new ConfigurablePropertiesLoader(deferredLogFactory);
     }
 
     @Override
@@ -63,26 +63,26 @@ public class ApolloConfigurationInitializer extends EnvironmentPostProcessorLogg
 
     private void setRequiredProperty(ConfigurableEnvironment environment) {
         String appId = getAppId(environment);
-        saveProperty(APP_ID, appId);
+        setPropertyToSystem(APP_ID, appId);
 
         String env = getEnv(environment);
-        saveProperty(ENV_KEY, env);
+        setPropertyToSystem(ENV_KEY, env);
 
-        String apolloUrl = getApolloUrl(environment, env);
-        saveProperty(APOLLO_META, apolloUrl);
+        String metaServerUrl = getApolloMetaServerUrl(environment, env);
+        setPropertyToSystem(APOLLO_META, metaServerUrl);
 
-        saveProperty(APOLLO_BOOTSTRAP_EAGER_LOAD_ENABLED, true);
-        saveProperty(APOLLO_BOOTSTRAP_ENABLED, true);
-        saveProperty(APOLLO_CACHE_FILE_ENABLE, true);
-        saveProperty(APOLLO_PROPERTY_ORDER_ENABLE, true);
+        setPropertyToSystem(APOLLO_BOOTSTRAP_EAGER_LOAD_ENABLED, true);
+        setPropertyToSystem(APOLLO_BOOTSTRAP_ENABLED, true);
+        setPropertyToSystem(APOLLO_CACHE_FILE_ENABLE, true);
+        setPropertyToSystem(APOLLO_PROPERTY_ORDER_ENABLE, true);
         // DO NOT set to true. After caching the property name, SpringBoot may not be able to bind the properties
-        saveProperty(APOLLO_PROPERTY_NAMES_CACHE_ENABLE, false);
-        saveProperty(APOLLO_OVERRIDE_SYSTEM_PROPERTIES, false);
+        setPropertyToSystem(APOLLO_PROPERTY_NAMES_CACHE_ENABLE, false);
+        setPropertyToSystem(APOLLO_OVERRIDE_SYSTEM_PROPERTIES, false);
 
         printProperties();
     }
 
-    private void saveProperty(String key, Object value) {
+    private void setPropertyToSystem(String key, Object value) {
         INIT_PROPERTIES.put(key, value);
         System.setProperty(key, value.toString());
     }
@@ -97,7 +97,12 @@ public class ApolloConfigurationInitializer extends EnvironmentPostProcessorLogg
         System.out.println(message);
     }
 
-    private String getApolloUrl(ConfigurableEnvironment environment, String env) {
+    /**
+     * get apollo meta server url
+     *
+     * @see com.ctrip.framework.foundation.internals.provider.DefaultApplicationProvider#getProperty(String, String)
+     */
+    private String getApolloMetaServerUrl(ConfigurableEnvironment environment, String env) {
         String fallbackKey = env + ".meta";
 
         // {env}.meta
@@ -125,6 +130,11 @@ public class ApolloConfigurationInitializer extends EnvironmentPostProcessorLogg
         return Foundation.getProperty(fallbackKey, null);
     }
 
+    /**
+     * get env
+     *
+     * @see #getApolloMetaServerUrl(org.springframework.core.env.ConfigurableEnvironment, String)
+     */
     private String getEnv(ConfigurableEnvironment environment) {
         String profile = EnvUtils.getProfile(environment);
         if (profile == null) {
@@ -133,6 +143,12 @@ public class ApolloConfigurationInitializer extends EnvironmentPostProcessorLogg
         return profile;
     }
 
+    /**
+     * get AppId
+     *
+     * @see com.ctrip.framework.foundation.internals.provider.DefaultApplicationProvider#initAppId()
+     */
+    @SuppressWarnings("JavadocReference")
     private String getAppId(ConfigurableEnvironment environment) {
         String appId;
         if (environment.containsProperty(APP_ID)) {

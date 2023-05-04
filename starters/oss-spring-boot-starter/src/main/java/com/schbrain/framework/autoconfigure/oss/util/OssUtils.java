@@ -22,7 +22,6 @@ import com.schbrain.framework.autoconfigure.oss.exception.OssException;
 import com.schbrain.framework.autoconfigure.oss.properties.OssProperties;
 import com.schbrain.framework.autoconfigure.oss.properties.OssProperties.StsProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.StringUtils;
 
 import java.io.File;
@@ -48,7 +47,7 @@ public class OssUtils {
     private static StsProperties stsProperties;
     private static String directory;
 
-    public static void initialize(ConfigurableEnvironment environment, OssProperties properties) {
+    public static void initialize(OssProperties properties) {
         if (properties == null || properties.isInValid()) {
             log.warn("ossProperties is invalid, OssUtils will not available until reinitialize with the correct configuration");
             return;
@@ -60,7 +59,7 @@ public class OssUtils {
             stsProperties = properties.getSts();
             directory = properties.getDirectory();
             if (directory == null) {
-                directory = ApplicationName.get(environment);
+                directory = ApplicationName.get();
             }
         } catch (Exception e) {
             log.warn("oss initialize fail, OssUtils will not available until reinitialize with the correct configuration", e);

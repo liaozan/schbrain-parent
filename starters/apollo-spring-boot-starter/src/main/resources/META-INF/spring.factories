@@ -1,3 +1,3 @@
 org.springframework.boot.env.EnvironmentPostProcessor=\
-  com.schbrain.framework.autoconfigure.apollo.ApolloConfigurationInitializer,\
+  com.schbrain.framework.autoconfigure.apollo.ApolloConfigurationInitializerEnvironmentPostProcessor,\
   com.schbrain.framework.autoconfigure.apollo.ApolloPropertiesReorderEnvironmentPostProcessor

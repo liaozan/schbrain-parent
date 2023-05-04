@@ -7,8 +7,6 @@ import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlCommandType;
 
-import java.sql.SQLException;
-
 /**
  * @author liaozan
  * @since 2023-04-17
@@ -16,13 +14,12 @@ import java.sql.SQLException;
 public class BizIdInjectInterceptor implements InnerInterceptor {
 
     @Override
-    public void beforeUpdate(Executor executor, MappedStatement ms, Object entity) throws SQLException {
+    public void beforeUpdate(Executor executor, MappedStatement ms, Object entity) {
         SqlCommandType sqlCommandType = ms.getSqlCommandType();
         if (sqlCommandType != SqlCommandType.INSERT) {
             return;
         }
-        Class<?> entityClass = entity.getClass();
-        BizIdColumnField bizColumnField = BizIdHelper.getBizColumnField(entityClass);
+        BizIdColumnField bizColumnField = BizIdHelper.getBizColumnField(entity.getClass());
         if (bizColumnField == null) {
             return;
         }

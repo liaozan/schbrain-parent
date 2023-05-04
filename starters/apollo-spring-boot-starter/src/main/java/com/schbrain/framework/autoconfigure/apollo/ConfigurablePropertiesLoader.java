@@ -3,7 +3,7 @@ package com.schbrain.framework.autoconfigure.apollo;
 import cn.hutool.core.thread.GlobalThreadPool;
 import com.ctrip.framework.apollo.Config;
 import com.ctrip.framework.apollo.ConfigService;
-import com.schbrain.common.util.properties.SchbrainMapPropertySource;
+import com.schbrain.common.util.properties.OrderedMapPropertySource;
 import com.schbrain.common.util.support.ConfigurableProperties;
 import com.schbrain.framework.autoconfigure.apollo.listener.PropertiesPreparedEvent;
 import com.schbrain.framework.autoconfigure.apollo.listener.PropertiesPreparedEventListener;
@@ -66,7 +66,7 @@ class ConfigurablePropertiesLoader {
         configurableProperties.forEach(properties -> {
             String namespace = properties.getDefaultNamespace();
             Config config = ConfigService.getConfig(namespace);
-            SchbrainMapPropertySource propertySource = ConfigUtils.toPropertySource(namespace, config);
+            OrderedMapPropertySource propertySource = ConfigUtils.toPropertySource(namespace, config);
             if (propertySource == null) {
                 log.warn("No configuration properties loaded under namespace: " + namespace);
                 return;

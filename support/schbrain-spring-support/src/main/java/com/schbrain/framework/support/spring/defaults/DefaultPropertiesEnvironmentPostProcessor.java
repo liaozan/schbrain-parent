@@ -5,7 +5,7 @@ import cn.hutool.core.util.ArrayUtil;
 import com.schbrain.common.constants.DateTimeFormatters;
 import com.schbrain.common.util.EnvUtils;
 import com.schbrain.common.util.PortUtils;
-import com.schbrain.framework.support.spring.EnvironmentPostProcessorLoggerAwareAdapter;
+import com.schbrain.framework.support.spring.LoggerAwareEnvironmentPostProcessor;
 import org.springframework.boot.*;
 import org.springframework.boot.actuate.autoconfigure.health.HealthProperties.Show;
 import org.springframework.boot.actuate.info.InfoPropertiesInfoContributor.Mode;
@@ -23,7 +23,7 @@ import java.util.*;
  * @author liaozan
  * @since 2021/12/18
  */
-public class DefaultPropertiesEnvironmentPostProcessor extends EnvironmentPostProcessorLoggerAwareAdapter implements Ordered {
+public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnvironmentPostProcessor implements Ordered {
 
     /**
      * set default properties after configData loaded
@@ -80,7 +80,7 @@ public class DefaultPropertiesEnvironmentPostProcessor extends EnvironmentPostPr
         if (ArrayUtil.isEmpty(environment.getActiveProfiles())) {
             environment.setActiveProfiles(EnvUtils.DEVELOPMENT);
             defaultProperties.put(SPRING_PROFILE_ACTIVE, EnvUtils.DEVELOPMENT);
-            getLog().info(StrFormatter.format("{} is unset, set to {} by default", SPRING_PROFILE_ACTIVE, EnvUtils.DEVELOPMENT));
+            log.info(StrFormatter.format("{} is unset, set to {} by default", SPRING_PROFILE_ACTIVE, EnvUtils.DEVELOPMENT));
         }
     }
 
@@ -92,8 +92,8 @@ public class DefaultPropertiesEnvironmentPostProcessor extends EnvironmentPostPr
             return;
         }
         if (!environment.containsProperty(DUBBO_REGISTER_KEY)) {
-            getLog().info(StrFormatter.format("Not running on CloudPlatform, {} is set to false by default", DUBBO_REGISTER_KEY));
-            getLog().info(StrFormatter.format("If you want force to register with Dubbo Registry, set {} = true", DUBBO_REGISTER_KEY));
+            log.info(StrFormatter.format("Not running on CloudPlatform, {} is set to false by default", DUBBO_REGISTER_KEY));
+            log.info(StrFormatter.format("If you want force to register with Dubbo Registry, set {} = true", DUBBO_REGISTER_KEY));
             defaultProperties.put(DUBBO_REGISTER_KEY, false);
         }
     }

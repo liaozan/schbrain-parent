@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
-import org.springframework.core.env.ConfigurableEnvironment;
 
 import java.nio.file.Paths;
 
@@ -25,15 +24,12 @@ public class XxlJobAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(XxlJobExecutor.class)
-    public SchbrainXxlJobExecutor schbrainXxlJobSpringExecutor(ConfigurableEnvironment environment,
-                                                               XxlJobProperties xxlJobProperties,
-                                                               LoggerProperties loggingProperties) {
-        String applicationName = ApplicationName.get(environment);
+    public SchbrainXxlJobExecutor schbrainXxlJobSpringExecutor(XxlJobProperties xxlJobProperties, LoggerProperties loggingProperties) {
         SchbrainXxlJobExecutor executor = new SchbrainXxlJobExecutor();
         executor.setAdminAddresses(xxlJobProperties.getAdminAddresses());
         executor.setIp(xxlJobProperties.getIp());
         executor.setPort(xxlJobProperties.getPort());
-        executor.setAppName(applicationName);
+        executor.setAppName(ApplicationName.get());
         executor.setAccessToken(xxlJobProperties.getAccessToken());
         executor.setLogPath(Paths.get(loggingProperties.getLogPath(), "xxl-job").toString());
         executor.setLogRetentionDays(xxlJobProperties.getLogRetentionDays());

@@ -13,7 +13,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.BeanUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.core.env.Environment;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -39,8 +38,8 @@ public class RateLimitAspect {
 
     private final StringRedisTemplate stringRedisTemplate;
 
-    public RateLimitAspect(Environment environment, StringRedisTemplate stringRedisTemplate) {
-        this.keyPrefix = ApplicationName.get(environment);
+    public RateLimitAspect(StringRedisTemplate stringRedisTemplate) {
+        this.keyPrefix = ApplicationName.get();
         this.stringRedisTemplate = stringRedisTemplate;
     }
 

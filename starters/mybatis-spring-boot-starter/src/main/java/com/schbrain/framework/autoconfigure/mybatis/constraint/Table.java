@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.schbrain.common.util.StreamUtils;
 import com.schbrain.framework.autoconfigure.mybatis.exception.TableConstraintException;
 import lombok.Data;
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
@@ -14,6 +15,7 @@ import java.util.*;
  * @author liaozan
  * @since 2022/9/2
  */
+@Getter
 public class Table {
 
     private final TableInfo tableInfo;
@@ -43,16 +45,8 @@ public class Table {
         return columnMetaMap.containsKey(column);
     }
 
-    public List<FieldInfo> getFieldInfoList() {
-        return fieldInfoList;
-    }
-
     public void addError(TableConstraintException error) {
         errors.add(error);
-    }
-
-    public List<TableConstraintException> getErrors() {
-        return errors;
     }
 
     @Data

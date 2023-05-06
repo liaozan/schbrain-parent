@@ -127,6 +127,7 @@ public class TableConstraintCheckerBean implements SmartInitializingSingleton, B
             if (ClassUtils.isAssignable(BaseEntityWithLogicDelete.class, entityClass)) {
                 checker.checkLogicDeleteField(table);
             }
+            checker.checkBizIdField(table);
         }
         errors.addAll(table.getErrors());
     }

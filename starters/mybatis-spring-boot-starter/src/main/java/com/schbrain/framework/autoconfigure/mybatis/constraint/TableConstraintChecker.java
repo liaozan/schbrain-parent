@@ -16,4 +16,9 @@ public interface TableConstraintChecker {
      */
     void checkLogicDeleteField(Table table);
 
+    /**
+     * 检查业务主键 id 字段
+     */
+    void checkBizIdField(Table table);
+
 }

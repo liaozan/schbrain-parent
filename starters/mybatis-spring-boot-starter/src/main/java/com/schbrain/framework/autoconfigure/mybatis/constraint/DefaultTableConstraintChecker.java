@@ -1,6 +1,8 @@
 package com.schbrain.framework.autoconfigure.mybatis.constraint;
 
 import com.mysql.cj.MysqlType;
+import com.schbrain.framework.autoconfigure.mybatis.biz.BizIdHelper;
+import com.schbrain.framework.autoconfigure.mybatis.core.BizIdColumnField;
 import com.schbrain.framework.autoconfigure.mybatis.exception.TableConstraintException;
 
 import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants.*;
@@ -23,6 +25,22 @@ public class DefaultTableConstraintChecker implements TableConstraintChecker {
     public void checkLogicDeleteField(Table table) {
         checkDeletedField(table);
         checkDeleteVersionField(table);
+    }
+
+    @Override
+    public void checkBizIdField(Table table) {
+        BizIdColumnField bizColumnField = BizIdHelper.getBizColumnField(table.getTableInfo().getEntityType());
+        if (bizColumnField == null) {
+            return;
+        }
+        ColumnMeta columnMeta = table.getColumnMeta(bizColumnField.getColumnName());
+        if (columnMeta == null) {
+            addMissingFieldError(table, bizColumnField.getColumnName());
+            return;
+        }
+        if (columnMeta.getIndexName() == null) {
+            addError(table, columnMeta, "BizId field should create an index");
+        }
     }
 
     protected void checkIdField(Table table) {

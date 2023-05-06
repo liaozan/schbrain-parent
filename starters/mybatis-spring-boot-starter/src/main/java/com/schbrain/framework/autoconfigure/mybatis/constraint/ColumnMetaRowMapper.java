@@ -20,6 +20,7 @@ public class ColumnMetaRowMapper implements RowMapper<ColumnMeta> {
         columnMeta.setNullable(isNullable(resultSet.getString("IS_NULLABLE")));
         columnMeta.setColumnDefault(resultSet.getString("COLUMN_DEFAULT"));
         columnMeta.setExtra(resultSet.getString("EXTRA"));
+        columnMeta.setIndexName(resultSet.getString("INDEX_NAME"));
         return columnMeta;
     }
 

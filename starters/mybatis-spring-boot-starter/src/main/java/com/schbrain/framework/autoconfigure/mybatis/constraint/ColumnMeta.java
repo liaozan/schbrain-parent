@@ -39,4 +39,9 @@ public class ColumnMeta {
      */
     private String extra;
 
+    /**
+     * 索引名称
+     */
+    private String indexName;
+
 }

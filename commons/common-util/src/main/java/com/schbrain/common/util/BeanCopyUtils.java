@@ -1,14 +1,13 @@
 package com.schbrain.common.util;
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.lang.Singleton;
 import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.extra.spring.SpringUtil;
 import com.google.common.base.Joiner;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.BeansException;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.cglib.core.Converter;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.util.ClassUtils;
 
 import java.util.ArrayList;
@@ -20,11 +19,10 @@ import java.util.List;
  * @author liaozan
  * @since 2022/1/24
  */
+@Slf4j
 public class BeanCopyUtils {
 
     private static final Joiner CACHE_KEY_JOINER = Joiner.on("#");
-
-    private static final ConversionServiceConverter CONVERTER = new ConversionServiceConverter();
 
     /**
      * copy object list
@@ -54,7 +52,7 @@ public class BeanCopyUtils {
             return null;
         }
         BeanCopier copier = getCopier(source.getClass(), target.getClass());
-        copier.copy(source, target, CONVERTER);
+        copier.copy(source, target, DefaultConverter.INSTANCE);
         return target;
     }
 
@@ -67,18 +65,9 @@ public class BeanCopyUtils {
         return CACHE_KEY_JOINER.join(source.getName(), target.getName());
     }
 
-    @SuppressWarnings("unchecked")
-    private static class ConversionServiceConverter implements Converter {
+    private static class DefaultConverter implements Converter {
 
-        private ConversionService conversionService;
-
-        private ConversionServiceConverter() {
-            try {
-                this.conversionService = SpringUtil.getBean(ConversionService.class);
-            } catch (BeansException e) {
-                this.conversionService = null;
-            }
-        }
+        private static final DefaultConverter INSTANCE = new DefaultConverter();
 
         @Override
         public Object convert(Object value, Class targetType, Object context) {
@@ -88,10 +77,11 @@ public class BeanCopyUtils {
             if (ClassUtils.isAssignableValue(targetType, value)) {
                 return value;
             }
-            if (conversionService != null && conversionService.canConvert(value.getClass(), targetType)) {
-                return conversionService.convert(value, targetType);
+            Object converted = Convert.convertQuietly(targetType, value, null);
+            if (converted == null) {
+                log.warn("Could not copy {} to {}, value type: {}", value, targetType, value.getClass());
             }
-            return value;
+            return converted;
         }
 
     }

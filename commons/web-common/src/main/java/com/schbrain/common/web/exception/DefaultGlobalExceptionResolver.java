@@ -47,6 +47,7 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
         this.handlerMethodResolver = new ExceptionHandlerMethodResolver(exceptionHandler.getClass());
         this.argumentResolverComposite = handlerMethodResolver.getArgumentResolvers();
         this.returnValueHandlerComposite = handlerMethodResolver.getReturnValueHandlers();
+        this.setWarnLogCategory(AbstractHandlerMethodExceptionResolver.class.getName());
     }
 
     @Override

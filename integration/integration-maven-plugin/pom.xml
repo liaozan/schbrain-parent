@@ -14,6 +14,11 @@
     <artifactId>integration-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
 
+    <properties>
+        <maven.core.version>3.9.1</maven.core.version>
+        <maven.plugin.version>3.8.2</maven.plugin.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>

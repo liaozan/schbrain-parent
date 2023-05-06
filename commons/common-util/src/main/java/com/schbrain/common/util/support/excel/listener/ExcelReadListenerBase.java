@@ -25,7 +25,9 @@ public class ExcelReadListenerBase<T> extends AnalysisEventListener<T> {
     protected final Validator validator = SpringUtil.getBean(Validator.class);
 
     protected List<T> dataList = new LinkedList<>();
+
     protected Map<Integer, String> headers = new HashMap<>();
+
     protected Table<String, Integer, String> errors = HashBasedTable.create();
 
     protected boolean terminateOnValidateFail = false;

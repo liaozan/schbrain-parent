@@ -7,7 +7,8 @@ import ch.qos.logback.core.*;
 import ch.qos.logback.core.rolling.RollingFileAppender;
 import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
 import cn.hutool.json.JSONObject;
-import com.schbrain.common.util.*;
+import com.schbrain.common.util.ApplicationName;
+import com.schbrain.common.util.EnvUtils;
 import com.schbrain.common.util.InetUtils.HostInfo;
 import com.schbrain.framework.autoconfigure.logger.logstash.EnhancedLogstashEncoder;
 import com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties;
@@ -36,12 +37,17 @@ import java.util.List;
 public class LoggerConfigurationInitializer {
 
     private final ConfigurableEnvironment environment;
+
     private final LoggerProperties properties;
+
+    private final HostInfo hostInfo;
+
     private final String applicationName;
 
-    public LoggerConfigurationInitializer(ConfigurableEnvironment environment, LoggerProperties properties) {
+    public LoggerConfigurationInitializer(ConfigurableEnvironment environment, LoggerProperties properties, HostInfo hostInfo) {
         this.environment = environment;
         this.properties = properties;
+        this.hostInfo = hostInfo;
         this.applicationName = ApplicationName.get(environment);
         this.init();
     }
@@ -114,7 +120,6 @@ public class LoggerConfigurationInitializer {
     }
 
     private String getCustomFields() {
-        HostInfo hostInfo = InetUtils.findFirstNonLoopBackHostInfo();
         JSONObject customFields = new JSONObject();
         customFields.set("appName", applicationName);
         customFields.set("hostName", hostInfo.getHostname());

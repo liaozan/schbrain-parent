@@ -10,29 +10,36 @@ public class TreeQueryOption {
      * 包括节点自身
      */
     public static final int TREE_QUERY_SELF_INCLUDE = 0;
+
     /**
      * 不包括节点自身
      */
     public static final int TREE_QUERY_SELF_EXCLUDE = 1;
+
     /**
      * 只包含直接子节点
      */
     public static final int TREE_QUERY_CHILDREN_DIRECT = 0;
+
     /**
      * 包含所有子节点
      */
     public static final int TREE_QUERY_CHILDREN_ALL = 1;
+
     /**
      * 深度排序-从根到叶子节点
      */
     public static final int TREE_QUERY_DEPTH_ORDER_ROOT_2_LEAF = 0;
+
     /**
      * 深度排序-从叶子节点到根
      */
     public static final int TREE_QUERY_DEPTH_ORDER_LEAF_2_ROOT = 1;
 
     private int selfIncludeMode;
+
     private int childrenMode;
+
     private int depthOrder;
 
     private TreeQueryOption() {

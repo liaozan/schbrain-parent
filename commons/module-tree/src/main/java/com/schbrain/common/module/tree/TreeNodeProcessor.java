@@ -20,6 +20,7 @@ import java.util.*;
 public class TreeNodeProcessor<NODE extends TreeNode> {
 
     private final TreeNodeDao<NODE> treeNodeDao;
+
     private final TreeOperationAware<NODE> operationHandler;
 
     public TreeNodeProcessor(BaseDao<NODE> baseDao, TreeOperationAware<NODE> operationHandler) {

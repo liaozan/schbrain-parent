@@ -18,14 +18,17 @@ public class MybatisProperties extends ConfigurableProperties {
      * 分页拦截器
      */
     private boolean addPageInterceptor = true;
+
     /**
      * 阻断全表更新操作，禁止不带 where 更新，删除
      */
     private boolean addBlockAttackInterceptor = true;
+
     /**
      * 是否开启表约束检查
      */
     private boolean enableTableConstraintCheck = true;
+
     /**
      * Instant 转为 long
      */

@@ -22,8 +22,11 @@ import static com.schbrain.ci.jenkins.plugins.integration.builder.constants.Cons
 public class ServiceDeployConfig {
 
     private final String serviceMode;
+
     private final String serviceNamespace;
+
     private final String serviceName;
+
     private final String servicePort;
 
     @DataBoundConstructor

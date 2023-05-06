@@ -23,10 +23,15 @@ import static com.schbrain.ci.jenkins.plugins.integration.builder.constants.Cons
 public class DeployTemplateComponent extends DeployStyleRadio {
 
     private final String namespace;
+
     private final String replicas;
+
     private final String memoryRequest;
+
     private final String memoryLimit;
+
     private final String nodeTag;
+
     private final String port;
 
     @DataBoundConstructor

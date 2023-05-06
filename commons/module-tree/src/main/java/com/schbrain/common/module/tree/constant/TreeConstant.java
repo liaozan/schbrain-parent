@@ -7,6 +7,7 @@ package com.schbrain.common.module.tree.constant;
 public class TreeConstant {
 
     public static final Long ROOT_PARENT_ID = -1L;
+
     public static final Long NODE_DELETE_VERSION_DEFAULT = 0L;
 
 }

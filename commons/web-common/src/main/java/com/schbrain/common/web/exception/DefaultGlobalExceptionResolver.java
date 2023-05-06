@@ -3,7 +3,6 @@ package com.schbrain.common.web.exception;
 import com.schbrain.common.web.annotation.ResponseWrapOption;
 import com.schbrain.common.web.properties.WebProperties;
 import com.schbrain.common.web.utils.HandlerMethodAnnotationUtils;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -27,22 +26,24 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 2022/8/30
  */
 @Slf4j
-@Data
 @EqualsAndHashCode(callSuper = true)
-public class GlobalExceptionResolver extends AbstractHandlerMethodExceptionResolver {
+public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExceptionResolver {
 
     private final WebProperties webProperties;
+
+    private final GlobalExceptionHandler exceptionHandler;
+
+    private final ExceptionHandlerMethodResolver handlerMethodResolver;
+
     private final HandlerMethodArgumentResolverComposite argumentResolverComposite;
+
     private final HandlerMethodReturnValueHandlerComposite returnValueHandlerComposite;
+
     private final Map<Class<?>, ExceptionHandlerMethodResolver> exceptionHandlerCache = new ConcurrentHashMap<>(64);
 
-    private GlobalExceptionHandler exceptionHandler;
-    private ExceptionHandlerMethodResolver handlerMethodResolver;
-
-    public GlobalExceptionResolver(ExceptionHandlerExceptionResolver handlerMethodResolver, WebProperties webProperties,
-                                   GlobalExceptionHandler exceptionHandler) {
-        this.exceptionHandler = exceptionHandler;
+    public DefaultGlobalExceptionResolver(ExceptionHandlerExceptionResolver handlerMethodResolver, WebProperties webProperties, GlobalExceptionHandler exceptionHandler) {
         this.webProperties = webProperties;
+        this.exceptionHandler = exceptionHandler;
         this.handlerMethodResolver = new ExceptionHandlerMethodResolver(exceptionHandler.getClass());
         this.argumentResolverComposite = handlerMethodResolver.getArgumentResolvers();
         this.returnValueHandlerComposite = handlerMethodResolver.getReturnValueHandlers();
@@ -67,8 +68,7 @@ public class GlobalExceptionResolver extends AbstractHandlerMethodExceptionResol
     }
 
     @Override
-    protected final ModelAndView doResolveHandlerMethodException(HttpServletRequest request, HttpServletResponse response,
-                                                                 @Nullable HandlerMethod handlerMethod, Exception exception) {
+    protected final ModelAndView doResolveHandlerMethodException(HttpServletRequest request, HttpServletResponse response, @Nullable HandlerMethod handlerMethod, Exception exception) {
         ServletInvocableHandlerMethod exceptionHandlerMethod = createExceptionHandlerMethod(exception, handlerMethod, exceptionHandler);
         if (exceptionHandlerMethod == null) {
             return null;
@@ -113,6 +113,11 @@ public class GlobalExceptionResolver extends AbstractHandlerMethodExceptionResol
             resolvedMethod = handlerMethodResolver.resolveMethod(exception);
         }
         return resolvedMethod;
+    }
+
+    @Override
+    protected void logException(Exception ex, HttpServletRequest request) {
+        // nothing to do
     }
 
     private ExceptionHandlerMethodResolver getHandlerMethodResolver(Class<?> handlerType) {

@@ -8,8 +8,8 @@ import com.ctrip.framework.apollo.core.enums.ConfigFileFormat;
 import com.google.common.collect.Maps;
 import com.schbrain.common.util.InetUtils;
 import com.schbrain.common.util.InetUtils.HostInfo;
-import com.schbrain.framework.autoconfigure.apollo.listener.GenericPropertiesPreparedEventListener;
-import com.schbrain.framework.autoconfigure.apollo.listener.PropertiesPreparedEvent;
+import com.schbrain.framework.autoconfigure.apollo.event.PropertiesPreparedEvent;
+import com.schbrain.framework.autoconfigure.apollo.event.listener.GenericPropertiesPreparedEventListener;
 import com.schbrain.framework.autoconfigure.logger.LoggerConfigurationInitializer;
 import com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -30,14 +30,17 @@ public class LoggerPropertiesPreparedEventListener extends GenericPropertiesPrep
     @Override
     protected void onPropertiesPrepared(PropertiesPreparedEvent event, LoggerProperties properties) {
         ConfigurableEnvironment environment = event.getEnvironment();
-        Map<String, String> hostInfoProperties = buildHostInfoProperties();
+        HostInfo hostInfo = InetUtils.findFirstNonLoopBackHostInfo();
+        Map<String, String> hostInfoProperties = buildHostInfoProperties(hostInfo);
         event.getPropertySource().addProperties(hostInfoProperties);
         configLoggingFileLocation(environment, properties.getLogConfigNamespace());
-        new LoggerConfigurationInitializer(environment, properties).init();
+        new LoggerConfigurationInitializer(environment, properties, hostInfo).init();
     }
 
-    private Map<String, String> buildHostInfoProperties() {
-        HostInfo hostInfo = InetUtils.findFirstNonLoopBackHostInfo();
+    /**
+     * hostInfo properties, for logging pattern
+     */
+    private Map<String, String> buildHostInfoProperties(HostInfo hostInfo) {
         Map<String, String> properties = Maps.newHashMapWithExpectedSize(2);
         properties.put("application.hostname", hostInfo.getHostname());
         properties.put("application.ipAddress", hostInfo.getIpAddress());

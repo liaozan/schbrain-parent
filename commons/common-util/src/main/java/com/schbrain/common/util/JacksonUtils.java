@@ -4,9 +4,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.NullNode;
-import com.schbrain.common.constants.ResponseActionConstants;
-import com.schbrain.common.constants.ResponseCodeConstants;
-import com.schbrain.common.exception.BaseException;
+import com.schbrain.common.util.exception.JSONException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +23,7 @@ import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 public class JacksonUtils {
 
     private static ObjectMapper OBJECT_MAPPER;
+
     private static ObjectMapper PRETTY_OBJECT_MAPPER;
 
     public static ObjectMapper getObjectMapper() {
@@ -228,16 +227,6 @@ public class JacksonUtils {
         } catch (Exception e) {
             throw new JSONException("JSON 转换出错", e);
         }
-    }
-
-    public static class JSONException extends BaseException {
-
-        private static final long serialVersionUID = 1656914307906296812L;
-
-        public JSONException(String message, Throwable cause) {
-            super(message, cause, ResponseCodeConstants.SERVER_ERROR, ResponseActionConstants.ALERT);
-        }
-
     }
 
 }

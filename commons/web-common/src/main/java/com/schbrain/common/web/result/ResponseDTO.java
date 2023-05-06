@@ -18,9 +18,13 @@ public class ResponseDTO<T> implements Serializable {
     private static final long serialVersionUID = 8559474982311419998L;
 
     private int code;
+
     private int action;
+
     private String message;
+
     private T data;
+
     private String uuid = TraceIdUtils.get();
 
     public static <T> ResponseDTO<T> success() {

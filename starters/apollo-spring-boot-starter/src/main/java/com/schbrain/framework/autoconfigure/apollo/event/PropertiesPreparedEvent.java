@@ -1,4 +1,4 @@
-package com.schbrain.framework.autoconfigure.apollo.listener;
+package com.schbrain.framework.autoconfigure.apollo.event;
 
 import com.schbrain.common.util.properties.OrderedMapPropertySource;
 import com.schbrain.common.util.support.ConfigurableProperties;

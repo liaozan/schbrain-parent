@@ -14,11 +14,17 @@ import java.io.IOException;
 public abstract class BuildConfig<T extends AbstractDescribableImpl<T>> extends AbstractDescribableImpl<T> {
 
     protected AbstractBuild<?, ?> build;
+
     protected Launcher launcher;
+
     protected FilePath workspace;
+
     protected BuildListener listener;
+
     protected Logger logger;
+
     protected EnvVars envVars;
+
     protected BuilderContext context;
 
     public void build(BuilderContext context) throws IOException, InterruptedException {

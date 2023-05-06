@@ -34,11 +34,8 @@ public class ApolloConfigurationInitializerEnvironmentPostProcessor extends Logg
 
     private static Map<String, Object> INIT_PROPERTIES = new LinkedHashMap<>();
 
-    private final ConfigurablePropertiesLoader configurablePropertiesLoader;
-
     public ApolloConfigurationInitializerEnvironmentPostProcessor(DeferredLogFactory deferredLogFactory, ConfigurableBootstrapContext bootstrapContext) {
         super(deferredLogFactory, bootstrapContext);
-        this.configurablePropertiesLoader = new ConfigurablePropertiesLoader(deferredLogFactory);
     }
 
     @Override
@@ -48,7 +45,7 @@ public class ApolloConfigurationInitializerEnvironmentPostProcessor extends Logg
             return;
         }
         setRequiredProperty(environment);
-        configurablePropertiesLoader.load(environment, application);
+        new ConfigurablePropertiesLoader(deferredLogFactory, environment, application).load();
     }
 
     @Override

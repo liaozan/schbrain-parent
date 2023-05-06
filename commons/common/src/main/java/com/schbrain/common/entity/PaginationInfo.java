@@ -22,30 +22,37 @@ public class PaginationInfo<T> implements Serializable {
      * 页索引
      */
     private long pageIndex = DEFAULT_PAGE_INDEX;
+
     /**
      * 每个页面大小
      */
     private long pageSize = DEFAULT_PAGE_SIZE;
+
     /**
      * 当前结果集记录数量
      */
     private long currentPageSize = DEFAULT_PAGE_INDEX;
+
     /**
      * 总页面数量
      */
     private long totalPageCount = DEFAULT_TOTAL_COUNT;
+
     /**
      * 满足条件的记录数量
      */
     private long totalCount = DEFAULT_TOTAL_COUNT;
+
     /**
      * 是否有前一页
      */
     private boolean hasPrevPage = false;
+
     /**
      * 是否有下一页
      */
     private boolean hasNextPage = false;
+
     /**
      * 结果集, Use new ArrayList() instead of collections.emptyList() to prevent errors when users edit it later
      */

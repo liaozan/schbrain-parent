@@ -1,6 +1,7 @@
-package com.schbrain.framework.autoconfigure.apollo.listener;
+package com.schbrain.framework.autoconfigure.apollo.event.listener;
 
 import com.schbrain.common.util.support.ConfigurableProperties;
+import com.schbrain.framework.autoconfigure.apollo.event.PropertiesPreparedEvent;
 import org.apache.commons.logging.Log;
 import org.springframework.core.ResolvableType;
 

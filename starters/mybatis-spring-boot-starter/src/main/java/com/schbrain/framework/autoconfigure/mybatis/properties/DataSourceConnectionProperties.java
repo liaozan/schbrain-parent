@@ -22,30 +22,37 @@ public class DataSourceConnectionProperties {
      * 使用 ssl 连接
      */
     private Boolean useSsl = false;
+
     /**
      * tinyint(1) 视为 boolean
      */
     private Boolean tinyInt1isBit = true;
+
     /**
      * 重写批处理sql
      */
     private Boolean rewriteBatchedStatements = true;
+
     /**
      * 是否允许一个 statement 用分号分割执行多个查询语句
      */
     private Boolean allowMultiQueries = true;
+
     /**
      * 允许从服务端获取公钥进行连接
      */
     private Boolean allowPublicKeyRetrieval = true;
+
     /**
      * 连接数据库使用的时区
      */
     private ZoneId serverTimeZone = ZoneId.systemDefault();
+
     /**
      * 时间格式字段值为 0 的时候的处理方式
      */
     private ZeroDatetimeBehavior zeroDatetimeBehavior = ZeroDatetimeBehavior.CONVERT_TO_NULL;
+
     /**
      * 数据库连接字符编码
      */

@@ -31,6 +31,7 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
     public static final Integer DEFAULT_ORDER = ConfigDataEnvironmentPostProcessor.ORDER + 1;
 
     private static final String SPRING_PROFILE_ACTIVE = "spring.profiles.active";
+
     private static final String DUBBO_REGISTER_KEY = "dubbo.registry.register";
 
     public DefaultPropertiesEnvironmentPostProcessor(DeferredLogFactory logFactory, ConfigurableBootstrapContext bootstrapContext) {

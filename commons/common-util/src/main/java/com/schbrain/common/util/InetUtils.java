@@ -1,6 +1,5 @@
 package com.schbrain.common.util;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +26,19 @@ public class InetUtils {
         hostInfo.setHostname("localhost");
         hostInfo.setIpAddress("127.0.0.1");
         return hostInfo;
+    }
+
+    public static int getIpAddressAsInt(HostInfo hostInfo) {
+        String host = hostInfo.getIpAddress();
+        if (host == null) {
+            host = hostInfo.getHostname();
+        }
+        try {
+            InetAddress inetAddress = InetAddress.getByName(host);
+            return ByteBuffer.wrap(inetAddress.getAddress()).getInt();
+        } catch (final UnknownHostException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     private static InetAddress findFirstNonLoopBackAddress() {
@@ -80,25 +92,9 @@ public class InetUtils {
     @Data
     public static class HostInfo {
 
-        public static final String NAME = "machineHostInfo";
-
         private String ipAddress;
-        private String hostname;
 
-        @JsonIgnore
-        public int getIpAddressAsInt() {
-            InetAddress inetAddress;
-            String host = this.ipAddress;
-            if (host == null) {
-                host = this.hostname;
-            }
-            try {
-                inetAddress = InetAddress.getByName(host);
-            } catch (final UnknownHostException e) {
-                throw new IllegalArgumentException(e);
-            }
-            return ByteBuffer.wrap(inetAddress.getAddress()).getInt();
-        }
+        private String hostname;
 
     }
 

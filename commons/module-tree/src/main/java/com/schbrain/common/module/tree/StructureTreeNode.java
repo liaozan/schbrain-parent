@@ -17,6 +17,7 @@ public class StructureTreeNode<NODE> implements Serializable {
     private static final long serialVersionUID = -7732621737666937981L;
 
     private NODE node;
+
     private List<StructureTreeNode<NODE>> children;
 
 }

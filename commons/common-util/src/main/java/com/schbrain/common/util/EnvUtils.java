@@ -16,7 +16,9 @@ import org.springframework.core.env.Environment;
 public class EnvUtils {
 
     public static final String DEVELOPMENT = "dev";
+
     public static final String TESTING = "test";
+
     public static final String PRODUCTION = "prod";
 
     public static boolean isDevelopment() {

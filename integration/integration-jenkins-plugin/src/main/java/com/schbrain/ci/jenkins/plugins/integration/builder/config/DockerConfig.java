@@ -28,11 +28,17 @@ public class DockerConfig extends BuildConfig<DockerConfig> {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmss").withZone(ZoneId.systemDefault());
 
     private final Boolean buildImage;
+
     private final PushConfig pushConfig;
+
     private final Boolean deleteImageAfterBuild;
+
     private final String javaOpts;
+
     private final String buildScriptUrl;
+
     private final String buildScriptBranch;
+
     private final Boolean disableSkywalking;
 
     @DataBoundConstructor
@@ -140,6 +146,7 @@ public class DockerConfig extends BuildConfig<DockerConfig> {
     public static class PushConfig extends BuildConfig<PushConfig> {
 
         private final Boolean pushImage;
+
         private final String registry;
 
         @DataBoundConstructor

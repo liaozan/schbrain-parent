@@ -20,7 +20,9 @@ import java.util.regex.Pattern;
 public abstract class AbstractSqlSource implements SqlSource {
 
     private static final String GENERIC_PARAM_NAME = "param";
+
     private static final Pattern pattern = Pattern.compile("#\\{.+?}");
+
     protected final Configuration configuration;
 
     protected AbstractSqlSource(Configuration configuration) {

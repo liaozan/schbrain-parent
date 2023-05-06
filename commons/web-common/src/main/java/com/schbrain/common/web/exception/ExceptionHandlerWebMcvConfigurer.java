@@ -16,6 +16,7 @@ import java.util.List;
 public class ExceptionHandlerWebMcvConfigurer implements WebMvcConfigurer {
 
     private final WebProperties webProperties;
+
     private final GlobalExceptionHandler globalExceptionHandler;
 
     public ExceptionHandlerWebMcvConfigurer(WebProperties webProperties, GlobalExceptionHandler globalExceptionHandler) {
@@ -51,8 +52,8 @@ public class ExceptionHandlerWebMcvConfigurer implements WebMvcConfigurer {
         resolvers.add(index, createGlobalExceptionResolver(adviceExceptionResolver));
     }
 
-    protected GlobalExceptionResolver createGlobalExceptionResolver(ExceptionHandlerExceptionResolver adviceExceptionResolver) {
-        return new GlobalExceptionResolver(adviceExceptionResolver, webProperties, globalExceptionHandler);
+    protected HandlerExceptionResolver createGlobalExceptionResolver(ExceptionHandlerExceptionResolver adviceExceptionResolver) {
+        return new DefaultGlobalExceptionResolver(adviceExceptionResolver, webProperties, globalExceptionHandler);
     }
 
 }

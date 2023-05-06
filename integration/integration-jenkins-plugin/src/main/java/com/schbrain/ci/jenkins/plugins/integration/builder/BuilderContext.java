@@ -17,10 +17,15 @@ import java.util.Objects;
 public class BuilderContext {
 
     private final AbstractBuild<?, ?> build;
+
     private final Launcher launcher;
+
     private final FilePath workspace;
+
     private final BuildListener listener;
+
     private final Logger logger;
+
     private final EnvVars envVars;
 
     private boolean imageHasBeenBuilt;
@@ -90,10 +95,15 @@ public class BuilderContext {
     public static class Builder {
 
         private AbstractBuild<?, ?> build;
+
         private Launcher launcher;
+
         private FilePath workspace;
+
         private BuildListener listener;
+
         private Logger logger;
+
         private EnvVars envVars;
 
         public Builder build(AbstractBuild<?, ?> build) {

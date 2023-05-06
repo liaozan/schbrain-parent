@@ -22,9 +22,13 @@ public class BaseMapper {
     private final SqlSessionTemplate sqlSession;
 
     private final Class<?> mapperInterface;
+
     private final BaseMapperStatement bms;
+
     private Class<?> domainClass;
+
     private String tableName;
+
     private Field[] fields;
 
     public BaseMapper(SqlSessionTemplate sqlSession, Class<?> mapperInterface) {

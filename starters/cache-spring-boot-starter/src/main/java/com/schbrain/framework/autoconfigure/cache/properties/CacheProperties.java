@@ -18,10 +18,12 @@ public class CacheProperties extends ConfigurableProperties {
      * cache prefix
      */
     private String prefix;
+
     /**
      * cache prefix delimiter
      */
     private String delimiter = ":";
+
     /**
      * whatever to enable prefix append
      */

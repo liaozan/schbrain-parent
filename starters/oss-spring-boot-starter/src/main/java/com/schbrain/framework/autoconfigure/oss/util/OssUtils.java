@@ -42,9 +42,13 @@ import java.util.stream.Collectors;
 public class OssUtils {
 
     private static OSSClient ossClient;
+
     private static DefaultAcsClient stsAcsClient;
+
     private static OssProperties ossProperties;
+
     private static StsProperties stsProperties;
+
     private static String directory;
 
     public static void initialize(OssProperties properties) {

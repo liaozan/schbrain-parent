@@ -19,6 +19,7 @@ public class DataSourceConnectionPostProcessor extends GenericBeanPostProcessor<
 
     // use ObjectProvider to avoid early initialization beans
     private final ObjectProvider<DataSourceCustomizer> customizers;
+
     private final ObjectProvider<DataSourceConnectionProperties> connectionProperties;
 
     public DataSourceConnectionPostProcessor(ObjectProvider<DataSourceCustomizer> customizers,

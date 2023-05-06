@@ -38,9 +38,13 @@ public class BaseMapperStatement {
     private final Class<?> domainClass;
 
     private final Field[] fields;
+
     private final List<ResultMap> objectResultMapList = new ArrayList<>(1);
+
     private final List<ResultMap> intResultMapList = new ArrayList<>(1);
+
     private String selectClause;
+
     private String insertClause;
 
     public BaseMapperStatement(Configuration configuration, Class<?> mapperInterface, Class<?> domainClass, String tableName, Field[] fields) {

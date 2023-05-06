@@ -18,8 +18,11 @@ public class UploadCredentials extends OssOperationResult {
     private static final long serialVersionUID = 5546792221041679671L;
 
     private String accessKeyId;
+
     private String accessKeySecret;
+
     private String securityToken;
+
     private LocalDateTime expiration;
 
     // for json deserialize

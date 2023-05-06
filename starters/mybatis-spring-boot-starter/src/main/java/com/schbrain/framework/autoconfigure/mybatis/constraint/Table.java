@@ -59,6 +59,7 @@ public class Table {
     public static class FieldInfo {
 
         private String field;
+
         private String column;
 
         public FieldInfo(TableFieldInfo tableFieldInfo) {

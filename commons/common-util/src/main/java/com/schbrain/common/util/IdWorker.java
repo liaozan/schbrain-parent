@@ -17,8 +17,7 @@
 
 package com.schbrain.common.util;
 
-import java.security.SecureRandom;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /***
  * @author adyliu (imxylz@gmail.com)
@@ -30,30 +29,43 @@ public class IdWorker {
      * 生成的自增id的大小减少到18位
      */
     private static final long ID_EPOCH = 1420041600000L;
+
     private static final long workerIdBits = 5L;
+
     private static final long datacenterIdBits = 5L;
+
     private static final long maxWorkerId = ~(-1L << workerIdBits);
+
     private static final long maxDatacenterId = ~(-1L << datacenterIdBits);
+
     private static final long sequenceBits = 12L;
+
     private static final long workerIdShift = sequenceBits;
+
     private static final long datacenterIdShift = sequenceBits + workerIdBits;
+
     private static final long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;
+
     private static final long sequenceMask = ~(-1L << sequenceBits);
-    private static final Random r = new SecureRandom();
-    // 需要等 r 初始化
-    private static final IdWorker INSTANCE = new IdWorker(ID_EPOCH);
+
+    private static final IdWorker INSTANCE = new IdWorker();
+
     private final long workerId;
+
     private final long datacenterId;
+
     private final long idEpoch;
+
     private long lastTimestamp = -1L;
+
     private long sequence;
 
-    public IdWorker(long idEpoch) {
-        this(r.nextInt((int) maxWorkerId), r.nextInt((int) maxDatacenterId), 0, idEpoch);
+    public IdWorker() {
+        this(ThreadLocalRandom.current().nextLong(maxWorkerId), ThreadLocalRandom.current().nextLong(maxDatacenterId), 0);
     }
 
     public IdWorker(long workerId, long datacenterId, long sequence) {
-        this(workerId, datacenterId, sequence, 1420041600000L);
+        this(workerId, datacenterId, sequence, ID_EPOCH);
     }
 
     public IdWorker(long workerId, long datacenterId, long sequence, long idEpoch) {
@@ -104,10 +116,7 @@ public class IdWorker {
             sequence = 0;
         }
         lastTimestamp = timestamp;
-        return ((timestamp - idEpoch) << timestampLeftShift)//
-                | (datacenterId << datacenterIdShift)//
-                | (workerId << workerIdShift)//
-                | sequence;
+        return ((timestamp - idEpoch) << timestampLeftShift) | (datacenterId << datacenterIdShift) | (workerId << workerIdShift) | sequence;
     }
 
     private long tilNextMillis(long lastTimestamp) {

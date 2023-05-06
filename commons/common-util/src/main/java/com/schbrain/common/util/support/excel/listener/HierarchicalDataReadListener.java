@@ -80,6 +80,7 @@ public class HierarchicalDataReadListener extends ExcelReadListenerBase<Map<Inte
     public static class ImportedRecord {
 
         private String text;
+
         private List<ImportedRecord> children = new LinkedList<>();
 
         public boolean hasChildren() {

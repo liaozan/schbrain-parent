@@ -31,7 +31,9 @@ import static com.schbrain.ci.jenkins.plugins.integration.builder.util.FileUtils
 public class IntegrationBuilder extends Builder {
 
     private final MavenConfig mavenConfig;
+
     private final DockerConfig dockerConfig;
+
     private final DeployToK8sConfig deployToK8sConfig;
 
     @DataBoundConstructor

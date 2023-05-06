@@ -23,7 +23,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
 
     private final WebProperties webProperties;
+
     private final List<String> basePackages;
+
     private final Map<Method, Boolean> methodCache;
 
     public ResponseBodyHandler(WebProperties webProperties, List<String> basePackages) {

@@ -73,7 +73,7 @@
         <commons-io.version>2.11.0</commons-io.version>
         <dubbo.version>3.2.0</dubbo.version>
         <druid.version>1.2.17</druid.version>
-        <easyexcel.version>3.3.0</easyexcel.version>
+        <easyexcel.version>3.3.1</easyexcel.version>
         <fastjson.version>1.2.83</fastjson.version>
         <fastjson2.version>2.0.30</fastjson2.version>
         <guava.version>31.1-jre</guava.version>

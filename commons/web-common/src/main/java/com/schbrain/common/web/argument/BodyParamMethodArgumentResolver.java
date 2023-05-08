@@ -7,14 +7,14 @@ import com.schbrain.common.web.annotation.BodyParam;
 import lombok.Setter;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.Assert;
-import org.springframework.util.StreamUtils;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver;
 
-import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.io.InputStream;
+
+import static com.schbrain.common.web.utils.ContentCachingServletUtils.wrapRequestIfRequired;
+import static org.springframework.web.context.request.RequestAttributes.SCOPE_REQUEST;
 
 /**
  * @author liaozan
@@ -23,7 +23,7 @@ import java.io.InputStream;
 @Setter
 public class BodyParamMethodArgumentResolver extends AbstractNamedValueMethodArgumentResolver {
 
-    private static final String METHOD_BODY_CACHE_KEY = BodyParamMethodArgumentResolver.class.getName() + ".bodyParamCache";
+    private static final String REQUEST_BODY_CACHE = BodyParamMethodArgumentResolver.class.getName() + ".requestBodyCache";
 
     private ObjectMapper objectMapper;
 
@@ -48,10 +48,9 @@ public class BodyParamMethodArgumentResolver extends AbstractNamedValueMethodArg
     }
 
     @Override
-    @Nullable
     protected Object resolveName(String name, MethodParameter parameter, NativeWebRequest request) throws Exception {
-        JsonNode paramNode = getParamNode(request);
-        JsonNode parameterValue = paramNode.get(name);
+        JsonNode requestBody = getRequestBody(request);
+        JsonNode parameterValue = requestBody.get(name);
         if (parameterValue == null || parameterValue.isNull()) {
             return null;
         }
@@ -59,16 +58,14 @@ public class BodyParamMethodArgumentResolver extends AbstractNamedValueMethodArg
         return objectMapper.convertValue(parameterValue, parameterType);
     }
 
-    private JsonNode getParamNode(NativeWebRequest nativeWebRequest) throws IOException {
-        HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
-        Assert.state(request != null, "request must not be null");
-        JsonNode paramNode = (JsonNode) request.getAttribute(METHOD_BODY_CACHE_KEY);
-        if (paramNode == null) {
-            InputStream inputStream = StreamUtils.nonClosing(request.getInputStream());
-            paramNode = objectMapper.readTree(inputStream);
-            request.setAttribute(METHOD_BODY_CACHE_KEY, paramNode);
+    private JsonNode getRequestBody(NativeWebRequest nativeWebRequest) throws IOException {
+        JsonNode requestBody = (JsonNode) nativeWebRequest.getAttribute(REQUEST_BODY_CACHE, SCOPE_REQUEST);
+        if (requestBody == null) {
+            HttpServletRequest request = wrapRequestIfRequired(nativeWebRequest.getNativeRequest(HttpServletRequest.class));
+            requestBody = objectMapper.readTree(request.getInputStream());
+            nativeWebRequest.setAttribute(REQUEST_BODY_CACHE, requestBody, SCOPE_REQUEST);
         }
-        return paramNode;
+        return requestBody;
     }
 
 }

@@ -10,7 +10,7 @@ import java.time.Duration;
  * @author liaozan
  * @since 2022/11/19
  */
-public class AllowAllCorsConfigurer implements WebMvcConfigurer {
+public class AllowAnyOriginWithoutCredentialsCorsConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {

@@ -42,6 +42,7 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
         Map<String, Object> defaultProperties = new HashMap<>();
         // management
+        defaultProperties.put("management.trace.http.enabled", false);
         defaultProperties.put("management.endpoints.web.exposure.include", "*");
         defaultProperties.put("management.endpoints.enabled-by-default", true);
         defaultProperties.put("management.endpoint.health.show-details", Show.ALWAYS);

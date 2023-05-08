@@ -1,22 +1,20 @@
 package com.schbrain.common.web;
 
 import com.schbrain.common.web.argument.BodyParamArgumentResolverWebMvcConfigurer;
-import com.schbrain.common.web.exception.*;
-import com.schbrain.common.web.log.RequestLoggingFilter;
 import com.schbrain.common.web.properties.WebProperties;
 import com.schbrain.common.web.result.ResponseBodyHandler;
-import com.schbrain.common.web.servlet.*;
-import com.schbrain.common.web.support.authentication.AuthenticationInterceptor;
-import com.schbrain.common.web.support.authentication.Authenticator;
+import com.schbrain.common.web.servlet.AllowAnyOriginWithoutCredentialsCorsConfigurer;
+import com.schbrain.common.web.servlet.TraceIdInitializeServletListener;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
-import org.springframework.boot.autoconfigure.condition.*;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -26,28 +24,10 @@ import java.util.List;
  * @since 2021/11/19
  */
 @AutoConfiguration
-@ConditionalOnWebApplication
+@ConditionalOnWebApplication(type = Type.SERVLET)
 @EnableConfigurationProperties(WebProperties.class)
+@Import({AuthenticationConfiguration.class, ExceptionHandingConfiguration.class, ServletComponentConfiguration.class})
 public class WebCommonAutoConfiguration {
-
-    @Bean
-    @ConditionalOnMissingBean
-    @ConditionalOnBean(Authenticator.class)
-    public AuthenticationInterceptor defaultAuthenticationInterceptor(Authenticator authenticator) {
-        return new AuthenticationInterceptor(authenticator);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public GlobalExceptionHandler defaultGlobalExceptionHandler() {
-        return new DefaultGlobalExceptionHandler();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public ExceptionHandlerWebMcvConfigurer defaultExceptionHandlerWebMcvConfigurer(WebProperties webProperties, GlobalExceptionHandler exceptionHandler) {
-        return new ExceptionHandlerWebMcvConfigurer(webProperties, exceptionHandler);
-    }
 
     @Bean
     @ConditionalOnMissingBean
@@ -81,20 +61,8 @@ public class WebCommonAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public CharacterEncodingServletContextInitializer characterEncodingServletContextInitializer(WebProperties webProperties) {
-        return new CharacterEncodingServletContextInitializer(webProperties.getEncoding());
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public RequestLoggingFilter requestLoggingFilter(WebProperties properties) {
-        return new RequestLoggingFilter(properties);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public AllowAllCorsConfigurer allowAllCorsConfigurer() {
-        return new AllowAllCorsConfigurer();
+    public AllowAnyOriginWithoutCredentialsCorsConfigurer allowAnyOriginWithoutCredentialsCorsConfigurer() {
+        return new AllowAnyOriginWithoutCredentialsCorsConfigurer();
     }
 
 }

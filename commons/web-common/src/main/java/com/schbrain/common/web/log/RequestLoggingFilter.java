@@ -1,6 +1,6 @@
 package com.schbrain.common.web.log;
 
-import cn.hutool.core.text.StrPool;
+import cn.hutool.core.text.CharPool;
 import cn.hutool.core.util.ArrayUtil;
 import com.schbrain.common.web.properties.WebProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+
+import static com.schbrain.common.web.utils.ContentCachingServletUtils.wrapRequestIfRequired;
 
 /**
  * 请求日志拦截器
@@ -44,6 +46,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter implements Ordere
         }
 
         request = wrapRequestIfRequired(request);
+
         long startTime = System.currentTimeMillis();
         try {
             chain.doFilter(request, response);
@@ -67,7 +70,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter implements Ordere
         String queryString = request.getQueryString();
         String body = getRequestBody(request);
         StringBuilder builder = new StringBuilder();
-        builder.append("requestUri: ").append(method).append(StrPool.C_SPACE).append(requestUri);
+        builder.append("requestUri: ").append(method).append(CharPool.SPACE).append(requestUri);
         if (StringUtils.hasText(queryString)) {
             builder.append(", queryString: ").append(queryString);
         }
@@ -95,14 +98,6 @@ public class RequestLoggingFilter extends OncePerRequestFilter implements Ordere
         } catch (UnsupportedEncodingException e) {
             log.warn("unsupported charset {} detect during convert body to String", charset, e);
             return null;
-        }
-    }
-
-    protected HttpServletRequest wrapRequestIfRequired(HttpServletRequest request) {
-        if (request instanceof ContentCachingRequestWrapper) {
-            return request;
-        } else {
-            return new ContentCachingRequestWrapper(request);
         }
     }
 

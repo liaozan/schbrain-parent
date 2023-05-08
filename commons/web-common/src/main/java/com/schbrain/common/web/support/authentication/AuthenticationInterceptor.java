@@ -6,6 +6,7 @@ import com.schbrain.common.web.result.ResponseDTO;
 import com.schbrain.common.web.support.BaseHandlerInterceptor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.core.Ordered;
 import org.springframework.http.MediaType;
 import org.springframework.util.Assert;
 import org.springframework.web.method.HandlerMethod;
@@ -22,13 +23,18 @@ import static com.schbrain.common.constants.ResponseCodeConstants.LOGIN_REQUIRED
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AuthenticationInterceptor extends BaseHandlerInterceptor {
+public class AuthenticationInterceptor extends BaseHandlerInterceptor implements Ordered {
 
     private Authenticator authenticator;
 
     public AuthenticationInterceptor(Authenticator authenticator) {
         Assert.notNull(authenticator, "authenticator must not be null");
         this.authenticator = authenticator;
+    }
+
+    @Override
+    public int getOrder() {
+        return Ordered.LOWEST_PRECEDENCE;
     }
 
     @Override

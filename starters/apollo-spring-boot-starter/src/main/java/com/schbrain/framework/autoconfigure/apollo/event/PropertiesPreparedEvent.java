@@ -23,18 +23,18 @@ public class PropertiesPreparedEvent extends ApplicationEvent {
 
     private final OrderedMapPropertySource propertySource;
 
-    private final SpringApplication application;
+    private final SpringApplication springApplication;
 
     public PropertiesPreparedEvent(ConfigurableEnvironment environment,
                                    DeferredLogFactory deferredLogFactory,
                                    OrderedMapPropertySource propertySource,
                                    ConfigurableProperties properties,
-                                   SpringApplication application) {
+                                   SpringApplication springApplication) {
         super(properties);
         this.environment = environment;
         this.propertySource = propertySource;
         this.deferredLogFactory = deferredLogFactory;
-        this.application = application;
+        this.springApplication = springApplication;
     }
 
     public ConfigurableProperties getConfigurableProperties() {

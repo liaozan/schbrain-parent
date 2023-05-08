@@ -38,18 +38,12 @@ class ConfigurablePropertiesLoader {
 
     private final DeferredLogFactory deferredLogFactory;
 
-    private final ConfigurableEnvironment environment;
-
-    private final SpringApplication application;
-
-    ConfigurablePropertiesLoader(DeferredLogFactory deferredLogFactory, ConfigurableEnvironment environment, SpringApplication application) {
+    ConfigurablePropertiesLoader(DeferredLogFactory deferredLogFactory) {
         this.log = deferredLogFactory.getLog(ConfigurablePropertiesLoader.class);
         this.deferredLogFactory = deferredLogFactory;
-        this.environment = environment;
-        this.application = application;
     }
 
-    void load() {
+    void load(ConfigurableEnvironment environment, SpringApplication application) {
         List<ConfigurableProperties> configurableProperties = loadFactories(ConfigurableProperties.class, getClass().getClassLoader());
         if (CollectionUtils.isEmpty(configurableProperties)) {
             log.warn("There is no configuration properties found");
@@ -81,11 +75,12 @@ class ConfigurablePropertiesLoader {
             // resolve any placeHolders
             ConfigUtils.resolvePlaceHolders(environment, propertySource);
             // multicast event
-            eventMulticaster.multicastEvent(createEvent(propertySource, properties));
+            eventMulticaster.multicastEvent(createEvent(environment, application, propertySource, properties));
         });
     }
 
-    private PropertiesPreparedEvent createEvent(OrderedMapPropertySource propertySource, ConfigurableProperties properties) {
+    private PropertiesPreparedEvent createEvent(ConfigurableEnvironment environment, SpringApplication application,
+                                                OrderedMapPropertySource propertySource, ConfigurableProperties properties) {
         ConfigurableProperties boundProperties = properties.bind(environment);
         return new PropertiesPreparedEvent(environment, deferredLogFactory, propertySource, boundProperties, application);
     }

@@ -21,4 +21,8 @@ public class OrderedMapPropertySource extends MapPropertySource {
         getSource().putAll(properties);
     }
 
+    public void addProperty(String propertyName, String propertyValue) {
+        getSource().put(propertyName, propertyValue);
+    }
+
 }

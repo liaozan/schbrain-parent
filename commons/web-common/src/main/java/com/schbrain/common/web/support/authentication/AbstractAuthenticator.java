@@ -46,9 +46,7 @@ public abstract class AbstractAuthenticator implements Authenticator {
         return doValidate(authentication, request, response, handler);
     }
 
-    protected boolean doValidate(String authentication, HttpServletRequest request, HttpServletResponse response, HandlerMethod handler) {
-        return true;
-    }
+    protected abstract boolean doValidate(String authentication, HttpServletRequest request, HttpServletResponse response, HandlerMethod handler);
 
     @Nullable
     protected String getAuthentication(HttpServletRequest request) {

@@ -108,8 +108,9 @@
         <alibabacloud-dysmsapi20170525.version>2.0.23</alibabacloud-dysmsapi20170525.version>
 
         <!-- dingtalk -->
-        <aliyun-dingtalk-sdk.version>2.0.11</aliyun-dingtalk-sdk.version>
-        <alibaba-dingtalk-sdk.version>2.0.0</alibaba-dingtalk-sdk.version>
+        <alibaba-dingtalk-service-sdk.version>2.0.0</alibaba-dingtalk-service-sdk.version>
+        <cube-sdk-java.version>1.0.2-RELEASE</cube-sdk-java.version>
+        <dingtalk.version>2.0.11</dingtalk.version>
 
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.4.1</flatten-maven-plugin.version>
@@ -531,12 +532,17 @@
             <dependency>
                 <groupId>com.aliyun</groupId>
                 <artifactId>alibaba-dingtalk-service-sdk</artifactId>
-                <version>${alibaba-dingtalk-sdk.version}</version>
+                <version>${alibaba-dingtalk-service-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.cube</groupId>
+                <artifactId>cube-sdk-java</artifactId>
+                <version>${cube-sdk-java.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.aliyun</groupId>
                 <artifactId>dingtalk</artifactId>
-                <version>${aliyun-dingtalk-sdk.version}</version>
+                <version>${dingtalk.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

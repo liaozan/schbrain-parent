@@ -84,10 +84,16 @@ public class IdWorker {
         }
     }
 
+    /**
+     * generate a new id
+     */
     public static long getId() {
         return INSTANCE.nextId();
     }
 
+    /**
+     * generate a new id String
+     */
     public static String getIdStr() {
         return String.valueOf(INSTANCE.nextId());
     }
@@ -98,8 +104,8 @@ public class IdWorker {
      * @param id the nextId
      * @return the timestamp of id
      */
-    public long getIdTimestamp(long id) {
-        return idEpoch + (id >> timestampLeftShift);
+    public static long getIdTimestamp(long id) {
+        return INSTANCE.idEpoch + (id >> timestampLeftShift);
     }
 
     private synchronized long nextId() {

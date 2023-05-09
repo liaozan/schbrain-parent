@@ -79,6 +79,7 @@
         <guava.version>31.1-jre</guava.version>
         <guice.version>5.1.0</guice.version>
         <hutool.version>5.8.18</hutool.version>
+        <jsr305.version>3.0.2</jsr305.version>
         <logstash-logback-encoder.version>7.3</logstash-logback-encoder.version>
         <mybatis.version>3.5.13</mybatis.version>
         <mybatis.starter.version>2.3.0</mybatis.starter.version>
@@ -373,6 +374,11 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>jsr305</artifactId>
+                <version>${jsr305.version}</version>
             </dependency>
             <dependency>
                 <groupId>net.logstash.logback</groupId>

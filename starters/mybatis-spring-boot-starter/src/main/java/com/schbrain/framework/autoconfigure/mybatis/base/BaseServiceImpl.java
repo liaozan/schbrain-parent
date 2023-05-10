@@ -37,7 +37,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
     public T getById(Long id, boolean throwIfNotFound) {
         Supplier<? extends RuntimeException> notFoundSupplier = null;
         if (throwIfNotFound) {
-            notFoundSupplier = () -> new NoSuchRecordException(entityClass, id);
+            notFoundSupplier = () -> new NoSuchRecordException(entityClass);
         }
         return getById(id, notFoundSupplier);
     }
@@ -68,7 +68,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
     public T getByBizId(String bizId, boolean throwIfNotFound) {
         Supplier<? extends RuntimeException> notFoundSupplier = null;
         if (throwIfNotFound) {
-            notFoundSupplier = () -> new NoSuchRecordException(entityClass, bizId);
+            notFoundSupplier = () -> new NoSuchRecordException(entityClass);
         }
         return getByBizId(bizId, notFoundSupplier);
     }

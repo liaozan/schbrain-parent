@@ -178,13 +178,6 @@ public class DefaultGlobalExceptionHandler implements GlobalExceptionHandler {
         return buildResponse(ex, PARAM_INVALID, errorMsg);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseDTO<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        String errorMsg = buildBindingErrorMsg(ex.getBindingResult());
-        log.error(errorMsg);
-        return buildResponse(ex, PARAM_INVALID, errorMsg);
-    }
-
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseDTO<String> handleConstraintViolationException(ConstraintViolationException ex) {
         String errorMsg = buildBindingErrorMsg(ex.getConstraintViolations());

@@ -5,6 +5,7 @@ import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * @author liaozan
@@ -12,20 +13,28 @@ import java.util.*;
  */
 public interface ValidateSupport {
 
-    default boolean hasText(String text) {
-        return StringUtils.isNotBlank(text);
+    default boolean isEmpty(String text) {
+        return StringUtils.isEmpty(text);
+    }
+
+    default boolean isNotEmpty(String text) {
+        return StringUtils.isNotEmpty(text);
     }
 
     default boolean isBlank(String text) {
-        return !hasText(text);
+        return StringUtils.isBlank(text);
+    }
+
+    default boolean isNotBlank(String text) {
+        return StringUtils.isNotBlank(text);
     }
 
     default boolean isNull(Object object) {
-        return object == null;
+        return Objects.isNull(object);
     }
 
     default boolean isNotNull(Object object) {
-        return !isNull(object);
+        return Objects.nonNull(object);
     }
 
     default boolean isEmpty(Collection<?> collection) {
@@ -33,7 +42,7 @@ public interface ValidateSupport {
     }
 
     default boolean isNotEmpty(Collection<?> collection) {
-        return !isEmpty(collection);
+        return CollectionUtils.isNotEmpty(collection);
     }
 
     default boolean isEmpty(Map<?, ?> map) {
@@ -41,7 +50,7 @@ public interface ValidateSupport {
     }
 
     default boolean isNotEmpty(Map<?, ?> map) {
-        return !isEmpty(map);
+        return MapUtils.isNotEmpty(map);
     }
 
     default String fixNull(String value) {
@@ -49,15 +58,23 @@ public interface ValidateSupport {
     }
 
     default <T> List<T> fixNull(List<T> value) {
-        return fixNull(value, new ArrayList<>());
+        return fixNull(value, ArrayList::new);
     }
 
     default <T> Set<T> fixNull(Set<T> value) {
-        return fixNull(value, new HashSet<>());
+        return fixNull(value, HashSet::new);
+    }
+
+    default <K, V> Map<K, V> fixNull(Map<K, V> value) {
+        return fixNull(value, HashMap::new);
     }
 
     default <T> T fixNull(T value, T defaultValue) {
         return value != null ? value : defaultValue;
+    }
+
+    default <T> T fixNull(T value, Supplier<T> defaultValueSupplier) {
+        return value != null ? value : defaultValueSupplier.get();
     }
 
 }

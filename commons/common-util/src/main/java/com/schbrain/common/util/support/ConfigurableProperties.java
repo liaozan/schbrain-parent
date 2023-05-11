@@ -17,7 +17,7 @@ public abstract class ConfigurableProperties implements Ordered {
     /**
      * get the namespace of remote config
      */
-    public abstract String getDefaultNamespace();
+    public abstract String getNamespace();
 
     /**
      * bind properties

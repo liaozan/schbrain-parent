@@ -15,7 +15,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class RedisProperties extends ConfigurableProperties {
 
     @Override
-    public String getDefaultNamespace() {
+    public String getNamespace() {
         return "redis-common";
     }
 

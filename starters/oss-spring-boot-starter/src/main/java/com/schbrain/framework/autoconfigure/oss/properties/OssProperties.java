@@ -35,7 +35,7 @@ public class OssProperties extends ConfigurableProperties {
     }
 
     @Override
-    public String getDefaultNamespace() {
+    public String getNamespace() {
         return "oss-common";
     }
 

@@ -28,7 +28,7 @@ public class XxlJobProperties extends ConfigurableProperties {
     private boolean register = false;
 
     @Override
-    public String getDefaultNamespace() {
+    public String getNamespace() {
         return "xxl-job-common";
     }
 

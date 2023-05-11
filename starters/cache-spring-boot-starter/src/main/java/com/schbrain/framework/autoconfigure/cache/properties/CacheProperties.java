@@ -30,7 +30,7 @@ public class CacheProperties extends ConfigurableProperties {
     private boolean appendPrefix = true;
 
     @Override
-    public String getDefaultNamespace() {
+    public String getNamespace() {
         return "cache-common";
     }
 

@@ -34,7 +34,7 @@ public class LoggerProperties extends ConfigurableProperties implements Priority
     private int maxHistory = (int) Duration.ofDays(30).toDays();
 
     @Override
-    public String getDefaultNamespace() {
+    public String getNamespace() {
         return "logger-common";
     }
 

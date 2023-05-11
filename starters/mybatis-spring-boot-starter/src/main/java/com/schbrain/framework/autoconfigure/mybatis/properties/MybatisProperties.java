@@ -35,7 +35,7 @@ public class MybatisProperties extends ConfigurableProperties {
     private boolean convertInstantToLong = true;
 
     @Override
-    public String getDefaultNamespace() {
+    public String getNamespace() {
         return "mybatis-common";
     }
 

@@ -42,7 +42,7 @@ public class WebProperties extends ConfigurableProperties {
     private String authenticationVariableName = "token";
 
     @Override
-    public String getDefaultNamespace() {
+    public String getNamespace() {
         return "web-common";
     }
 

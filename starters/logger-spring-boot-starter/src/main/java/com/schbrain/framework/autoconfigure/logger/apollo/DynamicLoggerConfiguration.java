@@ -22,7 +22,7 @@ public class DynamicLoggerConfiguration {
     }
 
     private void listenToLoggingLevelChange(LoggingSystem loggingSystem, LoggerProperties loggerProperties) {
-        String loggerNamespace = loggerProperties.getDefaultNamespace();
+        String loggerNamespace = loggerProperties.getNamespace();
         if (!StringUtils.hasText(loggerNamespace)) {
             log.debug("logger level reload is disabled");
             return;

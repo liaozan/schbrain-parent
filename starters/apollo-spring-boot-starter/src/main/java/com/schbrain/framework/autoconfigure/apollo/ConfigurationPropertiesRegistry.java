@@ -41,9 +41,7 @@ public class ConfigurationPropertiesRegistry implements SmartInitializingSinglet
         beanMap.forEach((beanName, propertiesBean) -> {
             String prefix = propertiesBean.getAnnotation().prefix();
             Object instance = propertiesBean.getInstance();
-            ReflectionUtils.doWithFields(instance.getClass(),
-                    field -> register(beanName, prefix, instance, field),
-                    field -> !Modifier.isFinal(field.getModifiers()));
+            ReflectionUtils.doWithFields(instance.getClass(), field -> register(beanName, prefix, instance, field), this::isNotFinalField);
         });
     }
 
@@ -64,6 +62,10 @@ public class ConfigurationPropertiesRegistry implements SmartInitializingSinglet
 
     private String toPlaceHolder(String key) {
         return DEFAULT_PLACEHOLDER_PREFIX + key + DEFAULT_VALUE_SEPARATOR + DEFAULT_PLACEHOLDER_SUFFIX;
+    }
+
+    private boolean isNotFinalField(Field field) {
+        return !Modifier.isFinal(field.getModifiers());
     }
 
 }

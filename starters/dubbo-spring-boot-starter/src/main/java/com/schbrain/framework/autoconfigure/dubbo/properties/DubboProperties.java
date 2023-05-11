@@ -59,7 +59,7 @@ public class DubboProperties extends ConfigurableProperties {
     private TracingConfig tracing = new TracingConfig();
 
     @Override
-    public String getDefaultNamespace() {
+    public String getNamespace() {
         return "dubbo-common";
     }
 

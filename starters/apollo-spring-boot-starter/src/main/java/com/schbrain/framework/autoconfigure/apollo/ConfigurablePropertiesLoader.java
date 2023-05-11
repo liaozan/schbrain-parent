@@ -32,7 +32,7 @@ class ConfigurablePropertiesLoader {
     /**
      * the name of properties propertySource
      */
-    private static final String PROPERTIES_PROPERTY_SOURCE = "ConfigurablePropertiesPropertySource";
+    public static final String PROPERTIES_PROPERTY_SOURCE = "ConfigurablePropertiesPropertySource";
 
     private final Log log;
 
@@ -63,7 +63,7 @@ class ConfigurablePropertiesLoader {
         }
 
         configurableProperties.forEach(properties -> {
-            String namespace = properties.getDefaultNamespace();
+            String namespace = properties.getNamespace();
             Config config = ConfigService.getConfig(namespace);
             OrderedMapPropertySource propertySource = ConfigUtils.toPropertySource(namespace, config);
             if (propertySource == null) {

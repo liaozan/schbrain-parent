@@ -15,7 +15,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ElasticsearchProperties extends ConfigurableProperties {
 
     @Override
-    public String getDefaultNamespace() {
+    public String getNamespace() {
         return "elasticsearch-common";
     }
 

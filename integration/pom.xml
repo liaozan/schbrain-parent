@@ -16,7 +16,6 @@
 
     <modules>
         <module>integration-maven-plugin</module>
-        <module>integration-jenkins-plugin</module>
     </modules>
 
 </project>

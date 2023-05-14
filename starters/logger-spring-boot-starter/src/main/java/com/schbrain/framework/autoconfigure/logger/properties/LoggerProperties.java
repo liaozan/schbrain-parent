@@ -2,7 +2,6 @@ package com.schbrain.framework.autoconfigure.logger.properties;
 
 import com.schbrain.common.util.support.ConfigurableProperties;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.PriorityOrdered;
 
@@ -13,9 +12,8 @@ import java.time.Duration;
  * @since 2021/12/11
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = "schbrain.logging.file")
-public class LoggerProperties extends ConfigurableProperties implements PriorityOrdered {
+public class LoggerProperties implements ConfigurableProperties, PriorityOrdered {
 
     public static final String DEFAULT_LOG_PATH = "/data/logs";
 

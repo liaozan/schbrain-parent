@@ -5,8 +5,8 @@ import com.ctrip.framework.apollo.ConfigService;
 import com.schbrain.common.util.properties.OrderedMapPropertySource;
 import com.schbrain.common.util.support.ConfigurableProperties;
 import com.schbrain.framework.autoconfigure.apollo.event.ConcurrentEventMulticaster;
-import com.schbrain.framework.autoconfigure.apollo.event.PropertiesPreparedEvent;
-import com.schbrain.framework.autoconfigure.apollo.event.listener.PropertiesPreparedEventListener;
+import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
+import com.schbrain.framework.autoconfigure.apollo.event.listener.ConfigLoadedEventListener;
 import com.schbrain.framework.autoconfigure.apollo.properties.ApolloProperties;
 import com.schbrain.framework.autoconfigure.apollo.util.ConfigUtils;
 import org.apache.commons.collections4.CollectionUtils;
@@ -79,16 +79,16 @@ class ConfigurablePropertiesLoader {
         });
     }
 
-    private PropertiesPreparedEvent createEvent(ConfigurableEnvironment environment, SpringApplication application,
-                                                OrderedMapPropertySource propertySource, ConfigurableProperties properties) {
+    private ConfigLoadedEvent createEvent(ConfigurableEnvironment environment, SpringApplication application,
+                                          OrderedMapPropertySource propertySource, ConfigurableProperties properties) {
         ConfigurableProperties boundProperties = properties.bind(environment);
-        return new PropertiesPreparedEvent(environment, deferredLogFactory, propertySource, boundProperties, application);
+        return new ConfigLoadedEvent(environment, deferredLogFactory, propertySource, boundProperties, application);
     }
 
     private ConcurrentEventMulticaster createEventMulticaster(Set<ApplicationListener<?>> listeners) {
         ConcurrentEventMulticaster eventMulticaster = new ConcurrentEventMulticaster();
         for (ApplicationListener<?> listener : listeners) {
-            if (ClassUtils.isAssignableValue(PropertiesPreparedEventListener.class, listener)) {
+            if (ClassUtils.isAssignableValue(ConfigLoadedEventListener.class, listener)) {
                 eventMulticaster.addApplicationListener(listener);
             }
         }

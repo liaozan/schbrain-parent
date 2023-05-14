@@ -2,7 +2,6 @@ package com.schbrain.framework.autoconfigure.oss.properties;
 
 import com.schbrain.common.util.support.ConfigurableProperties;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
@@ -11,9 +10,8 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
  * @since 2021/12/3
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = "schbrain.oss")
-public class OssProperties extends ConfigurableProperties {
+public class OssProperties implements ConfigurableProperties {
 
     private String accessKeyId;
 

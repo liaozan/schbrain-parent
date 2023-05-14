@@ -13,7 +13,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
  * @since 2023-04-28
  */
 @Getter
-public class PropertiesPreparedEvent extends ApplicationEvent {
+public class ConfigLoadedEvent extends ApplicationEvent {
 
     private static final long serialVersionUID = 2567291189881702459L;
 
@@ -25,11 +25,11 @@ public class PropertiesPreparedEvent extends ApplicationEvent {
 
     private final SpringApplication springApplication;
 
-    public PropertiesPreparedEvent(ConfigurableEnvironment environment,
-                                   DeferredLogFactory deferredLogFactory,
-                                   OrderedMapPropertySource propertySource,
-                                   ConfigurableProperties properties,
-                                   SpringApplication springApplication) {
+    public ConfigLoadedEvent(ConfigurableEnvironment environment,
+                             DeferredLogFactory deferredLogFactory,
+                             OrderedMapPropertySource propertySource,
+                             ConfigurableProperties properties,
+                             SpringApplication springApplication) {
         super(properties);
         this.environment = environment;
         this.propertySource = propertySource;

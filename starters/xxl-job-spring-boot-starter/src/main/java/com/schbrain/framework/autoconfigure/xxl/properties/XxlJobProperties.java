@@ -3,7 +3,6 @@ package com.schbrain.framework.autoconfigure.xxl.properties;
 import com.schbrain.common.util.InetUtils;
 import com.schbrain.common.util.support.ConfigurableProperties;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -11,9 +10,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @since 2022/1/8
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = "schbrain.xxl")
-public class XxlJobProperties extends ConfigurableProperties {
+public class XxlJobProperties implements ConfigurableProperties {
 
     private String adminAddresses;
 

@@ -3,8 +3,8 @@ package com.schbrain.framework.autoconfigure.dubbo.listener;
 import com.alibaba.fastjson2.JSONFactory;
 import com.schbrain.common.util.ApplicationName;
 import com.schbrain.common.util.properties.OrderedMapPropertySource;
-import com.schbrain.framework.autoconfigure.apollo.event.PropertiesPreparedEvent;
-import com.schbrain.framework.autoconfigure.apollo.event.listener.GenericPropertiesPreparedEventListener;
+import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
+import com.schbrain.framework.autoconfigure.apollo.event.listener.GenericConfigLoadedEventListener;
 import com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContextInitializer;
@@ -18,7 +18,7 @@ import static org.apache.dubbo.config.ConfigKeys.DUBBO_SCAN_BASE_PACKAGES;
  * @author liaozan
  * @since 2023-04-28
  */
-public class DubboPropertiesPreparedEventListener extends GenericPropertiesPreparedEventListener<DubboProperties> implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+public class DubboConfigLoadedEventListener extends GenericConfigLoadedEventListener<DubboProperties> implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     public static final String DUBBO_APPLICATION_NAME = "dubbo.application.name";
 
@@ -33,7 +33,7 @@ public class DubboPropertiesPreparedEventListener extends GenericPropertiesPrepa
     }
 
     @Override
-    protected void onPropertiesPrepared(PropertiesPreparedEvent event, DubboProperties properties) {
+    protected void onConfigLoaded(ConfigLoadedEvent event, DubboProperties properties) {
         event.getSpringApplication().addInitializers(this);
         setRequiredProperties(event.getEnvironment(), event.getSpringApplication(), event.getPropertySource());
         JSONFactory.setUseJacksonAnnotation(false);

@@ -1,6 +1,6 @@
 org.springframework.context.ApplicationContextInitializer=\
   com.schbrain.framework.autoconfigure.logger.logback.LogbackTraceIdConfiguration
 org.springframework.context.ApplicationListener=\
-  com.schbrain.framework.autoconfigure.logger.listener.LoggerPropertiesPreparedEventListener
+  com.schbrain.framework.autoconfigure.logger.listener.LoggerConfigLoadedEventListener
 com.schbrain.common.util.support.ConfigurableProperties=\
   com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties

@@ -2,7 +2,6 @@ package com.schbrain.framework.autoconfigure.mybatis.properties;
 
 import com.schbrain.common.util.support.ConfigurableProperties;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -10,9 +9,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @since 2021/11/23
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = "schbrain.mybatis")
-public class MybatisProperties extends ConfigurableProperties {
+public class MybatisProperties implements ConfigurableProperties {
 
     /**
      * 分页拦截器

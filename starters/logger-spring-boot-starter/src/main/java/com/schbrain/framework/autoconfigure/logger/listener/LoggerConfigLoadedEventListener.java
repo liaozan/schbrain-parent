@@ -8,8 +8,8 @@ import com.ctrip.framework.apollo.core.enums.ConfigFileFormat;
 import com.google.common.collect.Maps;
 import com.schbrain.common.util.InetUtils;
 import com.schbrain.common.util.InetUtils.HostInfo;
-import com.schbrain.framework.autoconfigure.apollo.event.PropertiesPreparedEvent;
-import com.schbrain.framework.autoconfigure.apollo.event.listener.GenericPropertiesPreparedEventListener;
+import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
+import com.schbrain.framework.autoconfigure.apollo.event.listener.GenericConfigLoadedEventListener;
 import com.schbrain.framework.autoconfigure.logger.LoggerConfigurationInitializer;
 import com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -25,10 +25,10 @@ import static org.springframework.boot.context.logging.LoggingApplicationListene
  * @author liaozan
  * @since 2023-04-28
  */
-public class LoggerPropertiesPreparedEventListener extends GenericPropertiesPreparedEventListener<LoggerProperties> {
+public class LoggerConfigLoadedEventListener extends GenericConfigLoadedEventListener<LoggerProperties> {
 
     @Override
-    protected void onPropertiesPrepared(PropertiesPreparedEvent event, LoggerProperties properties) {
+    protected void onConfigLoaded(ConfigLoadedEvent event, LoggerProperties properties) {
         ConfigurableEnvironment environment = event.getEnvironment();
         HostInfo hostInfo = InetUtils.findFirstNonLoopBackHostInfo();
         Map<String, String> hostInfoProperties = buildHostInfoProperties(hostInfo);

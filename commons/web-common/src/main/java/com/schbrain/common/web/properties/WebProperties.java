@@ -2,7 +2,6 @@ package com.schbrain.common.web.properties;
 
 import com.schbrain.common.util.support.ConfigurableProperties;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.nio.charset.StandardCharsets;
@@ -12,9 +11,8 @@ import java.nio.charset.StandardCharsets;
  * @since 2022/8/29
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = "schbrain.web")
-public class WebProperties extends ConfigurableProperties {
+public class WebProperties implements ConfigurableProperties {
 
     /**
      * whether to enable the request logging

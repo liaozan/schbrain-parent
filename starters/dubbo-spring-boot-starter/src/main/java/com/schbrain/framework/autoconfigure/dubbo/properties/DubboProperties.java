@@ -2,7 +2,6 @@ package com.schbrain.framework.autoconfigure.dubbo.properties;
 
 import com.schbrain.common.util.support.ConfigurableProperties;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.apache.dubbo.config.*;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -18,9 +17,8 @@ import java.util.Set;
  * @since 2021/12/6
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @ConfigurationProperties(prefix = "dubbo")
-public class DubboProperties extends ConfigurableProperties {
+public class DubboProperties implements ConfigurableProperties {
 
     @NestedConfigurationProperty
     private Scan scan = new Scan();

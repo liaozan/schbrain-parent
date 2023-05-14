@@ -1,4 +1,4 @@
 com.schbrain.common.util.support.ConfigurableProperties=\
   com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties
 org.springframework.context.ApplicationListener=\
-  com.schbrain.framework.autoconfigure.dubbo.listener.DubboPropertiesPreparedEventListener
+  com.schbrain.framework.autoconfigure.dubbo.listener.DubboConfigLoadedEventListener

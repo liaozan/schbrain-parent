@@ -1,9 +1,9 @@
 package com.schbrain.common.util.support;
 
 import com.schbrain.common.util.ConfigurationPropertiesUtils;
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.bind.*;
+import org.springframework.boot.context.properties.bind.Bindable;
+import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
 
@@ -11,30 +11,29 @@ import org.springframework.core.env.ConfigurableEnvironment;
  * @author liaozan
  * @since 2022/1/10
  */
-@Data
-public abstract class ConfigurableProperties implements Ordered {
+public interface ConfigurableProperties extends Ordered {
 
     /**
      * get the namespace of remote config
      */
-    public abstract String getNamespace();
+    String getNamespace();
 
     /**
      * bind properties
      */
-    public ConfigurableProperties bind(ConfigurableEnvironment environment) {
-        return Binder.get(environment, bindHandler()).bindOrCreate(getPropertiesPrefix(), Bindable.ofInstance(this));
+    default ConfigurableProperties bind(ConfigurableEnvironment environment) {
+        return Binder.get(environment).bindOrCreate(getPropertiesPrefix(), Bindable.ofInstance(this));
     }
 
     @Override
-    public int getOrder() {
+    default int getOrder() {
         return Ordered.LOWEST_PRECEDENCE;
     }
 
     /**
      * the prefix of properties
      */
-    protected String getPropertiesPrefix() {
+    private String getPropertiesPrefix() {
         ConfigurationProperties annotation = getClass().getAnnotation(ConfigurationProperties.class);
         if (annotation == null) {
             String className = ConfigurationProperties.class.getName();
@@ -42,13 +41,6 @@ public abstract class ConfigurableProperties implements Ordered {
             throw new IllegalStateException(errorDetail);
         }
         return ConfigurationPropertiesUtils.getPrefix(getClass());
-    }
-
-    /**
-     * get the {@link org.springframework.boot.context.properties.bind.BindHandler} for bind
-     */
-    protected BindHandler bindHandler() {
-        return BindHandler.DEFAULT;
     }
 
 }

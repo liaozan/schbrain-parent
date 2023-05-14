@@ -1,8 +1,5 @@
 package com.schbrain.maven.plugin.mojo;
 
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -14,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author liaozan
@@ -98,43 +96,46 @@ public class PrepareMojo extends AbstractMojo {
             return;
         }
 
-        validateParam();
-
-        Path targetFile = getTargetFile(finalName, buildDirectory);
-        if (!Files.exists(targetFile)) {
-            throw new MojoExecutionException("target jar is not present, it's required for build");
-        }
         try {
-            Map<Object, Object> variables = collectProjectVariables(targetFile);
-            storeVariablesToFile(variables);
-            getLog().info("generate build properties: \n" + JSONUtil.toJsonPrettyStr(variables));
+            validateParam();
+
+            Path executableJarFile = getExecutableJarFile(finalName, buildDirectory);
+            if (!Files.exists(executableJarFile)) {
+                throw new MojoExecutionException("target jar is not present, it's required for build");
+            }
+
+            Map<Object, Object> variables = collectProjectVariables(executableJarFile);
+            String content = storeVariablesToFile(variables);
+            getLog().info("generated build properties: \n" + content);
         } catch (Exception e) {
-            throw new MojoExecutionException(e);
+            String errorMsg = String.format("%s: %s", e.getClass().getName(), e.getMessage());
+            getLog().error(errorMsg);
+            throw new MojoExecutionException(errorMsg, e);
         }
     }
 
     private void validateParam() throws MojoExecutionException {
         MavenProject topLevelProject = session.getTopLevelProject();
-        if (StrUtil.isBlank(dockerRegistry)) {
+        if (isBlank(dockerRegistry)) {
             throw new MojoExecutionException("docker.registry is required for build, but found empty value, please check the pom configuration");
         }
-        if (StrUtil.isBlank(springProfile)) {
+        if (isBlank(springProfile)) {
             throw new MojoExecutionException("spring.profile is required for build, but found empty value, please check the pom configuration");
         }
-        if (StrUtil.isBlank(appName)) {
+        if (isBlank(appName)) {
             appName = topLevelProject.getArtifactId();
         }
-        if (StrUtil.isBlank(version)) {
+        if (isBlank(version)) {
             version = topLevelProject.getVersion();
         }
     }
 
-    private Map<Object, Object> collectProjectVariables(Path targetFile) {
+    private Map<Object, Object> collectProjectVariables(Path executableJarFile) {
         MavenProject topProject = session.getTopLevelProject();
         Map<Object, Object> variables = new HashMap<>();
         // required for docker build
         variables.put("APP_NAME", appName);
-        variables.put("JAR_FILE", getJarFileRelativePath(topProject.getBasedir(), targetFile));
+        variables.put("JAR_FILE", getJarFileRelativePath(topProject.getBasedir(), executableJarFile));
         variables.put("VERSION", version);
         variables.put("REGISTRY", dockerRegistry);
         variables.put("PROFILE", springProfile);
@@ -153,11 +154,14 @@ public class PrepareMojo extends AbstractMojo {
         return variables;
     }
 
-    private void storeVariablesToFile(Map<Object, Object> variables) throws IOException {
+    private String storeVariablesToFile(Map<Object, Object> variables) throws IOException {
         Path dockerBuildInfo = Paths.get(buildDirectory.getAbsolutePath(), DOCKER_BUILD_INFO);
-        FileUtil.del(dockerBuildInfo);
-        Files.createFile(dockerBuildInfo);
-        FileUtil.writeUtf8Map(variables, dockerBuildInfo.toFile(), "=", false);
+        if (Files.exists(dockerBuildInfo)) {
+            Files.delete(dockerBuildInfo);
+        }
+        String content = variablesToString(variables);
+        Files.writeString(dockerBuildInfo, content);
+        return content;
     }
 
     private String getJarFileRelativePath(File basedir, Path jarFile) {
@@ -172,12 +176,25 @@ public class PrepareMojo extends AbstractMojo {
         return false;
     }
 
-    private Path getTargetFile(String finalName, File targetDirectory) {
+    private Path getExecutableJarFile(String finalName, File targetDirectory) {
         return Paths.get(targetDirectory.getPath(), withExtension(finalName));
     }
 
     private String withExtension(String fileName) {
         return String.format("%s.%s", fileName, project.getArtifact().getArtifactHandler().getExtension());
+    }
+
+    private boolean isBlank(String value) {
+        return value == null || value.isBlank();
+    }
+
+    private String variablesToString(Map<Object, Object> variables) {
+        StringBuilder builder = new StringBuilder();
+        for (Entry<Object, Object> entry : variables.entrySet()) {
+            builder.append(entry.getKey()).append("=").append(entry.getValue());
+            builder.append(System.lineSeparator());
+        }
+        return builder.deleteCharAt(builder.length() - 1).toString();
     }
 
 }

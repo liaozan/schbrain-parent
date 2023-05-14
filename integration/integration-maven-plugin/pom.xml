@@ -38,10 +38,6 @@
             <version>${maven.plugin.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
@@ -51,9 +47,7 @@
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>${maven.plugin.version}</version>
                 <configuration>
-                    <mojoDependencies>
-                        <param>com.schbrain.maven.plugin</param>
-                    </mojoDependencies>
+                    <requiredJavaVersion>${java.version}</requiredJavaVersion>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,5 +1,6 @@
 package com.schbrain.framework.autoconfigure.dubbo.listener;
 
+import com.alibaba.fastjson2.JSONFactory;
 import org.apache.dubbo.config.ConfigCenterConfig;
 import org.apache.dubbo.config.context.ConfigManager;
 import org.apache.dubbo.config.spring.context.event.DubboConfigInitEvent;
@@ -28,6 +29,9 @@ class DubboConfigInitEventListener implements ApplicationListener<DubboConfigIni
     @Override
     public void onApplicationEvent(DubboConfigInitEvent event) {
         if (event.getApplicationContext() == applicationContext) {
+            JSONFactory.setUseJacksonAnnotation(false);
+            System.setProperty("dubbo.hessian.allowNonSerializable", Boolean.TRUE.toString());
+
             ApplicationModel applicationModel = DubboBeanUtils.getApplicationModel(applicationContext);
             ConfigManager configManager = applicationModel.getApplicationConfigManager();
             configManager.addConfigCenter(buildConfigCenterConfig());

@@ -1,6 +1,5 @@
 package com.schbrain.framework.autoconfigure.dubbo.listener;
 
-import com.alibaba.fastjson2.JSONFactory;
 import com.schbrain.common.util.ApplicationName;
 import com.schbrain.common.util.properties.OrderedMapPropertySource;
 import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
@@ -35,11 +34,10 @@ public class DubboConfigLoadedEventListener extends GenericConfigLoadedEventList
     @Override
     protected void onConfigLoaded(ConfigLoadedEvent event, DubboProperties properties) {
         event.getSpringApplication().addInitializers(this);
-        setRequiredProperties(event.getEnvironment(), event.getSpringApplication(), event.getPropertySource());
-        JSONFactory.setUseJacksonAnnotation(false);
+        addRequiredProperties(event.getEnvironment(), event.getSpringApplication(), event.getPropertySource());
     }
 
-    private void setRequiredProperties(ConfigurableEnvironment environment, SpringApplication application, OrderedMapPropertySource propertySource) {
+    private void addRequiredProperties(ConfigurableEnvironment environment, SpringApplication application, OrderedMapPropertySource propertySource) {
         if (!propertySource.containsProperty(DUBBO_SCAN_BASE_PACKAGES)) {
             propertySource.addProperty(DUBBO_SCAN_BASE_PACKAGES, getBasePackage(application));
         }

@@ -16,7 +16,7 @@
 
     <properties>
         <maven.core.version>3.9.2</maven.core.version>
-        <maven.plugin.version>3.8.2</maven.plugin.version>
+        <maven.plugin.version>3.9.0</maven.plugin.version>
     </properties>
 
     <dependencies>

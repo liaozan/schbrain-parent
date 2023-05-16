@@ -100,12 +100,16 @@ public class IdWorker {
 
     /**
      * get the timestamp (millis second) of id
-     *
-     * @param id the nextId
-     * @return the timestamp of id
      */
     public static long getIdTimestamp(long id) {
-        return INSTANCE.idEpoch + (id >> timestampLeftShift);
+        return getIdTimestamp(id, INSTANCE);
+    }
+
+    /**
+     * get the timestamp (millis second) of id
+     */
+    public static long getIdTimestamp(long id, IdWorker idWorker) {
+        return idWorker.idEpoch + (id >> timestampLeftShift);
     }
 
     private synchronized long nextId() {

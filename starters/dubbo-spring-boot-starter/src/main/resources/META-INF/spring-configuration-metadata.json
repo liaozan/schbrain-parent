@@ -240,6 +240,11 @@
       "sourceType": "org.apache.dubbo.config.ApplicationConfig"
     },
     {
+      "name": "dubbo.application.qos-anonymous-allow-commands",
+      "type": "java.lang.String",
+      "sourceType": "org.apache.dubbo.config.ApplicationConfig"
+    },
+    {
       "name": "dubbo.application.qos-enable",
       "type": "java.lang.Boolean",
       "sourceType": "org.apache.dubbo.config.ApplicationConfig"
@@ -2033,6 +2038,11 @@
     {
       "name": "dubbo.tracing.scope-model",
       "type": "org.apache.dubbo.rpc.model.ScopeModel",
+      "sourceType": "org.apache.dubbo.config.TracingConfig"
+    },
+    {
+      "name": "dubbo.tracing.tracing-exporter",
+      "type": "org.apache.dubbo.config.nested.ExporterConfig",
       "sourceType": "org.apache.dubbo.config.TracingConfig"
     },
     {

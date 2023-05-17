@@ -8,8 +8,8 @@ import com.schbrain.common.exception.BaseException;
 import com.schbrain.common.util.StreamUtils;
 import com.schbrain.common.util.support.ValidateSupport;
 import com.schbrain.framework.autoconfigure.mybatis.annotation.BizId;
+import com.schbrain.framework.autoconfigure.mybatis.biz.BizIdColumnField;
 import com.schbrain.framework.autoconfigure.mybatis.biz.BizIdHelper;
-import com.schbrain.framework.autoconfigure.mybatis.core.BizIdColumnField;
 import com.schbrain.framework.autoconfigure.mybatis.exception.NoSuchRecordException;
 import org.apache.ibatis.binding.MapperMethod.ParamMap;
 import org.springframework.beans.factory.InitializingBean;
@@ -60,12 +60,12 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
     }
 
     @Override
-    public T getByBizId(String bizId) {
+    public T getByBizId(Object bizId) {
         return getByBizId(bizId, false);
     }
 
     @Override
-    public T getByBizId(String bizId, boolean throwIfNotFound) {
+    public T getByBizId(Object bizId, boolean throwIfNotFound) {
         Supplier<? extends RuntimeException> notFoundSupplier = null;
         if (throwIfNotFound) {
             notFoundSupplier = () -> new NoSuchRecordException(entityClass);
@@ -74,7 +74,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
     }
 
     @Override
-    public T getByBizId(String bizId, Supplier<? extends RuntimeException> notFoundSupplier) {
+    public T getByBizId(Object bizId, Supplier<? extends RuntimeException> notFoundSupplier) {
         assertBidColumnFieldExist();
         T entity = query().eq(bizIdColumnField.getColumnName(), bizId).one();
         if (entity == null && notFoundSupplier != null) {
@@ -84,7 +84,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
     }
 
     @Override
-    public List<T> listByBizIds(Collection<String> bizIds) {
+    public <K> List<T> listByBizIds(Collection<K> bizIds) {
         assertBidColumnFieldExist();
         if (isEmpty(bizIds)) {
             return Collections.emptyList();
@@ -93,7 +93,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
     }
 
     @Override
-    public Map<String, T> getMapByBizIds(Collection<String> bizIds) {
+    public <K> Map<K, T> getMapByBizIds(Collection<K> bizIds) {
         assertBidColumnFieldExist();
         if (isEmpty(bizIds)) {
             return Collections.emptyMap();
@@ -128,9 +128,6 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
         ReflectionUtils.doWithFields(entityClass, bizId -> {
             if (this.bizIdColumnField != null) {
                 throw new BaseException(String.format("@BizId can't more than one in Class: \"%s\"", entityClass.getName()));
-            }
-            if (bizId.getType() != String.class) {
-                throw new BaseException("@BizId only support String field");
             }
             this.bizIdColumnField = new BizIdColumnField(entityClass, bizId);
             BizIdHelper.putBizColumnField(entityClass, bizIdColumnField);

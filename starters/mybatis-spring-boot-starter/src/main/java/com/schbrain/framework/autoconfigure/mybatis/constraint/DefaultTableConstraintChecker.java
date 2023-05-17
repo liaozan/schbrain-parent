@@ -1,8 +1,8 @@
 package com.schbrain.framework.autoconfigure.mybatis.constraint;
 
 import com.mysql.cj.MysqlType;
+import com.schbrain.framework.autoconfigure.mybatis.biz.BizIdColumnField;
 import com.schbrain.framework.autoconfigure.mybatis.biz.BizIdHelper;
-import com.schbrain.framework.autoconfigure.mybatis.core.BizIdColumnField;
 import com.schbrain.framework.autoconfigure.mybatis.exception.TableConstraintException;
 
 import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants.*;

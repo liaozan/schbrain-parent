@@ -1,5 +1,6 @@
 package com.schbrain.framework.autoconfigure.mybatis.annotation;
 
+import com.schbrain.framework.autoconfigure.mybatis.biz.BizIdColumnField;
 import com.schbrain.framework.autoconfigure.mybatis.biz.BizIdType;
 
 import java.lang.annotation.*;
@@ -16,7 +17,7 @@ public @interface BizId {
     /**
      * 逻辑主键列名,为空时取字段名
      *
-     * @see com.schbrain.framework.autoconfigure.mybatis.core.BizIdColumnField
+     * @see BizIdColumnField
      */
     String value() default "";
 

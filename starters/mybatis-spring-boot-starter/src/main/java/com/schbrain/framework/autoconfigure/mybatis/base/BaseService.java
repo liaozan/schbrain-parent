@@ -29,31 +29,31 @@ public interface BaseService<T extends BaseEntity> extends IService<T> {
     /**
      * 根据业务主键获取记录
      */
-    T getByBizId(String bizId);
+    T getByBizId(Object bizId);
 
     /**
      * 根据业务主键获取记录
      *
      * @param throwIfNotFound 未获取到记录时是否抛异常
      */
-    T getByBizId(String bizId, boolean throwIfNotFound);
+    T getByBizId(Object bizId, boolean throwIfNotFound);
 
     /**
      * 根据业务主键获取记录
      *
      * @param notFoundSupplier 未获取到记录时是否抛异常
      */
-    T getByBizId(String bizId, Supplier<? extends RuntimeException> notFoundSupplier);
+    T getByBizId(Object bizId, Supplier<? extends RuntimeException> notFoundSupplier);
 
     /**
      * 根据业务主键获取
      */
-    List<T> listByBizIds(Collection<String> bizIds);
+    <K> List<T> listByBizIds(Collection<K> bizIds);
 
     /**
      * 根据业务主键获取
      */
-    Map<String, T> getMapByBizIds(Collection<String> bizIds);
+    <K> Map<K, T> getMapByBizIds(Collection<K> bizIds);
 
     /**
      * 根据 id 更新,null 会被更新为 null

@@ -1,8 +1,6 @@
 package com.schbrain.framework.autoconfigure.mybatis.biz;
 
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
-import com.schbrain.framework.autoconfigure.mybatis.core.BizIdColumnField;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlCommandType;
@@ -32,8 +30,8 @@ public class BizIdInjectInterceptor implements InnerInterceptor {
             return;
         }
         if (bizIdType == BizIdType.ID_WORKER) {
-            String bizIdValue = bizColumnField.getValue(entity);
-            if (StringUtils.isBlank(bizIdValue)) {
+            Object bizIdValue = bizColumnField.getValue(entity);
+            if (bizIdValue == null) {
                 bizColumnField.setValue(entity, bizIdType.generateBizId(entity));
             }
         }

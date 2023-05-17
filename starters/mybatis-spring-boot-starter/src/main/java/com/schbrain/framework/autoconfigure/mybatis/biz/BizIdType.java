@@ -28,7 +28,7 @@ public enum BizIdType {
     /**
      * 生成 bizId 的值
      */
-    public String generateBizId(Object entity) {
+    public Object generateBizId(Object entity) {
         return generator.generate(entity);
     }
 

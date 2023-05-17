@@ -1,8 +1,7 @@
-package com.schbrain.framework.autoconfigure.mybatis.core;
+package com.schbrain.framework.autoconfigure.mybatis.biz;
 
 import com.schbrain.common.exception.BaseException;
 import com.schbrain.framework.autoconfigure.mybatis.annotation.BizId;
-import com.schbrain.framework.autoconfigure.mybatis.biz.BizIdHelper;
 import lombok.Data;
 
 import java.lang.invoke.MethodHandle;
@@ -29,22 +28,25 @@ public class BizIdColumnField {
         this.annotation = bizIdField.getAnnotation(BizId.class);
         this.columnName = BizIdHelper.getColumnName(entityClass, bizIdField, this.annotation);
         try {
-            this.bizIdFieldGetterMethodHandle = privateLookupIn(entityClass, lookup()).findGetter(entityClass, bizIdField.getName(), String.class);
-            this.bizIdFieldSetterMethodHandle = privateLookupIn(entityClass, lookup()).findSetter(entityClass, bizIdField.getName(), String.class);
+            Class<?> fieldType = bizIdField.getType();
+            Lookup lookup = privateLookupIn(entityClass, lookup());
+            this.bizIdFieldGetterMethodHandle = lookup.findGetter(entityClass, bizIdField.getName(), fieldType);
+            this.bizIdFieldSetterMethodHandle = lookup.findSetter(entityClass, bizIdField.getName(), fieldType);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new BaseException(e.getMessage(), e);
         }
     }
 
-    public <T> String getValue(T entity) {
+    @SuppressWarnings("unchecked")
+    public <V, T> V getValue(T entity) {
         try {
-            return (String) bizIdFieldGetterMethodHandle.invoke(entity);
+            return (V) bizIdFieldGetterMethodHandle.invoke(entity);
         } catch (Throwable e) {
             throw new BaseException(e.getMessage(), e);
         }
     }
 
-    public <T> void setValue(T entity, String value) {
+    public <V, T> void setValue(T entity, V value) {
         try {
             bizIdFieldSetterMethodHandle.invoke(entity, value);
         } catch (Throwable e) {

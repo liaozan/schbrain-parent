@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.schbrain.framework.autoconfigure.mybatis.annotation.BizId;
-import com.schbrain.framework.autoconfigure.mybatis.core.BizIdColumnField;
 import org.apache.ibatis.session.Configuration;
 
 import java.lang.reflect.Field;

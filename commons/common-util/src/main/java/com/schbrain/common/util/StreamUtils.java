@@ -36,8 +36,8 @@ public class StreamUtils {
         return toList(data, mapper, distinct, false);
     }
 
-    public static <T, E> List<E> toList(Iterable<T> data, Function<T, E> mapper, boolean distinct, boolean ignoreNull) {
-        return extract(data, mapper, distinct, ignoreNull, Collectors.toList());
+    public static <T, E> List<E> toList(Iterable<T> data, Function<T, E> mapper, boolean distinct, boolean discardNull) {
+        return extract(data, mapper, distinct, discardNull, Collectors.toList());
     }
 
     public static <T, E> Set<E> toSet(Iterable<T> data, Function<T, E> mapper) {
@@ -88,8 +88,8 @@ public class StreamUtils {
         return groupBy(data, mapper, collectors, false);
     }
 
-    public static <K, T, V> Map<K, V> groupBy(Iterable<T> data, Function<T, K> mapper, Collector<T, ?, V> collectors, boolean ignoreNullKey) {
-        return groupBy(data, mapper, Function.identity(), collectors, ignoreNullKey);
+    public static <K, T, V> Map<K, V> groupBy(Iterable<T> data, Function<T, K> mapper, Collector<T, ?, V> collectors, boolean discardNullKey) {
+        return groupBy(data, mapper, Function.identity(), collectors, discardNullKey);
     }
 
     public static <K, T, V> Map<K, List<V>> groupBy(Iterable<T> data, Function<T, K> keyMapper, Function<T, V> valueMapper) {
@@ -104,13 +104,13 @@ public class StreamUtils {
         return groupBy(data, keyMapper, valueMapper, collector, false);
     }
 
-    public static <K, T, V, C> Map<K, C> groupBy(Iterable<T> data, Function<T, K> keyMapper, Function<T, V> valueMapper, Collector<V, ?, C> collector, boolean ignoreNullKey) {
-        return groupBy(data, keyMapper, valueMapper, collector, ignoreNullKey, HashMap::new);
+    public static <K, T, V, C> Map<K, C> groupBy(Iterable<T> data, Function<T, K> keyMapper, Function<T, V> valueMapper, Collector<V, ?, C> collector, boolean discardNullKey) {
+        return groupBy(data, keyMapper, valueMapper, collector, discardNullKey, HashMap::new);
     }
 
-    public static <K, T, V, C> Map<K, C> groupBy(Iterable<T> data, Function<T, K> keyMapper, Function<T, V> valueMapper, Collector<V, ?, C> collector, boolean ignoreNullKey, Supplier<Map<K, C>> mapSupplier) {
+    public static <K, T, V, C> Map<K, C> groupBy(Iterable<T> data, Function<T, K> keyMapper, Function<T, V> valueMapper, Collector<V, ?, C> collector, boolean discardNullKey, Supplier<Map<K, C>> mapSupplier) {
         Stream<T> stream = from(data);
-        if (ignoreNullKey) {
+        if (discardNullKey) {
             stream = stream.filter(item -> null != keyMapper.apply(item));
         }
         return stream.collect(groupingBy(keyMapper, mapSupplier, mapping(valueMapper, collector)));
@@ -128,9 +128,9 @@ public class StreamUtils {
         return from(data).map(toStringFunction).collect(joining(delimiter, prefix, suffix));
     }
 
-    public static <T, E, R> R extract(Iterable<T> data, Function<T, E> mapper, boolean distinct, boolean ignoreNull, Collector<E, ?, R> collector) {
+    public static <T, E, R> R extract(Iterable<T> data, Function<T, E> mapper, boolean distinct, boolean discardNull, Collector<E, ?, R> collector) {
         Predicate<E> predicate = null;
-        if (ignoreNull) {
+        if (discardNull) {
             predicate = Objects::nonNull;
         }
         return extract(data, mapper, predicate, distinct, collector);

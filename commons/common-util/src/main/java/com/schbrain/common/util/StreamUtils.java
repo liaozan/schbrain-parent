@@ -44,8 +44,27 @@ public class StreamUtils {
         return toSet(data, mapper, false);
     }
 
-    public static <T, E> Set<E> toSet(Iterable<T> data, Function<T, E> mapper, boolean ignoreNull) {
-        return extract(data, mapper, ignoreNull, false, Collectors.toSet());
+    public static <T, E> Set<E> toSet(Iterable<T> data, Function<T, E> mapper, boolean discardNull) {
+        return extract(data, mapper, discardNull, false, Collectors.toSet());
+    }
+
+    public static <T, E, R> R extract(Iterable<T> data, Function<T, E> mapper, boolean distinct, boolean discardNull, Collector<E, ?, R> collector) {
+        Predicate<E> predicate = null;
+        if (discardNull) {
+            predicate = Objects::nonNull;
+        }
+        return extract(data, mapper, predicate, distinct, collector);
+    }
+
+    public static <T, E, R> R extract(Iterable<T> data, Function<T, E> mapper, Predicate<E> predicate, boolean distinct, Collector<E, ?, R> collector) {
+        Stream<E> stream = from(data).map(mapper);
+        if (distinct) {
+            stream = stream.distinct();
+        }
+        if (predicate != null) {
+            stream = stream.filter(predicate);
+        }
+        return stream.collect(collector);
     }
 
     public static <K, T> Map<K, T> toMap(Iterable<T> data, Function<T, K> keyMapper) {
@@ -126,25 +145,6 @@ public class StreamUtils {
 
     public static <T> String join(Iterable<T> data, CharSequence delimiter, String prefix, String suffix, Function<T, ? extends CharSequence> toStringFunction) {
         return from(data).map(toStringFunction).collect(joining(delimiter, prefix, suffix));
-    }
-
-    public static <T, E, R> R extract(Iterable<T> data, Function<T, E> mapper, boolean distinct, boolean discardNull, Collector<E, ?, R> collector) {
-        Predicate<E> predicate = null;
-        if (discardNull) {
-            predicate = Objects::nonNull;
-        }
-        return extract(data, mapper, predicate, distinct, collector);
-    }
-
-    public static <T, E, R> R extract(Iterable<T> data, Function<T, E> mapper, Predicate<E> predicate, boolean distinct, Collector<E, ?, R> collector) {
-        Stream<E> stream = from(data).map(mapper);
-        if (distinct) {
-            stream = stream.distinct();
-        }
-        if (predicate != null) {
-            stream = stream.filter(predicate);
-        }
-        return stream.collect(collector);
     }
 
     public static <T> Stream<T> from(Iterable<T> iterable) {

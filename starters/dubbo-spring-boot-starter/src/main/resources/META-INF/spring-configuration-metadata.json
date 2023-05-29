@@ -1010,6 +1010,11 @@
       "sourceType": "org.apache.dubbo.config.MetricsConfig"
     },
     {
+      "name": "dubbo.metrics.export-metrics-service",
+      "type": "java.lang.Boolean",
+      "sourceType": "org.apache.dubbo.config.MetricsConfig"
+    },
+    {
       "name": "dubbo.metrics.export-service-port",
       "type": "java.lang.Integer",
       "sourceType": "org.apache.dubbo.config.MetricsConfig"
@@ -1052,6 +1057,11 @@
     {
       "name": "dubbo.metrics.scope-model",
       "type": "org.apache.dubbo.rpc.model.ScopeModel",
+      "sourceType": "org.apache.dubbo.config.MetricsConfig"
+    },
+    {
+      "name": "dubbo.metrics.use-global-registry",
+      "type": "java.lang.Boolean",
       "sourceType": "org.apache.dubbo.config.MetricsConfig"
     },
     {

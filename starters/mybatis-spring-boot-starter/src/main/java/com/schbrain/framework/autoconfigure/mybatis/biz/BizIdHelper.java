@@ -44,7 +44,7 @@ public class BizIdHelper {
 
     private static TableFieldInfo getBizIdFieldInfo(TableInfo tableInfo, Field bizIdField) {
         List<TableFieldInfo> fieldInfoList = tableInfo.getFieldList().stream()
-                .filter(fieldInfo -> fieldInfo.getField() == bizIdField)
+                .filter(fieldInfo -> fieldInfo.getField().equals(bizIdField))
                 .collect(Collectors.toList());
         if (CollectionUtils.isEmpty(fieldInfoList)) {
             throw new BaseException(String.format("%s can not be found in fieldList", bizIdField.getName()));

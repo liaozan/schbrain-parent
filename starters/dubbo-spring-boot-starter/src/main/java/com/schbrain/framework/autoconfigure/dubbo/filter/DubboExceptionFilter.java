@@ -37,13 +37,14 @@ public class DubboExceptionFilter extends ExceptionFilter {
     }
 
     private void logErrorDetail(Invoker<?> invoker, Throwable exception) {
-        RpcServiceContext context = RpcContext.getServiceContext();
+        RpcServiceContext context = RpcContext.getCurrentServiceContext();
         String arguments = Arrays.toString(context.getArguments());
         String serviceName = invoker.getInterface().getSimpleName();
         String methodName = context.getMethodName();
         String remoteHost = context.getRemoteHost();
         String remoteApplication = context.getRemoteApplicationName();
-        log.error("Catch rpc exception, client: {}@{}, target: {}#{}, args: {}", remoteApplication, remoteHost, serviceName, methodName, arguments, exception);
+        String errorMessage = ExceptionUtil.getMessage(exception);
+        log.error("Catch rpc exception: {}, client: {}@{}, target: {}#{}, args: {}", errorMessage, remoteApplication, remoteHost, serviceName, methodName, arguments, exception);
     }
 
 }

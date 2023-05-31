@@ -1,14 +1,16 @@
 package com.schbrain.framework.autoconfigure.mybatis.biz;
 
-import com.baomidou.mybatisplus.core.metadata.TableInfo;
-import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
+import com.baomidou.mybatisplus.core.metadata.*;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.schbrain.common.exception.BaseException;
 import com.schbrain.framework.autoconfigure.mybatis.annotation.BizId;
-import org.apache.ibatis.session.Configuration;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * @author liaozan
@@ -37,11 +39,17 @@ public class BizIdHelper {
             return annotation.value();
         }
         TableInfo tableInfo = TableInfoHelper.getTableInfo(entityClass);
-        Configuration configuration = tableInfo.getConfiguration();
-        if (configuration.isMapUnderscoreToCamelCase()) {
-            return StringUtils.camelToUnderline(bizIdField.getName());
+        return getBizIdFieldInfo(tableInfo, bizIdField).getColumn();
+    }
+
+    private static TableFieldInfo getBizIdFieldInfo(TableInfo tableInfo, Field bizIdField) {
+        List<TableFieldInfo> fieldInfoList = tableInfo.getFieldList().stream()
+                .filter(fieldInfo -> fieldInfo.getField() == bizIdField)
+                .collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(fieldInfoList)) {
+            throw new BaseException(String.format("%s can not be found in fieldList", bizIdField.getName()));
         }
-        return bizIdField.getName();
+        return fieldInfoList.get(0);
     }
 
 }

@@ -2,11 +2,10 @@ package com.schbrain.common.web.exception;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.schbrain.common.constants.ResponseActionConstants;
 import com.schbrain.common.exception.BaseException;
-import com.schbrain.common.util.EnvUtils;
 import com.schbrain.common.web.result.ResponseDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -37,11 +36,17 @@ import static com.schbrain.common.constants.ResponseCodeConstants.*;
 @ResponseStatus(HttpStatus.OK)
 public class DefaultGlobalExceptionHandler implements GlobalExceptionHandler {
 
+    private final List<ExceptionTranslator> exceptionTranslators;
+
+    public DefaultGlobalExceptionHandler(List<ExceptionTranslator> exceptionTranslators) {
+        this.exceptionTranslators = exceptionTranslators;
+    }
+
     /*************************************  Base Exception Handing  *************************************/
     @ExceptionHandler(BaseException.class)
     public ResponseDTO<String> handleBaseException(BaseException ex) {
         logError(ex);
-        return ResponseDTO.error(ex);
+        return buildResponse(ex, ex.getCode(), ex.getAction(), ex.getMessage());
     }
 
     /*************************************  Common Exception Handing  *************************************/
@@ -185,25 +190,31 @@ public class DefaultGlobalExceptionHandler implements GlobalExceptionHandler {
         return buildResponse(ex, PARAM_INVALID, errorMsg);
     }
 
-    protected ResponseDTO<String> loggingThenBuildResponse(Throwable throwable, int errorCode) {
+    protected ResponseDTO<String> loggingThenBuildResponse(Throwable throwable, int code) {
         Throwable rootCause = ExceptionUtil.getRootCause(throwable);
         logError(rootCause);
-        return buildResponse(rootCause, errorCode, rootCause.getMessage());
+        return buildResponse(rootCause, code, rootCause.getMessage());
     }
 
     protected ResponseDTO<String> buildResponse(Throwable throwable, int code, String message) {
-        boolean isProduction = EnvUtils.isProduction();
-        ResponseDTO<String> responseDTO = getExceptionResponseMapping(throwable, isProduction);
+        return buildResponse(throwable, code, ResponseActionConstants.ALERT, message);
+    }
+
+    protected ResponseDTO<String> buildResponse(Throwable throwable, int code, int action, String message) {
+        ResponseDTO<String> responseDTO = translateException(throwable, code, action, message);
         if (responseDTO != null) {
             return responseDTO;
         }
-        if (isProduction || StringUtils.isBlank(message)) {
-            return ResponseDTO.error("系统错误", code);
-        }
-        return ResponseDTO.error(message, code);
+        return ResponseDTO.error(message, code, action);
     }
 
-    protected ResponseDTO<String> getExceptionResponseMapping(Throwable throwable, boolean isProduction) {
+    protected ResponseDTO<String> translateException(Throwable throwable, int code, int action, String message) {
+        for (ExceptionTranslator exceptionTranslator : exceptionTranslators) {
+            ResponseDTO<String> responseDTO = exceptionTranslator.translate(throwable, code, action, message);
+            if (responseDTO != null) {
+                return responseDTO;
+            }
+        }
         return null;
     }
 
@@ -235,15 +246,7 @@ public class DefaultGlobalExceptionHandler implements GlobalExceptionHandler {
 
     protected void logError(Throwable throwable) {
         String exMsg = ExceptionUtil.getMessage(throwable);
-        if (hasCause(throwable)) {
-            exMsg = exMsg + ", " + ExceptionUtil.getRootCauseMessage(throwable);
-            throwable = ExceptionUtil.getRootCause(throwable);
-        }
         log.error(exMsg, throwable);
-    }
-
-    private boolean hasCause(Throwable throwable) {
-        return throwable.getCause() != null;
     }
 
 }

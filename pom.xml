@@ -84,9 +84,10 @@
         <mybatis.starter.version>2.3.0</mybatis.starter.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
-        <pagehelper.version>5.3.3</pagehelper.version>
+        <pagehelper.version>5.3.2</pagehelper.version>
         <redisson.version>3.18.0</redisson.version>
-        <skywalking-tooklit.version>8.16.0</skywalking-tooklit.version>
+        <skywalking-tooklit.version>8.15.0</skywalking-tooklit.version>
+        <vavr.version>0.10.4</vavr.version>
         <xxl-job.version>2.0.2</xxl-job.version>
         <zookeeper.version>3.8.1</zookeeper.version>
         <zxing-core.version>3.5.1</zxing-core.version>
@@ -430,6 +431,11 @@
                 <groupId>org.apache.skywalking</groupId>
                 <artifactId>apm-toolkit-logback-1.x</artifactId>
                 <version>${skywalking-tooklit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vavr</groupId>
+                <artifactId>vavr</artifactId>
+                <version>${vavr.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.xuxueli</groupId>

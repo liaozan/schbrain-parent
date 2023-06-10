@@ -5,5 +5,5 @@ updates:
     schedule:
       interval: "daily"
       timezone: "Asia/Shanghai"
-      time: "01:00"
+      time: "21:00"
     open-pull-requests-limit: 10

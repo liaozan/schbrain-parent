@@ -12,12 +12,18 @@ import org.springframework.core.Ordered;
  */
 public class DefaultExceptionTranslator implements ExceptionTranslator {
 
+    private final boolean isProduction;
+
+    public DefaultExceptionTranslator() {
+        this.isProduction = EnvUtils.isProduction();
+    }
+
     @Override
     public ResponseDTO<String> translate(Throwable throwable, int code, int action, String message) {
         if (throwable instanceof BaseException) {
             return ResponseDTO.error((BaseException) throwable);
         }
-        if (EnvUtils.isProduction() || StringUtils.isBlank(message)) {
+        if (isProduction || StringUtils.isBlank(message)) {
             return ResponseDTO.error("系统错误", code);
         }
         return ResponseDTO.error(message, code, action);

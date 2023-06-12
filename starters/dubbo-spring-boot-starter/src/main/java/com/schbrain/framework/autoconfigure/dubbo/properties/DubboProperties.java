@@ -56,6 +56,9 @@ public class DubboProperties implements ConfigurableProperties {
     @NestedConfigurationProperty
     private TracingConfig tracing = new TracingConfig();
 
+    @NestedConfigurationProperty
+    private SslConfig ssl = new SslConfig();
+
     @Override
     public String getNamespace() {
         return "dubbo-common";

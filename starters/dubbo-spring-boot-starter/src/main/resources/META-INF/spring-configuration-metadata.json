@@ -72,6 +72,12 @@
       "sourceMethod": "getScan()"
     },
     {
+      "name": "dubbo.ssl",
+      "type": "org.apache.dubbo.config.SslConfig",
+      "sourceType": "com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties",
+      "sourceMethod": "getSsl()"
+    },
+    {
       "name": "dubbo.tracing",
       "type": "org.apache.dubbo.config.TracingConfig",
       "sourceType": "com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties",
@@ -2004,6 +2010,121 @@
       "type": "java.util.Set<java.lang.String>",
       "description": "The basePackages to scan , the multiple-value is delimited by comma @see EnableDubbo#scanBasePackages()",
       "sourceType": "com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties$Scan"
+    },
+    {
+      "name": "dubbo.ssl.ca-address",
+      "type": "java.lang.String",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.ca-cert-path",
+      "type": "java.lang.String",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.client-key-cert-chain-path",
+      "type": "java.lang.String",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.client-key-cert-chain-path-stream",
+      "type": "java.io.InputStream",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.client-key-password",
+      "type": "java.lang.String",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.client-private-key-path",
+      "type": "java.lang.String",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.client-private-key-path-stream",
+      "type": "java.io.InputStream",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.client-trust-cert-collection-path",
+      "type": "java.lang.String",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.client-trust-cert-collection-path-stream",
+      "type": "java.io.InputStream",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.default",
+      "type": "java.lang.Boolean",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.env-type",
+      "type": "java.lang.String",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.id",
+      "type": "java.lang.String",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.meta-data",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.oidc-token-path",
+      "type": "java.lang.String",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.prefixes",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.scope-model",
+      "type": "org.apache.dubbo.rpc.model.ScopeModel",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.server-key-cert-chain-path",
+      "type": "java.lang.String",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.server-key-cert-chain-path-stream",
+      "type": "java.io.InputStream",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.server-key-password",
+      "type": "java.lang.String",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.server-private-key-path",
+      "type": "java.lang.String",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.server-private-key-path-stream",
+      "type": "java.io.InputStream",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.server-trust-cert-collection-path",
+      "type": "java.lang.String",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
+    },
+    {
+      "name": "dubbo.ssl.server-trust-cert-collection-path-stream",
+      "type": "java.io.InputStream",
+      "sourceType": "org.apache.dubbo.config.SslConfig"
     },
     {
       "name": "dubbo.tracing.baggage",

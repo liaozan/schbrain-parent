@@ -94,8 +94,8 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
             return;
         }
         if (!environment.containsProperty(DUBBO_REGISTER_KEY)) {
-            log.info(StrFormatter.format("Not running on CloudPlatform, {} is set to false by default", DUBBO_REGISTER_KEY));
-            log.info(StrFormatter.format("If you want force to register with Dubbo Registry, set {} = true", DUBBO_REGISTER_KEY));
+            log.warn(StrFormatter.format("Not running on CloudPlatform, {} is set to false by default", DUBBO_REGISTER_KEY));
+            log.warn(StrFormatter.format("If you want force to register with Dubbo Registry, set {} = true", DUBBO_REGISTER_KEY));
             defaultProperties.put(DUBBO_REGISTER_KEY, false);
         }
     }

@@ -549,20 +549,10 @@
 
     <repositories>
         <repository>
-            <id>libs-releases</id>
-            <url>${maven.repository.url}/maven-releases</url>
+            <id>libs-public</id>
+            <url>${maven.repository.url}/maven-public</url>
             <releases>
                 <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>libs-snapshots</id>
-            <url>${maven.repository.url}/maven-snapshots</url>
-            <releases>
-                <enabled>false</enabled>
             </releases>
             <snapshots>
                 <enabled>true</enabled>
@@ -573,15 +563,11 @@
 
     <pluginRepositories>
         <pluginRepository>
-            <id>plugin-releases</id>
-            <url>${maven.repository.url}/maven-releases</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>plugin-snapshots</id>
-            <url>${maven.repository.url}/maven-snapshots</url>
+            <id>libs-public</id>
+            <url>${maven.repository.url}/maven-public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>

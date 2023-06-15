@@ -64,7 +64,7 @@
 
         <!--  3th part versions -->
         <apollo.version>2.1.0</apollo.version>
-        <bcprov-jdk18on.version>1.73</bcprov-jdk18on.version>
+        <bcprov-jdk18on.version>1.74</bcprov-jdk18on.version>
         <cglib.version>3.3.0</cglib.version>
         <curator.version>5.5.0</curator.version>
         <commons-collections4.version>4.4</commons-collections4.version>

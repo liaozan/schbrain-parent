@@ -20,6 +20,8 @@ public class BizIdColumnField {
 
     private final String columnName;
 
+    private final Class<?> fieldType;
+
     private final MethodHandle bizIdFieldGetterMethodHandle;
 
     private final MethodHandle bizIdFieldSetterMethodHandle;
@@ -27,8 +29,8 @@ public class BizIdColumnField {
     public BizIdColumnField(Class<?> entityClass, Field bizIdField) {
         this.annotation = bizIdField.getAnnotation(BizId.class);
         this.columnName = BizIdHelper.getColumnName(entityClass, bizIdField, this.annotation);
+        this.fieldType = bizIdField.getType();
         try {
-            Class<?> fieldType = bizIdField.getType();
             Lookup lookup = privateLookupIn(entityClass, lookup());
             this.bizIdFieldGetterMethodHandle = lookup.findGetter(entityClass, bizIdField.getName(), fieldType);
             this.bizIdFieldSetterMethodHandle = lookup.findSetter(entityClass, bizIdField.getName(), fieldType);
@@ -52,6 +54,10 @@ public class BizIdColumnField {
         } catch (Throwable e) {
             throw new BaseException(e.getMessage(), e);
         }
+    }
+
+    public Class<?> getFieldType() {
+        return fieldType;
     }
 
 }

@@ -17,6 +17,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.unit.DataSize;
 
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -61,6 +62,7 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
         defaultProperties.put("spring.jackson.date-format", DateTimeFormatters.DATE_TIME_PATTERN);
         defaultProperties.put("spring.jackson.time-zone", TimeZone.getDefault());
         // others
+        defaultProperties.put("spring.mandatory-file-encoding", StandardCharsets.UTF_8.name());
         defaultProperties.put("spring.web.resources.add-mappings", false);
         defaultProperties.put("spring.main.allow-circular-references", true);
         defaultProperties.put("spring.main.banner-mode", Banner.Mode.OFF);

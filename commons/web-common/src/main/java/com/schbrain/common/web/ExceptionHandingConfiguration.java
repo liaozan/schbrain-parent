@@ -18,9 +18,14 @@ import java.util.stream.Collectors;
 public class ExceptionHandingConfiguration {
 
     @Bean
-    @ConditionalOnMissingBean
     public GlobalExceptionHandler defaultGlobalExceptionHandler(ObjectProvider<ExceptionTranslator> exceptionTranslators) {
-        return new DefaultGlobalExceptionHandler(exceptionTranslators.orderedStream().collect(Collectors.toList()));
+        return new GlobalExceptionHandler(exceptionTranslators.orderedStream().collect(Collectors.toList()));
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public ExceptionHandingWebMvcConfigurer defaultExceptionHandingWebMvcConfigurer(WebProperties webProperties, GlobalExceptionHandler exceptionHandler) {
+        return new ExceptionHandingWebMvcConfigurer(webProperties, exceptionHandler);
     }
 
     @Bean
@@ -28,13 +33,6 @@ public class ExceptionHandingConfiguration {
     @ConditionalOnBean(GlobalExceptionHandler.class)
     public ExceptionTranslator defaultExceptionTranslator() {
         return new DefaultExceptionTranslator();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    @ConditionalOnBean(GlobalExceptionHandler.class)
-    public ExceptionHandlerWebMcvConfigurer defaultExceptionHandlerWebMcvConfigurer(WebProperties webProperties, GlobalExceptionHandler exceptionHandler) {
-        return new ExceptionHandlerWebMcvConfigurer(webProperties, exceptionHandler);
     }
 
 }

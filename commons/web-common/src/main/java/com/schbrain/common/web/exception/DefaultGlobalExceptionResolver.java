@@ -39,7 +39,7 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
 
     private final HandlerMethodReturnValueHandlerComposite returnValueHandlerComposite;
 
-    private final Map<Class<?>, ExceptionHandlerMethodResolver> exceptionHandlerCache = new ConcurrentHashMap<>(64);
+    private final Map<Class<?>, ExceptionHandlerMethodResolver> exceptionHandlerMethodResolvers = new ConcurrentHashMap<>(64);
 
     public DefaultGlobalExceptionResolver(ExceptionHandlerExceptionResolver handlerMethodResolver, WebProperties webProperties, GlobalExceptionHandler exceptionHandler) {
         this.webProperties = webProperties;
@@ -69,7 +69,7 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
     }
 
     @Override
-    protected final ModelAndView doResolveHandlerMethodException(HttpServletRequest request, HttpServletResponse response, @Nullable HandlerMethod handlerMethod, Exception exception) {
+    protected ModelAndView doResolveHandlerMethodException(HttpServletRequest request, HttpServletResponse response, @Nullable HandlerMethod handlerMethod, Exception exception) {
         ServletInvocableHandlerMethod exceptionHandlerMethod = createExceptionHandlerMethod(exception, handlerMethod, exceptionHandler);
         if (exceptionHandlerMethod == null) {
             return null;
@@ -79,7 +79,7 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
         return doResolveException(webRequest, exceptionHandlerMethod, getArguments(exception, handlerMethod));
     }
 
-    protected final ModelAndView doResolveException(ServletWebRequest webRequest, ServletInvocableHandlerMethod targetMethod, Object[] arguments) {
+    protected ModelAndView doResolveException(ServletWebRequest webRequest, ServletInvocableHandlerMethod targetMethod, Object[] arguments) {
         ModelAndViewContainer mavContainer = new ModelAndViewContainer();
         try {
             targetMethod.invokeAndHandle(webRequest, mavContainer, arguments);
@@ -93,6 +93,7 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
         return null;
     }
 
+    @Nullable
     protected ServletInvocableHandlerMethod createExceptionHandlerMethod(Exception exception, @Nullable HandlerMethod handlerMethod, Object handler) {
         Method targetMethod = resolveTargetMethod(exception, handlerMethod);
         if (targetMethod == null) {
@@ -104,6 +105,7 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
         return exceptionHandlerMethod;
     }
 
+    @Nullable
     protected Method resolveTargetMethod(Exception exception, @Nullable HandlerMethod handlerMethod) {
         Method resolvedMethod = null;
         if (handlerMethod != null) {
@@ -122,7 +124,7 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
     }
 
     private ExceptionHandlerMethodResolver getHandlerMethodResolver(Class<?> handlerType) {
-        return exceptionHandlerCache.computeIfAbsent(handlerType, key -> new ExceptionHandlerMethodResolver(handlerType));
+        return exceptionHandlerMethodResolvers.computeIfAbsent(handlerType, key -> new ExceptionHandlerMethodResolver(handlerType));
     }
 
     /**

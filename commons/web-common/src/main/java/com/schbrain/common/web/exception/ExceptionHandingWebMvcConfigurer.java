@@ -13,13 +13,13 @@ import java.util.List;
  * @since 2022/8/29
  */
 @Slf4j
-public class ExceptionHandlerWebMcvConfigurer implements WebMvcConfigurer {
+public class ExceptionHandingWebMvcConfigurer implements WebMvcConfigurer {
 
     private final WebProperties webProperties;
 
     private final GlobalExceptionHandler globalExceptionHandler;
 
-    public ExceptionHandlerWebMcvConfigurer(WebProperties webProperties, GlobalExceptionHandler globalExceptionHandler) {
+    public ExceptionHandingWebMvcConfigurer(WebProperties webProperties, GlobalExceptionHandler globalExceptionHandler) {
         this.webProperties = webProperties;
         this.globalExceptionHandler = globalExceptionHandler;
     }
@@ -44,15 +44,11 @@ public class ExceptionHandlerWebMcvConfigurer implements WebMvcConfigurer {
             return;
         }
 
-        addGlobalExceptionResolver(resolvers, adviceExceptionResolver);
-    }
-
-    protected void addGlobalExceptionResolver(List<HandlerExceptionResolver> resolvers, ExceptionHandlerExceptionResolver adviceExceptionResolver) {
         int index = resolvers.indexOf(adviceExceptionResolver) + 1;
-        resolvers.add(index, createGlobalExceptionResolver(adviceExceptionResolver));
+        resolvers.add(index, createExceptionResolver(adviceExceptionResolver));
     }
 
-    protected HandlerExceptionResolver createGlobalExceptionResolver(ExceptionHandlerExceptionResolver adviceExceptionResolver) {
+    protected HandlerExceptionResolver createExceptionResolver(ExceptionHandlerExceptionResolver adviceExceptionResolver) {
         return new DefaultGlobalExceptionResolver(adviceExceptionResolver, webProperties, globalExceptionHandler);
     }
 

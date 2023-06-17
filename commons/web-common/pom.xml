@@ -31,7 +31,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
-        <!--  Used for com.schbrain.common.web.exception.DefaultGlobalExceptionHandler#handleDataAccessException   -->
+        <!--  Used for com.schbrain.common.web.exception.GlobalExceptionHandler#handleDataAccessException   -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>

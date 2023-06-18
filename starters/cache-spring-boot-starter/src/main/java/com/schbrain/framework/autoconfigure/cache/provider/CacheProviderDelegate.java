@@ -63,6 +63,11 @@ public class CacheProviderDelegate implements CacheProvider {
     }
 
     @Override
+    public Set<String> keys(String pattern) {
+        return getCacheProvider().keys(withKeyPrefix(pattern));
+    }
+
+    @Override
     public <T> T get(String cacheKey, Class<T> valueType) {
         return getCacheProvider().get(withKeyPrefix(cacheKey), valueType);
     }

@@ -161,4 +161,14 @@ public class CacheUtils {
         getCacheProvider().del(cacheKeys);
     }
 
+    /**
+     * keys
+     *
+     * @param pattern
+     * @return
+     */
+    public static Set<String> keys(String pattern) {
+        return getCacheProvider().keys(pattern);
+    }
+
 }

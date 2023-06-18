@@ -30,6 +30,13 @@ public interface CacheProvider {
     void del(List<String> cacheKeys);
 
     /**
+     * 模糊搜索KEY
+     * @param pattern
+     * @return
+     */
+    Set<String> keys(String pattern);
+
+    /**
      * 缓存获取
      */
     <T> T get(String cacheKey, Class<T> valueType);

@@ -13,6 +13,7 @@ import org.springframework.core.env.Environment;
 import java.time.Duration;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 /**
  * @author liaozan
@@ -64,7 +65,13 @@ public class CacheProviderDelegate implements CacheProvider {
 
     @Override
     public Set<String> keys(String pattern) {
-        return getCacheProvider().keys(withKeyPrefix(pattern));
+        Set<String> keys = getCacheProvider().keys(withKeyPrefix(pattern));
+        return keys.stream().map(e->{
+            if(StringUtils.isBlank(prefixWithDelimiter)){
+                return e;
+            }
+            return e.replaceFirst(prefixWithDelimiter,"");
+        }).collect(Collectors.toSet());
     }
 
     @Override

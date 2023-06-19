@@ -162,10 +162,7 @@ public class CacheUtils {
     }
 
     /**
-     * keys
-     *
-     * @param pattern
-     * @return
+     * 模糊搜索 key
      */
     public static Set<String> keys(String pattern) {
         return getCacheProvider().keys(pattern);

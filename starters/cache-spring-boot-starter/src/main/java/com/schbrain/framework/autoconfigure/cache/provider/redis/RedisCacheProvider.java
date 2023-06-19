@@ -71,10 +71,7 @@ public class RedisCacheProvider implements CacheProvider {
     }
 
     /**
-     * 模糊搜索KEY
-     *
-     * @param pattern
-     * @return
+     * 模糊搜索 key
      */
     @Override
     public Set<String> keys(String pattern) {

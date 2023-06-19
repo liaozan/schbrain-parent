@@ -75,7 +75,7 @@
         <druid.version>1.2.18</druid.version>
         <easyexcel.version>3.3.2</easyexcel.version>
         <fastjson.version>2.0.33</fastjson.version>
-        <fastjson2.version>2.0.33</fastjson2.version>
+        <fastjson2.version>2.0.34</fastjson2.version>
         <guava.version>32.0.1-jre</guava.version>
         <hutool.version>5.8.20</hutool.version>
         <jsr305.version>3.0.2</jsr305.version>

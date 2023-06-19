@@ -79,7 +79,7 @@
         <guava.version>32.0.1-jre</guava.version>
         <hutool.version>5.8.20</hutool.version>
         <jsr305.version>3.0.2</jsr305.version>
-        <logstash-logback-encoder.version>7.3</logstash-logback-encoder.version>
+        <logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
         <mybatis.version>3.5.13</mybatis.version>
         <mybatis.starter.version>2.3.0</mybatis.starter.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>

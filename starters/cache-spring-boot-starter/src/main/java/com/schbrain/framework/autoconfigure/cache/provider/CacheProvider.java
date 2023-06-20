@@ -1,7 +1,10 @@
 package com.schbrain.framework.autoconfigure.cache.provider;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author zhuyf
@@ -30,11 +33,9 @@ public interface CacheProvider {
     void del(List<String> cacheKeys);
 
     /**
-     * 模糊搜索KEY
-     * @param pattern
-     * @return
+     * 模糊搜索 key, 默认采用 scan 实现
      */
-    Set<String> keys(String pattern);
+    Set<String> keys(String pattern, long limit);
 
     /**
      * 缓存获取

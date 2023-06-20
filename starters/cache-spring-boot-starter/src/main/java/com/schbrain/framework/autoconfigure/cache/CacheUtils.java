@@ -162,10 +162,17 @@ public class CacheUtils {
     }
 
     /**
-     * 模糊搜索 key
+     * 模糊搜索 key, 默认采用 scan 实现
      */
     public static Set<String> keys(String pattern) {
-        return getCacheProvider().keys(pattern);
+        return keys(pattern, Long.MAX_VALUE);
+    }
+
+    /**
+     * 模糊搜索 key, 默认采用 scan 实现
+     */
+    public static Set<String> keys(String pattern, long limit) {
+        return getCacheProvider().keys(pattern, limit);
     }
 
 }

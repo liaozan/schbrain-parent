@@ -63,8 +63,8 @@ public class CacheProviderDelegate implements CacheProvider {
     }
 
     @Override
-    public Set<String> keys(String pattern) {
-        Set<String> keys = getCacheProvider().keys(withKeyPrefix(pattern));
+    public Set<String> keys(String pattern, long limit) {
+        Set<String> keys = getCacheProvider().keys(withKeyPrefix(pattern), limit);
         return StreamUtils.toSet(keys, this::removeKeyPrefix);
     }
 

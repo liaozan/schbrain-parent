@@ -7,8 +7,11 @@ import com.schbrain.framework.autoconfigure.cache.exception.CacheException;
 import com.schbrain.framework.autoconfigure.cache.provider.CacheProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.util.CollectionUtils;
 
 import java.nio.charset.StandardCharsets;
@@ -74,8 +77,18 @@ public class RedisCacheProvider implements CacheProvider {
      * 模糊搜索 key
      */
     @Override
-    public Set<String> keys(String pattern) {
-        return redisTemplate.keys(pattern);
+    public Set<String> keys(String pattern, long limit) {
+        Set<String> keys = new HashSet<>();
+        RedisSerializer<?> keySerializer = redisTemplate.getKeySerializer();
+        ScanOptions scanOptions = ScanOptions.scanOptions().match(pattern).count(limit).build();
+        Cursor<byte[]> cursor = Objects.requireNonNull(redisTemplate.execute(connection -> connection.scan(scanOptions), true));
+        while (cursor.hasNext()) {
+            Object deserialized = keySerializer.deserialize(cursor.next());
+            if (deserialized != null) {
+                keys.add(deserialized.toString());
+            }
+        }
+        return keys;
     }
 
     /**

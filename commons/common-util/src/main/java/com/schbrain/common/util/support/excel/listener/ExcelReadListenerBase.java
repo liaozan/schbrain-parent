@@ -38,6 +38,11 @@ public class ExcelReadListenerBase<T> extends AnalysisEventListener<T> {
     }
 
     @Override
+    public void onException(Exception exception, AnalysisContext context) {
+        throw new ExcelException(exception.getMessage(), exception);
+    }
+
+    @Override
     public void invoke(T data, AnalysisContext context) {
         boolean validated = validate(data, context);
         if (!validated) {
@@ -46,11 +51,6 @@ public class ExcelReadListenerBase<T> extends AnalysisEventListener<T> {
             }
         }
         this.dataList.add(data);
-    }
-
-    @Override
-    public void onException(Exception exception, AnalysisContext context) {
-        throw new ExcelException(exception.getMessage(), exception);
     }
 
     @Override

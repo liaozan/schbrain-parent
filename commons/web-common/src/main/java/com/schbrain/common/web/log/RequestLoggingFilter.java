@@ -2,7 +2,6 @@ package com.schbrain.common.web.log;
 
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.util.ArrayUtil;
-import com.schbrain.common.web.properties.WebProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.filter.OrderedFilter;
 import org.springframework.core.Ordered;
@@ -27,15 +26,9 @@ import static com.schbrain.common.web.utils.ContentCachingServletUtils.wrapReque
 @Slf4j
 public class RequestLoggingFilter extends OncePerRequestFilter implements OrderedFilter {
 
-    private final WebProperties webProperties;
-
-    public RequestLoggingFilter(WebProperties webProperties) {
-        this.webProperties = webProperties;
-    }
-
     @Override
     public int getOrder() {
-        return Ordered.HIGHEST_PRECEDENCE;
+        return Ordered.HIGHEST_PRECEDENCE + 10;
     }
 
     @Override
@@ -57,9 +50,6 @@ public class RequestLoggingFilter extends OncePerRequestFilter implements Ordere
     }
 
     protected boolean shouldSkip(HttpServletRequest request) {
-        if (!webProperties.isEnableRequestLogging()) {
-            return true;
-        }
         return CorsUtils.isPreFlightRequest(request);
     }
 

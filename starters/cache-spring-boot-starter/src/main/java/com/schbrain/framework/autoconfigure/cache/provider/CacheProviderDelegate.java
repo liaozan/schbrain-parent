@@ -8,7 +8,6 @@ import com.schbrain.framework.autoconfigure.cache.properties.CacheProperties;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.core.env.Environment;
 
 import java.time.Duration;
 import java.util.*;
@@ -24,17 +23,22 @@ public class CacheProviderDelegate implements CacheProvider {
 
     private final CacheProvider cacheProvider;
 
-    public CacheProviderDelegate(CacheProperties properties, CacheProvider cacheProvider, Environment environment) {
+    public CacheProviderDelegate(CacheProperties properties, CacheProvider cacheProvider) {
         this.cacheProvider = cacheProvider;
         if (properties.isAppendPrefix()) {
             String prefix = properties.getPrefix();
             if (StringUtils.isBlank(prefix)) {
-                prefix = ApplicationName.get(environment);
+                prefix = ApplicationName.get();
             }
             this.prefixWithDelimiter = prefix + properties.getDelimiter();
         } else {
             this.prefixWithDelimiter = null;
         }
+    }
+
+    @Override
+    public boolean isExpired(String cacheKey) {
+        return getCacheProvider().isExpired(withKeyPrefix(cacheKey));
     }
 
     @Override
@@ -54,6 +58,12 @@ public class CacheProviderDelegate implements CacheProvider {
     }
 
     @Override
+    public Set<String> keys(String pattern, long limit) {
+        Set<String> keys = getCacheProvider().keys(withKeyPrefix(pattern), limit);
+        return StreamUtils.toSet(keys, this::removeKeyPrefix);
+    }
+
+    @Override
     public void del(List<String> cacheKeys) {
         if (CollectionUtils.isEmpty(cacheKeys)) {
             return;
@@ -63,52 +73,8 @@ public class CacheProviderDelegate implements CacheProvider {
     }
 
     @Override
-    public Set<String> keys(String pattern, long limit) {
-        Set<String> keys = getCacheProvider().keys(withKeyPrefix(pattern), limit);
-        return StreamUtils.toSet(keys, this::removeKeyPrefix);
-    }
-
-    @Override
     public <T> T get(String cacheKey, Class<T> valueType) {
         return getCacheProvider().get(withKeyPrefix(cacheKey), valueType);
-    }
-
-    @Override
-    public <T> Map<String, T> multiGet(Collection<String> cacheKeys, Class<T> valueType, boolean discardIfValueIsNull) {
-        if (CollectionUtils.isEmpty(cacheKeys)) {
-            return Collections.emptyMap();
-        }
-        List<String> keysWithPrefix = StreamUtils.toList(cacheKeys, this::withKeyPrefix);
-        Map<String, T> cachedDate = getCacheProvider().multiGet(keysWithPrefix, valueType, discardIfValueIsNull);
-        Map<String, T> result = Maps.newHashMapWithExpectedSize(keysWithPrefix.size());
-        // 这里不能用 Stream toMap, toMap 不允许 value 是 null
-        if (MapUtils.isEmpty(cachedDate)) {
-            if (discardIfValueIsNull) {
-                result = Collections.emptyMap();
-            } else {
-                for (String cacheKey : keysWithPrefix) {
-                    result.put(removeKeyPrefix(cacheKey), null);
-                }
-            }
-            return result;
-        } else {
-            if (discardIfValueIsNull) {
-                // 值为 null 的key 在实现类获取时已经被丢弃,直接遍历 put 即可
-                for (Entry<String, T> cacheEntry : cachedDate.entrySet()) {
-                    result.put(removeKeyPrefix(cacheEntry.getKey()), cacheEntry.getValue());
-                }
-            } else {
-                for (String cacheKey : keysWithPrefix) {
-                    result.put(removeKeyPrefix(cacheKey), cachedDate.get(cacheKey));
-                }
-            }
-        }
-        return result;
-    }
-
-    @Override
-    public <T> List<T> getList(String cacheKey, Class<T> valueType) {
-        return getCacheProvider().getList(withKeyPrefix(cacheKey), valueType);
     }
 
     @Override
@@ -131,8 +97,27 @@ public class CacheProviderDelegate implements CacheProvider {
     }
 
     @Override
-    public boolean isExpired(String cacheKey) {
-        return getCacheProvider().isExpired(withKeyPrefix(cacheKey));
+    public <T> Map<String, T> multiGet(Collection<String> cacheKeys, Class<T> valueType, boolean discardIfValueIsNull) {
+        if (CollectionUtils.isEmpty(cacheKeys)) {
+            return Collections.emptyMap();
+        }
+        List<String> keysWithPrefix = StreamUtils.toList(cacheKeys, this::withKeyPrefix);
+        Map<String, T> dataWithPrefixedKey = getCacheProvider().multiGet(keysWithPrefix, valueType, discardIfValueIsNull);
+        if (MapUtils.isEmpty(dataWithPrefixedKey)) {
+            return Collections.emptyMap();
+        } else {
+            Map<String, T> result = Maps.newHashMapWithExpectedSize(dataWithPrefixedKey.size());
+            // 这里不能用 Stream toMap, toMap 不允许 value 是 null
+            for (Entry<String, T> cacheEntry : dataWithPrefixedKey.entrySet()) {
+                result.put(removeKeyPrefix(cacheEntry.getKey()), cacheEntry.getValue());
+            }
+            return result;
+        }
+    }
+
+    @Override
+    public <T> List<T> getList(String cacheKey, Class<T> valueType) {
+        return getCacheProvider().getList(withKeyPrefix(cacheKey), valueType);
     }
 
     public CacheProvider getCacheProvider() {

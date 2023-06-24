@@ -1,7 +1,6 @@
 package com.schbrain.common.web.exception;
 
 import com.schbrain.common.web.annotation.ResponseWrapOption;
-import com.schbrain.common.web.properties.WebProperties;
 import com.schbrain.common.web.utils.HandlerMethodAnnotationUtils;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @EqualsAndHashCode(callSuper = true)
 public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExceptionResolver {
 
-    private final WebProperties webProperties;
+    private final boolean wrapResponse;
 
     private final GlobalExceptionHandler exceptionHandler;
 
@@ -41,8 +40,8 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
 
     private final Map<Class<?>, ExceptionHandlerMethodResolver> exceptionHandlerMethodResolvers = new ConcurrentHashMap<>(64);
 
-    public DefaultGlobalExceptionResolver(ExceptionHandlerExceptionResolver handlerMethodResolver, WebProperties webProperties, GlobalExceptionHandler exceptionHandler) {
-        this.webProperties = webProperties;
+    public DefaultGlobalExceptionResolver(ExceptionHandlerExceptionResolver handlerMethodResolver, boolean wrapResponse, GlobalExceptionHandler exceptionHandler) {
+        this.wrapResponse = wrapResponse;
         this.exceptionHandler = exceptionHandler;
         this.handlerMethodResolver = new ExceptionHandlerMethodResolver(exceptionHandler.getClass());
         this.argumentResolverComposite = handlerMethodResolver.getArgumentResolvers();
@@ -52,7 +51,7 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
 
     @Override
     protected boolean shouldApplyTo(HttpServletRequest request, @Nullable Object handler) {
-        if (!webProperties.isWrapResponse()) {
+        if (!wrapResponse) {
             return false;
         }
 

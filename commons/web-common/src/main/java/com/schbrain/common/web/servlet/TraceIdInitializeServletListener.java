@@ -12,15 +12,15 @@ import javax.servlet.ServletRequestListener;
 public class TraceIdInitializeServletListener implements ServletRequestListener {
 
     @Override
-    public void requestInitialized(ServletRequestEvent event) {
-        // Make sure the traceId is initialized
-        TraceIdUtils.get();
-    }
-
-    @Override
     public void requestDestroyed(ServletRequestEvent event) {
         // Make sure the traceId can be cleared
         TraceIdUtils.clear();
+    }
+
+    @Override
+    public void requestInitialized(ServletRequestEvent event) {
+        // Make sure the traceId is initialized
+        TraceIdUtils.get();
     }
 
 }

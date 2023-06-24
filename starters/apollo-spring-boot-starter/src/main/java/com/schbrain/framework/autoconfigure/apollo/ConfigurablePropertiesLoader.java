@@ -54,7 +54,7 @@ class ConfigurablePropertiesLoader {
 
         ApolloProperties apolloProperties = ApolloProperties.get(environment);
 
-        // MUST NOT use CachedCompositePropertySource
+        // MUST NOT use CachedCompositePropertySource, because propertyNames will be cached when property loading
         CompositePropertySource compositePropertySource = new CompositePropertySource(PROPERTIES_PROPERTY_SOURCE);
         if (apolloProperties.isRemoteFirst()) {
             environment.getPropertySources().addFirst(compositePropertySource);

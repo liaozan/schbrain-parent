@@ -36,10 +36,6 @@ public class HierarchicalDataReadListener extends ExcelReadListenerBase<Map<Inte
         });
     }
 
-    public List<ImportedRecord> getImportedRecords() {
-        return importedRecords;
-    }
-
     @Override
     protected boolean validate(Map<Integer, String> data, AnalysisContext context) {
         Integer rowIndex = context.readRowHolder().getRowIndex();
@@ -52,6 +48,10 @@ public class HierarchicalDataReadListener extends ExcelReadListenerBase<Map<Inte
             }
         }
         return true;
+    }
+
+    public List<ImportedRecord> getImportedRecords() {
+        return importedRecords;
     }
 
     protected void buildImportedRow(Integer rowIndex, Integer columnIndex, String text) {

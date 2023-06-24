@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.core.env.Environment;
 
 /**
  * AutoConfiguration for schbrain cache
@@ -25,10 +24,10 @@ public class CacheAutoConfiguration {
 
     @Bean
     @ConditionalOnBean(CacheProvider.class)
-    public CacheProvider cacheProvider(CacheProvider cacheProvider, CacheProperties cacheProperties, Environment environment) {
-        CacheProviderDelegate delegate = new CacheProviderDelegate(cacheProperties, cacheProvider, environment);
-        CacheUtils.setCacheProvider(delegate);
-        return delegate;
+    public CacheProvider cacheProvider(CacheProvider cacheProvider, CacheProperties cacheProperties) {
+        CacheProvider provider = new CacheProviderDelegate(cacheProperties, cacheProvider);
+        CacheUtils.setCacheProvider(provider);
+        return provider;
     }
 
 }

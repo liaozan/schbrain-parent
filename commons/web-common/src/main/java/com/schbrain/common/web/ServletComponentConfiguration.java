@@ -4,6 +4,7 @@ import com.schbrain.common.web.log.RequestLoggingFilter;
 import com.schbrain.common.web.properties.WebProperties;
 import com.schbrain.common.web.servlet.CharacterEncodingServletContextInitializer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,8 +33,9 @@ public class ServletComponentConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public RequestLoggingFilter requestLoggingFilter(WebProperties properties) {
-        return new RequestLoggingFilter(properties);
+    @ConditionalOnProperty(value = "schbrain.web.enable-request-logging", havingValue = "true", matchIfMissing = true)
+    public RequestLoggingFilter requestLoggingFilter() {
+        return new RequestLoggingFilter();
     }
 
 }

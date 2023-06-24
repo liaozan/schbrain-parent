@@ -19,12 +19,12 @@ public abstract class DataSourcePropertiesExtractorSupport implements DataSource
         return TypeUtils.isAssignable(supportedType, dataSource.getClass());
     }
 
-    public abstract Class<? extends DataSource> getSupportedType();
-
     @Override
     public Properties extract(DataSource dataSource, Map<String, String> properties) throws SQLException {
         return extract(dataSource);
     }
+
+    protected abstract Class<? extends DataSource> getSupportedType();
 
     protected abstract Properties extract(DataSource dataSource) throws SQLException;
 

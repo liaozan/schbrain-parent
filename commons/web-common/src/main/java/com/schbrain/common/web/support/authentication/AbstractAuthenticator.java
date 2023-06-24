@@ -34,8 +34,8 @@ public abstract class AbstractAuthenticator implements Authenticator {
     }
 
     @Override
-    public boolean validate(HttpServletRequest request, HttpServletResponse response, HandlerMethod handler) {
-        boolean ignore = HandlerMethodAnnotationUtils.hasAnnotation(handler, IgnoreLogin.class);
+    public boolean validate(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) {
+        boolean ignore = HandlerMethodAnnotationUtils.hasAnnotation(handlerMethod, IgnoreLogin.class);
         if (ignore) {
             return true;
         }
@@ -43,10 +43,10 @@ public abstract class AbstractAuthenticator implements Authenticator {
         if (StringUtils.isBlank(authentication)) {
             return false;
         }
-        return doValidate(authentication, request, response, handler);
+        return doValidate(authentication, request, response, handlerMethod);
     }
 
-    protected abstract boolean doValidate(String authentication, HttpServletRequest request, HttpServletResponse response, HandlerMethod handler);
+    protected abstract boolean doValidate(String authentication, HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod);
 
     @Nullable
     protected String getAuthentication(HttpServletRequest request) {

@@ -38,8 +38,8 @@ public class AuthenticationInterceptor extends BaseHandlerInterceptor implements
     }
 
     @Override
-    protected boolean preHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handler) {
-        boolean validated = authenticator.validate(request, response, handler);
+    protected boolean preHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) {
+        boolean validated = authenticator.validate(request, response, handlerMethod);
         if (validated) {
             return true;
         }
@@ -48,8 +48,8 @@ public class AuthenticationInterceptor extends BaseHandlerInterceptor implements
     }
 
     @Override
-    protected void afterCompletion(HttpServletRequest request, HttpServletResponse response, HandlerMethod handler, Exception ex) {
-        authenticator.afterCompletion(request, response, handler, ex);
+    protected void afterCompletion(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod, Exception ex) {
+        authenticator.afterCompletion(request, response, handlerMethod, ex);
     }
 
     protected void writeResult(HttpServletResponse response, ResponseDTO<?> result) {

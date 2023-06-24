@@ -26,7 +26,7 @@ public interface BaseDao<T> {
      * 批量插入领域对象
      *
      * @param objList 待插入领域对象列表
-     * @param fields  插入时指定的领域对象属性列表，如果为空表示对象的所有属性
+     * @param fields 插入时指定的领域对象属性列表，如果为空表示对象的所有属性
      * @return 影响行数
      */
     Integer addList(List<T> objList, String... fields);
@@ -50,11 +50,11 @@ public interface BaseDao<T> {
     /**
      * 分页获取列表
      *
-     * @param pageNum       当前页码
-     * @param pageSize      当前页记录数
-     * @param whereClause   <tt>where</tt>关键词后的条件语句
+     * @param pageNum 当前页码
+     * @param pageSize 当前页记录数
+     * @param whereClause <tt>where</tt>关键词后的条件语句
      * @param orderByClause <tt>order by</tt>关键词后的排序语句，注意：语句中不支持参数
-     * @param objs          <tt>where</tt>关键词后的条件语句中参数对应的值
+     * @param objs <tt>where</tt>关键词后的条件语句中参数对应的值
      * @return <tt>page</tt>对象，包含记录及分页信息
      */
     Page<T> pageByCondition(int pageNum, int pageSize, String whereClause, String orderByClause, Object... objs);

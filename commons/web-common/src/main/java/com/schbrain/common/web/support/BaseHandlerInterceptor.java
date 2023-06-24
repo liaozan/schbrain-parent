@@ -46,19 +46,19 @@ public class BaseHandlerInterceptor implements AsyncHandlerInterceptor {
         }
     }
 
-    protected boolean preHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handler) throws Exception {
+    protected boolean preHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
         return true;
     }
 
-    protected void postHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handler, ModelAndView modelAndView) throws Exception {
+    protected void postHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod, ModelAndView modelAndView) throws Exception {
 
     }
 
-    protected void afterCompletion(HttpServletRequest request, HttpServletResponse response, HandlerMethod handler, Exception ex) throws Exception {
+    protected void afterCompletion(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod, Exception ex) throws Exception {
 
     }
 
-    protected void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) {
+    protected void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
 
     }
 

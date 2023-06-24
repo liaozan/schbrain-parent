@@ -9,8 +9,7 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.autoconfigure.condition.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -48,9 +47,10 @@ public class WebCommonAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ResponseBodyHandler defaultResponseBodyHandler(WebProperties properties, BeanFactory beanFactory) {
+    @ConditionalOnProperty(value = "schbrain.web.wrap-response", havingValue = "true", matchIfMissing = true)
+    public ResponseBodyHandler defaultResponseBodyHandler(BeanFactory beanFactory) {
         List<String> basePackages = AutoConfigurationPackages.get(beanFactory);
-        return new ResponseBodyHandler(properties, basePackages);
+        return new ResponseBodyHandler(basePackages);
     }
 
     @Bean

@@ -17,7 +17,7 @@ import java.util.Properties;
 public class DruidDataSourcePropertiesExtractor extends DataSourcePropertiesExtractorSupport {
 
     @Override
-    public Class<DruidDataSource> getSupportedType() {
+    protected Class<DruidDataSource> getSupportedType() {
         return DruidDataSource.class;
     }
 

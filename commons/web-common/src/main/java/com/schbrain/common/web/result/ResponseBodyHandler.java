@@ -1,7 +1,6 @@
 package com.schbrain.common.web.result;
 
 import com.schbrain.common.web.annotation.ResponseWrapOption;
-import com.schbrain.common.web.properties.WebProperties;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -22,34 +21,23 @@ import java.util.concurrent.ConcurrentHashMap;
 @RestControllerAdvice
 public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
 
-    private final WebProperties webProperties;
-
     private final List<String> basePackages;
 
-    private final Map<Method, Boolean> methodCache;
+    private final Map<Method, Boolean> methodCache = new ConcurrentHashMap<>();
 
-    public ResponseBodyHandler(WebProperties webProperties, List<String> basePackages) {
-        this.webProperties = webProperties;
+    public ResponseBodyHandler(List<String> basePackages) {
         this.basePackages = basePackages;
-        this.methodCache = new ConcurrentHashMap<>();
     }
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        if (!webProperties.isWrapResponse()) {
-            return false;
-        }
         return methodCache.computeIfAbsent(returnType.getMethod(), this::shouldApply);
     }
 
     @Override
-    public Object beforeBodyWrite(Object body, MethodParameter returnType,
-                                  MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType,
+    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
+                                  Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   ServerHttpRequest request, ServerHttpResponse response) {
-        return beforeBodyWrite(body);
-    }
-
-    protected Object beforeBodyWrite(Object body) {
         if (body instanceof ResponseDTO) {
             return body;
         }

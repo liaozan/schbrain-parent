@@ -5,6 +5,7 @@ import com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties;
 import com.schbrain.framework.autoconfigure.xxl.condition.XxlJobShouldAvailableCondition;
 import com.schbrain.framework.autoconfigure.xxl.properties.XxlJobProperties;
 import com.xxl.job.core.executor.XxlJobExecutor;
+import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -22,10 +23,10 @@ import java.nio.file.Paths;
 @EnableConfigurationProperties(XxlJobProperties.class)
 public class XxlJobAutoConfiguration {
 
-    @Bean
+    @Bean(initMethod = "start", destroyMethod = "destroy")
     @ConditionalOnMissingBean(XxlJobExecutor.class)
-    public SchbrainXxlJobExecutor schbrainXxlJobSpringExecutor(XxlJobProperties xxlJobProperties, LoggerProperties loggingProperties) {
-        SchbrainXxlJobExecutor executor = new SchbrainXxlJobExecutor();
+    public XxlJobSpringExecutor xxlJobSpringExecutor(XxlJobProperties xxlJobProperties, LoggerProperties loggingProperties) {
+        XxlJobSpringExecutor executor = new XxlJobSpringExecutor();
         executor.setAdminAddresses(xxlJobProperties.getAdminAddresses());
         executor.setIp(xxlJobProperties.getIp());
         executor.setPort(xxlJobProperties.getPort());

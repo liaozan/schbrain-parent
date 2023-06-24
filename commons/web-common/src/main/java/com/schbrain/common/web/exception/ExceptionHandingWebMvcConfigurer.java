@@ -49,7 +49,7 @@ public class ExceptionHandingWebMvcConfigurer implements WebMvcConfigurer {
     }
 
     protected HandlerExceptionResolver createExceptionResolver(ExceptionHandlerExceptionResolver adviceExceptionResolver) {
-        return new DefaultGlobalExceptionResolver(adviceExceptionResolver, webProperties, globalExceptionHandler);
+        return new DefaultGlobalExceptionResolver(adviceExceptionResolver, webProperties.isWrapResponse(), globalExceptionHandler);
     }
 
 }

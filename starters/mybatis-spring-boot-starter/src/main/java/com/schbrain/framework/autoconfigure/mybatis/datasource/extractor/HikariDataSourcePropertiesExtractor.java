@@ -15,7 +15,7 @@ import java.util.Properties;
 public class HikariDataSourcePropertiesExtractor extends DataSourcePropertiesExtractorSupport {
 
     @Override
-    public Class<? extends DataSource> getSupportedType() {
+    protected Class<? extends DataSource> getSupportedType() {
         return HikariDataSource.class;
     }
 

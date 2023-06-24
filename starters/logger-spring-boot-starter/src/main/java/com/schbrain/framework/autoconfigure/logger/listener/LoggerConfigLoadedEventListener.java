@@ -12,6 +12,9 @@ import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
 import com.schbrain.framework.autoconfigure.apollo.event.listener.GenericConfigLoadedEventListener;
 import com.schbrain.framework.autoconfigure.logger.LoggerConfigurationInitializer;
 import com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties;
+import org.springframework.boot.context.logging.LoggingApplicationListener;
+import org.springframework.boot.logging.LogFile;
+import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.StringUtils;
 
@@ -48,9 +51,9 @@ public class LoggerConfigLoadedEventListener extends GenericConfigLoadedEventLis
     }
 
     /**
-     * Add {@link org.springframework.boot.context.logging.LoggingApplicationListener#CONFIG_PROPERTY} property to SystemProperty
+     * Add {@link LoggingApplicationListener#CONFIG_PROPERTY} property to SystemProperty
      *
-     * @see org.springframework.boot.context.logging.LoggingApplicationListener#initializeSystem(ConfigurableEnvironment, org.springframework.boot.logging.LoggingSystem, org.springframework.boot.logging.LogFile)
+     * @see LoggingApplicationListener#initializeSystem(ConfigurableEnvironment, LoggingSystem, LogFile)
      */
     @SuppressWarnings("JavadocReference")
     private void configLoggingFileLocation(ConfigurableEnvironment environment, String logConfigNamespace) {

@@ -15,6 +15,10 @@ public class ValidateUtils {
     private ValidateUtils() {
     }
 
+    public static void isTrue(boolean expression) {
+        isTrue(expression, "操作有误");
+    }
+
     public static void isTrue(boolean expression, String message) {
         isTrue(expression, () -> new ParamInvalidException(message));
     }
@@ -23,6 +27,10 @@ public class ValidateUtils {
         if (!expression) {
             throw errorSupplier.get();
         }
+    }
+
+    public static void isFalse(boolean expression) {
+        isFalse(expression, "操作有误");
     }
 
     public static void isFalse(boolean expression, String message) {
@@ -35,6 +43,10 @@ public class ValidateUtils {
         }
     }
 
+    public static void notNull(Object object) {
+        notNull(object, "The validated object is null");
+    }
+
     public static void notNull(Object object, String message) {
         notNull(object, () -> new ParamInvalidException(message));
     }
@@ -43,6 +55,10 @@ public class ValidateUtils {
         if (object == null) {
             throw errorSupplier.get();
         }
+    }
+
+    public static void isNull(Object object) {
+        isNull(object, "The validated object is not null");
     }
 
     public static void isNull(Object object, String message) {
@@ -55,6 +71,10 @@ public class ValidateUtils {
         }
     }
 
+    public static void notEmpty(String value) {
+        notEmpty(value, "The validated string is empty");
+    }
+
     public static void notEmpty(String value, String message) {
         notEmpty(value, () -> new ParamInvalidException(message));
     }
@@ -63,6 +83,10 @@ public class ValidateUtils {
         if (value == null || value.isBlank()) {
             throw errorSupplier.get();
         }
+    }
+
+    public static void isEmpty(String value) {
+        isEmpty(value, "The validated string is not empty");
     }
 
     public static void isEmpty(String value, String message) {
@@ -75,6 +99,10 @@ public class ValidateUtils {
         }
     }
 
+    public static void notEmpty(Object[] array) {
+        notEmpty(array, "The validated array is empty");
+    }
+
     public static void notEmpty(Object[] array, String message) {
         notEmpty(array, () -> new ParamInvalidException(message));
     }
@@ -83,6 +111,10 @@ public class ValidateUtils {
         if (array == null || array.length == 0) {
             throw errorSupplier.get();
         }
+    }
+
+    public static void isEmpty(Object[] array) {
+        isEmpty(array, "The validated array is not empty");
     }
 
     public static void isEmpty(Object[] array, String message) {
@@ -95,6 +127,10 @@ public class ValidateUtils {
         }
     }
 
+    public static void notEmpty(Collection<?> collection) {
+        notEmpty(collection, "The validated collection is empty");
+    }
+
     public static void notEmpty(Collection<?> collection, String message) {
         notEmpty(collection, () -> new ParamInvalidException(message));
     }
@@ -103,6 +139,10 @@ public class ValidateUtils {
         if (collection == null || collection.isEmpty()) {
             throw errorSupplier.get();
         }
+    }
+
+    public static void isEmpty(Collection<?> collection) {
+        isEmpty(collection, "The validated collection is not empty");
     }
 
     public static void isEmpty(Collection<?> collection, String message) {
@@ -115,6 +155,10 @@ public class ValidateUtils {
         }
     }
 
+    public static void notEmpty(Map<?, ?> map) {
+        notEmpty(map, "The validated map is empty");
+    }
+
     public static void notEmpty(Map<?, ?> map, String message) {
         notEmpty(map, () -> new ParamInvalidException(message));
     }
@@ -123,6 +167,10 @@ public class ValidateUtils {
         if (map == null || map.isEmpty()) {
             throw errorSupplier.get();
         }
+    }
+
+    public static void isEmpty(Map<?, ?> map) {
+        isEmpty(map, "The validated map is not empty");
     }
 
     public static void isEmpty(Map<?, ?> map, String message) {

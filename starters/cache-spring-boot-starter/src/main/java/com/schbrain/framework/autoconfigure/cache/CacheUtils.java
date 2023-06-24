@@ -47,6 +47,20 @@ public class CacheUtils {
     }
 
     /**
+     * 模糊搜索 key, 默认采用 scan 实现
+     */
+    public static Set<String> keys(String pattern) {
+        return keys(pattern, Long.MAX_VALUE);
+    }
+
+    /**
+     * 模糊搜索 key, 默认采用 scan 实现
+     */
+    public static Set<String> keys(String pattern, long limit) {
+        return getCacheProvider().keys(pattern, limit);
+    }
+
+    /**
      * 获取缓存数据
      */
     public static <T> T getValue(String cacheKey, Class<T> valueType) {
@@ -159,20 +173,6 @@ public class CacheUtils {
      */
     public static void del(List<String> cacheKeys) {
         getCacheProvider().del(cacheKeys);
-    }
-
-    /**
-     * 模糊搜索 key, 默认采用 scan 实现
-     */
-    public static Set<String> keys(String pattern) {
-        return keys(pattern, Long.MAX_VALUE);
-    }
-
-    /**
-     * 模糊搜索 key, 默认采用 scan 实现
-     */
-    public static Set<String> keys(String pattern, long limit) {
-        return getCacheProvider().keys(pattern, limit);
     }
 
 }

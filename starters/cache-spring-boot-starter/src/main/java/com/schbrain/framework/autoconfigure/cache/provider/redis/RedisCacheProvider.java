@@ -7,10 +7,7 @@ import com.schbrain.framework.autoconfigure.cache.exception.CacheException;
 import com.schbrain.framework.autoconfigure.cache.provider.CacheProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.redis.core.Cursor;
-import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.ScanOptions;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.util.CollectionUtils;
 
@@ -32,6 +29,14 @@ public class RedisCacheProvider implements CacheProvider {
 
     public RedisCacheProvider(StringRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
+    }
+
+    /**
+     * 查询key是否过期
+     */
+    @Override
+    public boolean isExpired(String cacheKey) {
+        return !hasKey(cacheKey);
     }
 
     /**
@@ -63,17 +68,6 @@ public class RedisCacheProvider implements CacheProvider {
     }
 
     /**
-     * 删除缓存
-     */
-    @Override
-    public void del(List<String> cacheKeys) {
-        if (CollectionUtils.isEmpty(cacheKeys)) {
-            return;
-        }
-        redisTemplate.delete(cacheKeys);
-    }
-
-    /**
      * 模糊搜索 key
      */
     @Override
@@ -92,11 +86,47 @@ public class RedisCacheProvider implements CacheProvider {
     }
 
     /**
+     * 删除缓存
+     */
+    @Override
+    public void del(List<String> cacheKeys) {
+        if (CollectionUtils.isEmpty(cacheKeys)) {
+            return;
+        }
+        redisTemplate.delete(cacheKeys);
+    }
+
+    /**
      * 缓存获取
      */
     @Override
     public <T> T get(String cacheKey, Class<T> type) {
         return JacksonUtils.getObjectFromJson(getValueFromRedis(cacheKey), type);
+    }
+
+    /**
+     * 普通缓存放入并设置时间
+     */
+    @Override
+    public <T> void set(String cacheKey, T value, Duration expiration) {
+        setValueToRedis(cacheKey, value, expiration);
+    }
+
+    @Override
+    public <T> void multiSet(Map<String, T> data, Duration expiration) {
+        Iterables.partition(data.keySet(), DEFAULT_BATCH_SIZE).forEach(keys ->
+                redisTemplate.executePipelined((RedisCallback<Void>) connection -> {
+                    Map<byte[], byte[]> byteMap = Maps.newHashMapWithExpectedSize(keys.size());
+                    for (String key : keys) {
+                        byteMap.put(key.getBytes(StandardCharsets.UTF_8), JacksonUtils.writeObjectAsBytes(data.get(key)));
+                    }
+                    connection.mSet(byteMap);
+                    long expirationMillis = expiration.toMillis();
+                    for (byte[] rawKey : byteMap.keySet()) {
+                        connection.pExpire(rawKey, expirationMillis);
+                    }
+                    return null;
+                }));
     }
 
     @Override
@@ -121,38 +151,6 @@ public class RedisCacheProvider implements CacheProvider {
     @Override
     public <T> List<T> getList(String cacheKey, Class<T> type) {
         return JacksonUtils.getListFromJson(getValueFromRedis(cacheKey), type);
-    }
-
-    /**
-     * 普通缓存放入并设置时间
-     */
-    @Override
-    public <T> void set(String cacheKey, T value, Duration expiration) {
-        setValueToRedis(cacheKey, value, expiration);
-    }
-
-    @Override
-    public <T> void multiSet(Map<String, T> data, Duration expiration) {
-        Iterables.partition(data.keySet(), DEFAULT_BATCH_SIZE).forEach(keys ->
-                redisTemplate.executePipelined((RedisCallback<Void>) connection -> {
-                    Map<byte[], byte[]> byteMap = Maps.newHashMapWithExpectedSize(keys.size());
-                    for (String key : keys) {
-                        byteMap.put(key.getBytes(StandardCharsets.UTF_8), JacksonUtils.writeObjectAsBytes(data.get(key)));
-                    }
-                    connection.mSet(byteMap);
-                    for (byte[] rawKey : byteMap.keySet()) {
-                        connection.pExpire(rawKey, expiration.toMillis());
-                    }
-                    return null;
-                }));
-    }
-
-    /**
-     * 查询key是否过期
-     */
-    @Override
-    public boolean isExpired(String cacheKey) {
-        return !hasKey(cacheKey);
     }
 
     private String getValueFromRedis(String cacheKey) {

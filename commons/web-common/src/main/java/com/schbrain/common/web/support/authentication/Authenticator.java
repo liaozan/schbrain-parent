@@ -19,6 +19,6 @@ public interface Authenticator {
     /**
      * 请求完成后的回调
      */
-    void afterCompletion(HttpServletRequest request, HttpServletResponse response, HandlerMethod handler, Exception exception);
+    void afterCompletion(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod, Exception exception);
 
 }

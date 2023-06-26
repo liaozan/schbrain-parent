@@ -3,8 +3,6 @@ package com.schbrain.common.web;
 import com.schbrain.common.web.argument.BodyParamArgumentResolverWebMvcConfigurer;
 import com.schbrain.common.web.properties.WebProperties;
 import com.schbrain.common.web.result.ResponseBodyHandler;
-import com.schbrain.common.web.servlet.AllowAnyOriginWithoutCredentialsCorsConfigurer;
-import com.schbrain.common.web.servlet.TraceIdInitializeServletListener;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -25,7 +23,7 @@ import java.util.List;
 @AutoConfiguration
 @ConditionalOnWebApplication(type = Type.SERVLET)
 @EnableConfigurationProperties(WebProperties.class)
-@Import({AuthenticationConfiguration.class, ExceptionHandingConfiguration.class, ServletComponentConfiguration.class})
+@Import({AuthenticationConfiguration.class, ExceptionHandingConfiguration.class, ServletComponentConfiguration.class, DefaultCorsConfiguration.class})
 public class WebCommonAutoConfiguration {
 
     @Bean
@@ -51,18 +49,6 @@ public class WebCommonAutoConfiguration {
     public ResponseBodyHandler defaultResponseBodyHandler(BeanFactory beanFactory) {
         List<String> basePackages = AutoConfigurationPackages.get(beanFactory);
         return new ResponseBodyHandler(basePackages);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public TraceIdInitializeServletListener traceIdInitializeServletListener() {
-        return new TraceIdInitializeServletListener();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public AllowAnyOriginWithoutCredentialsCorsConfigurer allowAnyOriginWithoutCredentialsCorsConfigurer() {
-        return new AllowAnyOriginWithoutCredentialsCorsConfigurer();
     }
 
 }

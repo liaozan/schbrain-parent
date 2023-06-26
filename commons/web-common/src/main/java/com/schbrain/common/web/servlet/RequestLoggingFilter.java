@@ -1,4 +1,4 @@
-package com.schbrain.common.web.log;
+package com.schbrain.common.web.servlet;
 
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.util.ArrayUtil;

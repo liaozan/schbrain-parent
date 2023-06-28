@@ -104,7 +104,7 @@ public class TableConstraintCheckerBean implements SmartInitializingSingleton, B
             return;
         }
 
-        if (entityClass.isAssignableFrom(IgnoreConstraintCheck.class)) {
+        if (entityClass.isAnnotationPresent(IgnoreConstraintCheck.class)) {
             return;
         }
 

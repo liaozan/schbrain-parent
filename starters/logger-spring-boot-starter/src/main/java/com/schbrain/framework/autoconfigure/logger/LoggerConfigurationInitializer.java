@@ -44,18 +44,25 @@ public class LoggerConfigurationInitializer {
 
     private final String applicationName;
 
+    private volatile boolean initialized;
+
     public LoggerConfigurationInitializer(ConfigurableEnvironment environment, LoggerProperties properties, HostInfo hostInfo) {
         this.environment = environment;
         this.properties = properties;
         this.hostInfo = hostInfo;
         this.applicationName = ApplicationName.get(environment);
-        this.init();
     }
 
     public void init() {
         if (properties == null) {
+            log.warn("logger properties is null");
             return;
         }
+        if (initialized) {
+            log.warn("{} is initialized", getClass().getName());
+            return;
+        }
+        initialized = true;
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
         for (Logger logger : context.getLoggerList()) {
             registerAppender(logger, context);

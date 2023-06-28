@@ -15,6 +15,7 @@ import com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties;
 import org.springframework.boot.context.logging.LoggingApplicationListener;
 import org.springframework.boot.logging.LogFile;
 import org.springframework.boot.logging.LoggingSystem;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.StringUtils;
 
@@ -30,6 +31,13 @@ import static org.springframework.boot.context.logging.LoggingApplicationListene
  */
 public class LoggerConfigLoadedEventListener extends GenericConfigLoadedEventListener<LoggerProperties> {
 
+    private LoggerConfigurationInitializer initializer;
+
+    @Override
+    public void initialize(ConfigurableApplicationContext applicationContext) {
+        initializer.init();
+    }
+
     @Override
     protected void onConfigLoaded(ConfigLoadedEvent event, LoggerProperties properties) {
         ConfigurableEnvironment environment = event.getEnvironment();
@@ -37,7 +45,7 @@ public class LoggerConfigLoadedEventListener extends GenericConfigLoadedEventLis
         Map<String, String> hostInfoProperties = buildHostInfoProperties(hostInfo);
         event.getPropertySource().addProperties(hostInfoProperties);
         configLoggingFileLocation(environment, properties.getLogConfigNamespace());
-        new LoggerConfigurationInitializer(environment, properties, hostInfo).init();
+        this.initializer = new LoggerConfigurationInitializer(environment, properties, hostInfo);
     }
 
     /**

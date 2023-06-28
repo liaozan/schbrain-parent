@@ -6,7 +6,6 @@ import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
 import com.schbrain.framework.autoconfigure.apollo.event.listener.GenericConfigLoadedEventListener;
 import com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties;
 import org.springframework.boot.SpringApplication;
-import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -17,7 +16,7 @@ import static org.apache.dubbo.config.ConfigKeys.DUBBO_SCAN_BASE_PACKAGES;
  * @author liaozan
  * @since 2023-04-28
  */
-public class DubboConfigLoadedEventListener extends GenericConfigLoadedEventListener<DubboProperties> implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+public class DubboConfigLoadedEventListener extends GenericConfigLoadedEventListener<DubboProperties> {
 
     public static final String DUBBO_APPLICATION_NAME = "dubbo.application.name";
 
@@ -33,7 +32,6 @@ public class DubboConfigLoadedEventListener extends GenericConfigLoadedEventList
 
     @Override
     protected void onConfigLoaded(ConfigLoadedEvent event, DubboProperties properties) {
-        event.getSpringApplication().addInitializers(this);
         addRequiredProperties(event.getEnvironment(), event.getSpringApplication(), event.getPropertySource());
     }
 

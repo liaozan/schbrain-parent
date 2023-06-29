@@ -23,7 +23,7 @@ import java.util.List;
 @AutoConfiguration
 @ConditionalOnWebApplication(type = Type.SERVLET)
 @EnableConfigurationProperties(WebProperties.class)
-@Import({AuthenticationConfiguration.class, ExceptionHandingConfiguration.class, ServletComponentConfiguration.class, DefaultCorsConfiguration.class})
+@Import({AuthenticationConfiguration.class, ExceptionHandingConfiguration.class, ServletComponentConfiguration.class, CorsFilterConfiguration.class})
 public class WebCommonAutoConfiguration {
 
     @Bean

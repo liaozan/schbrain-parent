@@ -30,7 +30,7 @@ public class DefaultCorsConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public CorsConfigurationSource defaultCorsConfigurationSource(CorsConfiguration corsConfiguration) {
+    public UrlBasedCorsConfigurationSource defaultCorsConfigurationSource(CorsConfiguration corsConfiguration) {
         UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();
         configSource.registerCorsConfiguration("/**", corsConfiguration);
         return configSource;
@@ -38,7 +38,7 @@ public class DefaultCorsConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public CorsFilter defaultCorsFilter(CorsConfigurationSource corsConfigurationSource) {
+    public CorsFilter defaultCorsFilter(UrlBasedCorsConfigurationSource corsConfigurationSource) {
         return new CorsFilter(corsConfigurationSource);
     }
 

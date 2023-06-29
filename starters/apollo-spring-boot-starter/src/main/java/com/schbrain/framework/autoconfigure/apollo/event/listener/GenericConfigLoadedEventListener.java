@@ -3,8 +3,6 @@ package com.schbrain.framework.autoconfigure.apollo.event.listener;
 import com.schbrain.common.util.support.ConfigurableProperties;
 import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
 import org.apache.commons.logging.Log;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.ResolvableType;
 
 /**
@@ -12,7 +10,7 @@ import org.springframework.core.ResolvableType;
  * @since 2023-04-28
  */
 @SuppressWarnings("unchecked")
-public abstract class GenericConfigLoadedEventListener<T extends ConfigurableProperties> implements ConfigLoadedEventListener, ApplicationContextInitializer<ConfigurableApplicationContext> {
+public abstract class GenericConfigLoadedEventListener<T extends ConfigurableProperties> implements ConfigLoadedEventListener {
 
     protected final ResolvableType propertiesType;
 
@@ -29,11 +27,6 @@ public abstract class GenericConfigLoadedEventListener<T extends ConfigurablePro
             this.log = event.getDeferredLogFactory().getLog(getClass());
             this.onConfigLoaded(event, (T) event.getConfigurableProperties());
         }
-    }
-
-    @Override
-    public void initialize(ConfigurableApplicationContext applicationContext) {
-
     }
 
     protected abstract void onConfigLoaded(ConfigLoadedEvent event, T configurableProperties);

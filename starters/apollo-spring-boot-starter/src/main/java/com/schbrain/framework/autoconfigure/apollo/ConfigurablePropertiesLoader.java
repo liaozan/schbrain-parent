@@ -39,9 +39,12 @@ class ConfigurablePropertiesLoader {
         this.log = deferredLogFactory.getLog(ConfigurablePropertiesLoader.class);
     }
 
+    /**
+     * Do not use asynchronous or thread pool to speed up configuration loading, as this may break the priority of configuration properties
+     */
     void load(ConfigurableEnvironment environment, SpringApplication application) {
-        List<ConfigurableProperties> configurableProperties = loadFactories(ConfigurableProperties.class, getClass().getClassLoader());
-        if (CollectionUtils.isEmpty(configurableProperties)) {
+        List<ConfigurableProperties> propertiesList = loadFactories(ConfigurableProperties.class, getClass().getClassLoader());
+        if (CollectionUtils.isEmpty(propertiesList)) {
             log.warn("There is no configuration properties found");
             return;
         }
@@ -49,15 +52,15 @@ class ConfigurablePropertiesLoader {
         ApplicationEventMulticaster eventMulticaster = createEventMulticaster(application.getListeners());
         boolean remoteFirst = ApolloProperties.get(environment).isRemoteFirst();
 
-        configurableProperties.parallelStream().forEach(properties -> {
+        for (ConfigurableProperties properties : propertiesList) {
             OrderedMapPropertySource propertySource = loadFromRemote(environment, remoteFirst, properties.getNamespace());
             if (propertySource == null) {
-                return;
+                continue;
             }
             // multicast event
             ConfigLoadedEvent event = createEvent(environment, application, propertySource, properties);
             eventMulticaster.multicastEvent(event, ResolvableType.forClass(event.getClass()));
-        });
+        }
     }
 
     private OrderedMapPropertySource loadFromRemote(ConfigurableEnvironment environment, boolean remoteFirst, String namespace) {

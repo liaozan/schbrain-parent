@@ -4,7 +4,6 @@ import com.ctrip.framework.apollo.Config;
 import com.ctrip.framework.apollo.ConfigService;
 import com.schbrain.common.util.properties.OrderedMapPropertySource;
 import com.schbrain.common.util.support.ConfigurableProperties;
-import com.schbrain.framework.autoconfigure.apollo.event.ConcurrentEventMulticaster;
 import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
 import com.schbrain.framework.autoconfigure.apollo.event.listener.ConfigLoadedEventListener;
 import com.schbrain.framework.autoconfigure.apollo.properties.ApolloProperties;
@@ -14,6 +13,8 @@ import org.apache.commons.logging.Log;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.logging.DeferredLogFactory;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ApplicationEventMulticaster;
+import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.core.env.CompositePropertySource;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.ClassUtils;
@@ -50,7 +51,7 @@ class ConfigurablePropertiesLoader {
             return;
         }
 
-        ConcurrentEventMulticaster eventMulticaster = createEventMulticaster(application.getListeners());
+        ApplicationEventMulticaster eventMulticaster = createEventMulticaster(application.getListeners());
 
         ApolloProperties apolloProperties = ApolloProperties.get(environment);
 
@@ -85,8 +86,8 @@ class ConfigurablePropertiesLoader {
         return new ConfigLoadedEvent(environment, deferredLogFactory, propertySource, boundProperties, application);
     }
 
-    private ConcurrentEventMulticaster createEventMulticaster(Set<ApplicationListener<?>> listeners) {
-        ConcurrentEventMulticaster eventMulticaster = new ConcurrentEventMulticaster();
+    private ApplicationEventMulticaster createEventMulticaster(Set<ApplicationListener<?>> listeners) {
+        SimpleApplicationEventMulticaster eventMulticaster = new SimpleApplicationEventMulticaster();
         for (ApplicationListener<?> listener : listeners) {
             if (ClassUtils.isAssignableValue(ConfigLoadedEventListener.class, listener)) {
                 eventMulticaster.addApplicationListener(listener);

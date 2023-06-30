@@ -15,7 +15,7 @@ import org.springframework.boot.logging.DeferredLogFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
-import org.springframework.core.env.CompositePropertySource;
+import org.springframework.core.ResolvableType;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.ClassUtils;
 
@@ -30,18 +30,13 @@ import static org.springframework.core.io.support.SpringFactoriesLoader.loadFact
  */
 class ConfigurablePropertiesLoader {
 
-    /**
-     * the name of properties propertySource
-     */
-    public static final String PROPERTIES_PROPERTY_SOURCE = "ConfigurablePropertiesPropertySource";
-
     private final Log log;
 
     private final DeferredLogFactory deferredLogFactory;
 
     ConfigurablePropertiesLoader(DeferredLogFactory deferredLogFactory) {
-        this.log = deferredLogFactory.getLog(ConfigurablePropertiesLoader.class);
         this.deferredLogFactory = deferredLogFactory;
+        this.log = deferredLogFactory.getLog(ConfigurablePropertiesLoader.class);
     }
 
     void load(ConfigurableEnvironment environment, SpringApplication application) {
@@ -52,32 +47,34 @@ class ConfigurablePropertiesLoader {
         }
 
         ApplicationEventMulticaster eventMulticaster = createEventMulticaster(application.getListeners());
+        boolean remoteFirst = ApolloProperties.get(environment).isRemoteFirst();
 
-        ApolloProperties apolloProperties = ApolloProperties.get(environment);
-
-        // MUST NOT use CachedCompositePropertySource, because propertyNames will be cached when property loading
-        CompositePropertySource compositePropertySource = new CompositePropertySource(PROPERTIES_PROPERTY_SOURCE);
-        if (apolloProperties.isRemoteFirst()) {
-            environment.getPropertySources().addFirst(compositePropertySource);
-        } else {
-            environment.getPropertySources().addLast(compositePropertySource);
-        }
-
-        configurableProperties.forEach(properties -> {
-            String namespace = properties.getNamespace();
-            Config config = ConfigService.getConfig(namespace);
-            OrderedMapPropertySource propertySource = ConfigUtils.toPropertySource(namespace, config);
+        configurableProperties.parallelStream().forEach(properties -> {
+            OrderedMapPropertySource propertySource = loadFromRemote(environment, remoteFirst, properties.getNamespace());
             if (propertySource == null) {
-                log.warn("No configuration properties loaded under namespace: " + namespace);
                 return;
             }
-            // early add to environment to support properties bind
-            compositePropertySource.addPropertySource(propertySource);
-            // resolve any placeHolders
-            ConfigUtils.resolvePlaceHolders(environment, propertySource);
             // multicast event
-            eventMulticaster.multicastEvent(createEvent(environment, application, propertySource, properties));
+            ConfigLoadedEvent event = createEvent(environment, application, propertySource, properties);
+            eventMulticaster.multicastEvent(event, ResolvableType.forClass(event.getClass()));
         });
+    }
+
+    private OrderedMapPropertySource loadFromRemote(ConfigurableEnvironment environment, boolean remoteFirst, String namespace) {
+        Config config = ConfigService.getConfig(namespace);
+        OrderedMapPropertySource propertySource = ConfigUtils.toPropertySource(namespace, config);
+        if (propertySource == null) {
+            log.warn("No configuration properties loaded under namespace: " + namespace);
+            return null;
+        }
+        if (remoteFirst) {
+            environment.getPropertySources().addFirst(propertySource);
+        } else {
+            environment.getPropertySources().addLast(propertySource);
+        }
+        // resolve any placeHolders
+        ConfigUtils.resolvePlaceHolders(environment, propertySource);
+        return propertySource;
     }
 
     private ConfigLoadedEvent createEvent(ConfigurableEnvironment environment, SpringApplication application,

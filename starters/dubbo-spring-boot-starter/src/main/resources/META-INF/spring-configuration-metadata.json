@@ -1011,6 +1011,11 @@
       "sourceType": "org.apache.dubbo.config.MetricsConfig"
     },
     {
+      "name": "dubbo.metrics.enable-rpc",
+      "type": "java.lang.Boolean",
+      "sourceType": "org.apache.dubbo.config.MetricsConfig"
+    },
+    {
       "name": "dubbo.metrics.enable-threadpool",
       "type": "java.lang.Boolean",
       "sourceType": "org.apache.dubbo.config.MetricsConfig"
@@ -1073,6 +1078,11 @@
     {
       "name": "dubbo.module.background",
       "type": "java.lang.Boolean",
+      "sourceType": "org.apache.dubbo.config.ModuleConfig"
+    },
+    {
+      "name": "dubbo.module.check-reference-timeout",
+      "type": "java.lang.Long",
       "sourceType": "org.apache.dubbo.config.ModuleConfig"
     },
     {

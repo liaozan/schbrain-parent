@@ -88,11 +88,7 @@ public class StreamUtils {
     }
 
     public static <K, T, V, M extends Map<K, V>> Map<K, V> toMap(Iterable<T> data, Function<T, K> keyMapper, Function<T, V> valueMapper, Supplier<M> mapFactory) {
-        return from(data).collect(Collectors.toMap(keyMapper, valueMapper, (oldValue, newValue) -> {
-            // Could not get the key when mergeFunction invoke
-            log.warn("There are multiple values with the same key when toMap, return the old one");
-            return oldValue;
-        }, mapFactory));
+        return from(data).collect(Collectors.toMap(keyMapper, valueMapper, (oldValue, newValue) -> oldValue, mapFactory));
     }
 
     public static <K, T> Map<K, List<T>> groupBy(Iterable<T> data, Function<T, K> mapper) {

@@ -38,7 +38,7 @@ public class ApolloConfigurationInitializerEnvironmentPostProcessor extends Logg
 
     public ApolloConfigurationInitializerEnvironmentPostProcessor(DeferredLogFactory deferredLogFactory, ConfigurableBootstrapContext bootstrapContext) {
         super(deferredLogFactory, bootstrapContext);
-        this.configurablePropertiesLoader = new ConfigurablePropertiesLoader(deferredLogFactory);
+        this.configurablePropertiesLoader = new ConfigurablePropertiesLoader(deferredLogFactory, bootstrapContext);
     }
 
     @Override

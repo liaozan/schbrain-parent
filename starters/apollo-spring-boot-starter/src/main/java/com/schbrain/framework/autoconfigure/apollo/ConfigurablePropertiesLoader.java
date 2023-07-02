@@ -10,6 +10,7 @@ import com.schbrain.framework.autoconfigure.apollo.properties.ApolloProperties;
 import com.schbrain.framework.autoconfigure.apollo.util.ConfigUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.logging.Log;
+import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.logging.DeferredLogFactory;
 import org.springframework.context.ApplicationListener;
@@ -31,12 +32,13 @@ import static org.springframework.core.io.support.SpringFactoriesLoader.loadFact
 class ConfigurablePropertiesLoader {
 
     private final Log log;
-
     private final DeferredLogFactory deferredLogFactory;
+    private final ConfigurableBootstrapContext bootstrapContext;
 
-    ConfigurablePropertiesLoader(DeferredLogFactory deferredLogFactory) {
+    ConfigurablePropertiesLoader(DeferredLogFactory deferredLogFactory, ConfigurableBootstrapContext bootstrapContext) {
         this.deferredLogFactory = deferredLogFactory;
         this.log = deferredLogFactory.getLog(ConfigurablePropertiesLoader.class);
+        this.bootstrapContext = bootstrapContext;
     }
 
     /**
@@ -83,7 +85,7 @@ class ConfigurablePropertiesLoader {
     private ConfigLoadedEvent createEvent(ConfigurableEnvironment environment, SpringApplication application,
                                           OrderedMapPropertySource propertySource, ConfigurableProperties properties) {
         ConfigurableProperties boundProperties = properties.bind(environment);
-        return new ConfigLoadedEvent(environment, deferredLogFactory, propertySource, boundProperties, application);
+        return new ConfigLoadedEvent(environment, deferredLogFactory, propertySource, boundProperties, application, bootstrapContext);
     }
 
     private ApplicationEventMulticaster createEventMulticaster(Set<ApplicationListener<?>> listeners) {

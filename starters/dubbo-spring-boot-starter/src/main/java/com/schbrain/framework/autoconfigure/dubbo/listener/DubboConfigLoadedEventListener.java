@@ -1,6 +1,5 @@
 package com.schbrain.framework.autoconfigure.dubbo.listener;
 
-import com.schbrain.common.util.ApplicationName;
 import com.schbrain.common.util.properties.OrderedMapPropertySource;
 import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
 import com.schbrain.framework.autoconfigure.apollo.event.listener.GenericConfigLoadedEventListener;
@@ -8,7 +7,6 @@ import com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.Ordered;
-import org.springframework.core.env.ConfigurableEnvironment;
 
 import static org.apache.dubbo.config.ConfigKeys.DUBBO_SCAN_BASE_PACKAGES;
 
@@ -17,8 +15,6 @@ import static org.apache.dubbo.config.ConfigKeys.DUBBO_SCAN_BASE_PACKAGES;
  * @since 2023-04-28
  */
 public class DubboConfigLoadedEventListener extends GenericConfigLoadedEventListener<DubboProperties> {
-
-    public static final String DUBBO_APPLICATION_NAME = "dubbo.application.name";
 
     @Override
     public int getOrder() {
@@ -32,15 +28,12 @@ public class DubboConfigLoadedEventListener extends GenericConfigLoadedEventList
 
     @Override
     protected void onConfigLoaded(ConfigLoadedEvent event, DubboProperties properties) {
-        addRequiredProperties(event.getEnvironment(), event.getSpringApplication(), event.getPropertySource());
+        addRequiredProperties(event.getSpringApplication(), event.getPropertySource());
     }
 
-    private void addRequiredProperties(ConfigurableEnvironment environment, SpringApplication application, OrderedMapPropertySource propertySource) {
+    private void addRequiredProperties(SpringApplication application, OrderedMapPropertySource propertySource) {
         if (!propertySource.containsProperty(DUBBO_SCAN_BASE_PACKAGES)) {
             propertySource.addProperty(DUBBO_SCAN_BASE_PACKAGES, getBasePackage(application));
-        }
-        if (!propertySource.containsProperty(DUBBO_APPLICATION_NAME)) {
-            propertySource.addProperty(DUBBO_APPLICATION_NAME, ApplicationName.get(environment));
         }
     }
 

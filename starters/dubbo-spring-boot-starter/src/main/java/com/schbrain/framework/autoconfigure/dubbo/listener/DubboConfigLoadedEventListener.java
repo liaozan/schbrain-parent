@@ -3,6 +3,7 @@ package com.schbrain.framework.autoconfigure.dubbo.listener;
 import com.schbrain.common.util.properties.OrderedMapPropertySource;
 import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
 import com.schbrain.framework.autoconfigure.apollo.event.listener.GenericConfigLoadedEventListener;
+import com.schbrain.framework.autoconfigure.dubbo.initializer.DubboValidationInitializer;
 import com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -29,6 +30,7 @@ public class DubboConfigLoadedEventListener extends GenericConfigLoadedEventList
     @Override
     protected void onConfigLoaded(ConfigLoadedEvent event, DubboProperties properties) {
         addRequiredProperties(event.getSpringApplication(), event.getPropertySource());
+        DubboValidationInitializer.initialize(event.getPropertySource());
     }
 
     private void addRequiredProperties(SpringApplication application, OrderedMapPropertySource propertySource) {

@@ -4,14 +4,14 @@ import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.schbrain.common.constants.ResponseActionConstants;
 import com.schbrain.common.exception.BaseException;
+import com.schbrain.common.util.support.ValidationMessageBuilder;
 import com.schbrain.common.web.result.ResponseDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.ClassUtils;
-import org.springframework.validation.*;
+import org.springframework.validation.BindException;
 import org.springframework.web.*;
 import org.springframework.web.bind.*;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +20,10 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.schbrain.common.constants.ResponseCodeConstants.*;
 
@@ -178,14 +178,14 @@ public class GlobalExceptionHandler {
     /*************************************  Parameter Binding Exception Handing *************************************/
     @ExceptionHandler(BindException.class)
     public ResponseDTO<String> handleBindException(BindException ex) {
-        String errorMsg = buildBindingErrorMsg(ex.getBindingResult());
+        String errorMsg = ValidationMessageBuilder.buildBindingErrorMsg(ex.getBindingResult());
         log.error(errorMsg);
         return buildResponse(ex, PARAM_INVALID, errorMsg);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseDTO<String> handleConstraintViolationException(ConstraintViolationException ex) {
-        String errorMsg = buildBindingErrorMsg(ex.getConstraintViolations());
+        String errorMsg = ValidationMessageBuilder.buildConstraintViolationErrorMsg(ex.getConstraintViolations());
         log.error(errorMsg);
         return buildResponse(ex, PARAM_INVALID, errorMsg);
     }
@@ -216,32 +216,6 @@ public class GlobalExceptionHandler {
             }
         }
         return null;
-    }
-
-    private String buildBindingErrorMsg(BindingResult bindingResult) {
-        String prefix = "参数验证失败: ";
-        StringJoiner joiner = new StringJoiner(", ");
-        for (ObjectError error : bindingResult.getAllErrors()) {
-            String errorMessage = Optional.ofNullable(error.getDefaultMessage()).orElse("验证失败");
-            String source;
-            if (error instanceof FieldError) {
-                source = ((FieldError) error).getField();
-            } else {
-                source = error.getObjectName();
-            }
-            joiner.add(source + " " + errorMessage);
-        }
-        return prefix + joiner;
-    }
-
-    private String buildBindingErrorMsg(Set<ConstraintViolation<?>> constraintViolations) {
-        String prefix = "参数验证失败: ";
-        StringJoiner joiner = new StringJoiner(", ");
-        for (ConstraintViolation<?> violation : constraintViolations) {
-            PathImpl propertyPath = (PathImpl) violation.getPropertyPath();
-            joiner.add(propertyPath.asString() + " " + violation.getMessage());
-        }
-        return prefix + joiner;
     }
 
     private void logError(Throwable throwable) {

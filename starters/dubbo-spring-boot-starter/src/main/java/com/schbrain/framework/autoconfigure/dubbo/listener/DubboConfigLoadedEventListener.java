@@ -8,6 +8,7 @@ import com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.Ordered;
+import org.springframework.core.env.ConfigurableEnvironment;
 
 import static org.apache.dubbo.config.ConfigKeys.DUBBO_SCAN_BASE_PACKAGES;
 
@@ -29,12 +30,12 @@ public class DubboConfigLoadedEventListener extends GenericConfigLoadedEventList
 
     @Override
     protected void onConfigLoaded(ConfigLoadedEvent event, DubboProperties properties) {
-        addRequiredProperties(event.getSpringApplication(), event.getPropertySource());
+        addRequiredProperties(event.getEnvironment(), event.getSpringApplication(), event.getPropertySource());
         DubboValidationInitializer.initialize(event.getPropertySource());
     }
 
-    private void addRequiredProperties(SpringApplication application, OrderedMapPropertySource propertySource) {
-        if (!propertySource.containsProperty(DUBBO_SCAN_BASE_PACKAGES)) {
+    private void addRequiredProperties(ConfigurableEnvironment environment, SpringApplication application, OrderedMapPropertySource propertySource) {
+        if (!environment.containsProperty(DUBBO_SCAN_BASE_PACKAGES)) {
             propertySource.addProperty(DUBBO_SCAN_BASE_PACKAGES, getBasePackage(application));
         }
     }

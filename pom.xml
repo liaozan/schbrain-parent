@@ -105,7 +105,7 @@
         <alibabacloud-sts20150401.version>1.0.3</alibabacloud-sts20150401.version>
         <alibabacloud-oss20190517.version>1.0.2</alibabacloud-oss20190517.version>
         <alibabacloud-vod20170321.version>1.0.6</alibabacloud-vod20170321.version>
-        <alibabacloud-dysmsapi20170525.version>2.0.23</alibabacloud-dysmsapi20170525.version>
+        <alibabacloud-dysmsapi20170525.version>2.0.24</alibabacloud-dysmsapi20170525.version>
 
         <!-- dingtalk -->
         <alibaba-dingtalk-service-sdk.version>2.0.0</alibaba-dingtalk-service-sdk.version>

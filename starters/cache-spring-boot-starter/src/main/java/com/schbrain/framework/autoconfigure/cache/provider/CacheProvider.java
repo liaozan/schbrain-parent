@@ -1,7 +1,10 @@
 package com.schbrain.framework.autoconfigure.cache.provider;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author zhuyf

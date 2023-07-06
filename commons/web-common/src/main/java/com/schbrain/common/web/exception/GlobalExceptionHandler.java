@@ -12,9 +12,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.ClassUtils;
 import org.springframework.validation.BindException;
-import org.springframework.web.*;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
@@ -25,7 +29,8 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.schbrain.common.constants.ResponseCodeConstants.*;
+import static com.schbrain.common.constants.ResponseCodeConstants.PARAM_INVALID;
+import static com.schbrain.common.constants.ResponseCodeConstants.SERVER_ERROR;
 
 /**
  * @author liaozan

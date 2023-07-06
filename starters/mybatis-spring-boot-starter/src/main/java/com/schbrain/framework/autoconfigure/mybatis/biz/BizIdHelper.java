@@ -1,6 +1,8 @@
 package com.schbrain.framework.autoconfigure.mybatis.biz;
 
-import com.baomidou.mybatisplus.core.metadata.*;
+import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
+import com.baomidou.mybatisplus.core.metadata.TableInfo;
+import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.schbrain.common.exception.BaseException;
 import com.schbrain.framework.autoconfigure.mybatis.annotation.BizId;

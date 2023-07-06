@@ -12,9 +12,13 @@ import com.schbrain.framework.autoconfigure.mybatis.configuration.MybatisPlusGlo
 import com.schbrain.framework.autoconfigure.mybatis.datasource.DataSourceConnectionPostProcessor;
 import com.schbrain.framework.autoconfigure.mybatis.datasource.customizer.DataSourceCustomizer;
 import com.schbrain.framework.autoconfigure.mybatis.datasource.customizer.DefaultDataSourceCustomizer;
-import com.schbrain.framework.autoconfigure.mybatis.datasource.extractor.*;
+import com.schbrain.framework.autoconfigure.mybatis.datasource.extractor.DataSourcePropertiesExtractor;
+import com.schbrain.framework.autoconfigure.mybatis.datasource.extractor.DruidDataSourcePropertiesExtractor;
+import com.schbrain.framework.autoconfigure.mybatis.datasource.extractor.HikariDataSourcePropertiesExtractor;
 import com.schbrain.framework.autoconfigure.mybatis.listener.TableConstraintCheckerBean;
-import com.schbrain.framework.autoconfigure.mybatis.properties.*;
+import com.schbrain.framework.autoconfigure.mybatis.properties.DataSourceConnectionProperties;
+import com.schbrain.framework.autoconfigure.mybatis.properties.DataSourceProperties;
+import com.schbrain.framework.autoconfigure.mybatis.properties.MybatisProperties;
 import com.schbrain.framework.autoconfigure.mybatis.sql.injector.DefaultMethodSqlInjector;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -22,7 +26,9 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Role;
 
 import javax.sql.DataSource;
 import java.util.List;

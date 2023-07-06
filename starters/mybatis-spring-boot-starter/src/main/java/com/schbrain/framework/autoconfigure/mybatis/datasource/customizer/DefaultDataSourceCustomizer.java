@@ -6,7 +6,9 @@ import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author liaozan

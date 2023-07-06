@@ -3,13 +3,16 @@ package com.schbrain.framework.autoconfigure.apollo.util;
 import com.schbrain.framework.autoconfigure.apollo.properties.ApolloProperties;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.boot.DefaultPropertiesPropertySource;
-import org.springframework.core.env.*;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.MutablePropertySources;
+import org.springframework.core.env.PropertySource;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.ctrip.framework.apollo.spring.config.PropertySourcesConstants.*;
+import static com.ctrip.framework.apollo.spring.config.PropertySourcesConstants.APOLLO_BOOTSTRAP_PROPERTY_SOURCE_NAME;
+import static com.ctrip.framework.apollo.spring.config.PropertySourcesConstants.APOLLO_PROPERTY_SOURCE_NAME;
 
 /**
  * @author liaozan

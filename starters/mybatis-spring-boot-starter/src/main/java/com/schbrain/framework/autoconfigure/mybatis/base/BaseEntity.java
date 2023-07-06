@@ -1,6 +1,8 @@
 package com.schbrain.framework.autoconfigure.mybatis.base;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants;
 import lombok.Data;
 

@@ -5,11 +5,14 @@ import com.ctrip.framework.apollo.enums.PropertyChangeType;
 import com.ctrip.framework.apollo.model.ConfigChange;
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.logging.*;
+import org.springframework.boot.logging.LogLevel;
+import org.springframework.boot.logging.LoggerConfiguration;
+import org.springframework.boot.logging.LoggingSystem;
 
 import java.util.Set;
 
-import static com.ctrip.framework.apollo.enums.PropertyChangeType.*;
+import static com.ctrip.framework.apollo.enums.PropertyChangeType.ADDED;
+import static com.ctrip.framework.apollo.enums.PropertyChangeType.MODIFIED;
 import static org.springframework.boot.logging.LoggingSystem.ROOT_LOGGER_NAME;
 
 /**

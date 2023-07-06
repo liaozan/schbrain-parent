@@ -6,7 +6,9 @@ import com.google.common.base.Converter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.annotation.MergedAnnotation;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author liaozan

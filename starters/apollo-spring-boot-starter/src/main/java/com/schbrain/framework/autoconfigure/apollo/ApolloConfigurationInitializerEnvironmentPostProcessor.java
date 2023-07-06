@@ -17,7 +17,8 @@ import java.util.Map;
 
 import static com.ctrip.framework.apollo.core.ApolloClientSystemConsts.*;
 import static com.ctrip.framework.apollo.core.ConfigConsts.APOLLO_META_KEY;
-import static com.ctrip.framework.apollo.spring.config.PropertySourcesConstants.*;
+import static com.ctrip.framework.apollo.spring.config.PropertySourcesConstants.APOLLO_BOOTSTRAP_EAGER_LOAD_ENABLED;
+import static com.ctrip.framework.apollo.spring.config.PropertySourcesConstants.APOLLO_BOOTSTRAP_ENABLED;
 
 /**
  * @author liaozan

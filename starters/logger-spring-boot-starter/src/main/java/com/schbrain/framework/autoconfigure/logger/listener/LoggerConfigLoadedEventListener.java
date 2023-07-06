@@ -33,21 +33,20 @@ import static org.springframework.boot.context.logging.LoggingApplicationListene
  */
 public class LoggerConfigLoadedEventListener extends GenericConfigLoadedEventListener<LoggerProperties> {
 
-    private LoggerConfigurationInitializer initializer;
+    private LoggerConfigurationInitializer loggerInitializer;
 
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
-        initializer.init();
+        loggerInitializer.init();
     }
 
     @Override
     protected void onConfigLoaded(ConfigLoadedEvent event, LoggerProperties properties) {
-        ConfigurableEnvironment environment = event.getEnvironment();
         HostInfo hostInfo = InetUtils.findFirstNonLoopBackHostInfo();
         Map<String, String> hostInfoProperties = buildHostInfoProperties(hostInfo);
         event.getPropertySource().addProperties(hostInfoProperties);
-        configLoggingFileLocation(environment, properties.getLogConfigNamespace());
-        this.initializer = new LoggerConfigurationInitializer(environment, properties, hostInfo);
+        configLoggingFileLocation(event.getEnvironment(), properties.getLogConfigNamespace());
+        this.loggerInitializer = new LoggerConfigurationInitializer(event.getEnvironment(), properties, hostInfo);
     }
 
     /**

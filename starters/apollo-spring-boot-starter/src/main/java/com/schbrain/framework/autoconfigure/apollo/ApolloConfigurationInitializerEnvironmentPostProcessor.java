@@ -137,11 +137,7 @@ public class ApolloConfigurationInitializerEnvironmentPostProcessor extends Logg
      * @see #getApolloMetaServerUrl(org.springframework.core.env.ConfigurableEnvironment, String)
      */
     private String getEnv(ConfigurableEnvironment environment) {
-        String profile = EnvUtils.getProfile(environment);
-        if (profile == null) {
-            profile = EnvUtils.DEVELOPMENT;
-        }
-        return profile;
+        return EnvUtils.getProfile(environment);
     }
 
     /**
@@ -151,13 +147,11 @@ public class ApolloConfigurationInitializerEnvironmentPostProcessor extends Logg
      */
     @SuppressWarnings("JavadocReference")
     private String getAppId(ConfigurableEnvironment environment) {
-        String appId;
         if (environment.containsProperty(APP_ID)) {
-            appId = environment.getRequiredProperty(APP_ID);
+            return environment.getRequiredProperty(APP_ID);
         } else {
-            appId = ApplicationName.get(environment);
+            return ApplicationName.get(environment);
         }
-        return appId;
     }
 
 }

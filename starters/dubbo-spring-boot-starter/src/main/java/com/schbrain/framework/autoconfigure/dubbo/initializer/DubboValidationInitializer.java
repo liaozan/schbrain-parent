@@ -1,6 +1,6 @@
 package com.schbrain.framework.autoconfigure.dubbo.initializer;
 
-import com.schbrain.common.util.properties.OrderedMapPropertySource;
+import com.schbrain.framework.autoconfigure.apollo.config.OrderedMapPropertySource;
 import org.springframework.util.ClassUtils;
 
 /**

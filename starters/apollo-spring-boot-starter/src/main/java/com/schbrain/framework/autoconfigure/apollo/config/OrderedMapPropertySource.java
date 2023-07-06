@@ -1,4 +1,4 @@
-package com.schbrain.common.util.properties;
+package com.schbrain.framework.autoconfigure.apollo.config;
 
 import org.springframework.core.env.MapPropertySource;
 

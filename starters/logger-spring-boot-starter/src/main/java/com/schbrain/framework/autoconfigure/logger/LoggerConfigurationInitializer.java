@@ -40,11 +40,8 @@ import java.util.List;
 public class LoggerConfigurationInitializer {
 
     private final ConfigurableEnvironment environment;
-
     private final LoggerProperties properties;
-
     private final HostInfo hostInfo;
-
     private final String applicationName;
 
     private volatile boolean initialized;

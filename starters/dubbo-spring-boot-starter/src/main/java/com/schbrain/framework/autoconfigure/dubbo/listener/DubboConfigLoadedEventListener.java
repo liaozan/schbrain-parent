@@ -1,6 +1,6 @@
 package com.schbrain.framework.autoconfigure.dubbo.listener;
 
-import com.schbrain.common.util.properties.OrderedMapPropertySource;
+import com.schbrain.framework.autoconfigure.apollo.config.OrderedMapPropertySource;
 import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
 import com.schbrain.framework.autoconfigure.apollo.event.listener.GenericConfigLoadedEventListener;
 import com.schbrain.framework.autoconfigure.dubbo.initializer.DubboValidationInitializer;

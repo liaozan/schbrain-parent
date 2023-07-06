@@ -1,7 +1,7 @@
 package com.schbrain.framework.autoconfigure.apollo.event;
 
-import com.schbrain.common.util.properties.OrderedMapPropertySource;
 import com.schbrain.common.util.support.ConfigurableProperties;
+import com.schbrain.framework.autoconfigure.apollo.config.OrderedMapPropertySource;
 import lombok.Getter;
 import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;
@@ -38,8 +38,9 @@ public class ConfigLoadedEvent extends ApplicationEvent {
         this.bootstrapContext = bootstrapContext;
     }
 
-    public ConfigurableProperties getConfigurableProperties() {
-        return (ConfigurableProperties) getSource();
+    @Override
+    public ConfigurableProperties getSource() {
+        return (ConfigurableProperties) super.getSource();
     }
 
 }

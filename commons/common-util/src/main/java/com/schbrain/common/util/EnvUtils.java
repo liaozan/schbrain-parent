@@ -58,6 +58,11 @@ public class EnvUtils {
         return profiles[0];
     }
 
+    public static boolean runningOnCloudPlatform() {
+        Environment environment = SpringUtil.getBean(Environment.class);
+        return runningOnCloudPlatform(environment);
+    }
+
     public static boolean runningOnCloudPlatform(Environment environment) {
         CloudPlatform cloudPlatform = CloudPlatform.getActive(environment);
         return cloudPlatform != null && cloudPlatform != CloudPlatform.NONE;

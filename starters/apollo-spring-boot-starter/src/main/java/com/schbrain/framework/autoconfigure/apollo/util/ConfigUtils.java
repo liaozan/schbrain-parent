@@ -2,7 +2,7 @@ package com.schbrain.framework.autoconfigure.apollo.util;
 
 import com.ctrip.framework.apollo.Config;
 import com.google.common.collect.Maps;
-import com.schbrain.common.util.properties.OrderedMapPropertySource;
+import com.schbrain.framework.autoconfigure.apollo.config.OrderedMapPropertySource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.ConfigurableEnvironment;
 

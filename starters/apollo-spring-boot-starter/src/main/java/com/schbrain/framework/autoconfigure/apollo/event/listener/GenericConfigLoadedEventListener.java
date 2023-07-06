@@ -23,9 +23,9 @@ public abstract class GenericConfigLoadedEventListener<T extends ConfigurablePro
     @Override
     public void onApplicationEvent(ConfigLoadedEvent event) {
         event.getSpringApplication().addInitializers(this);
-        if (propertiesType.isInstance(event.getConfigurableProperties())) {
+        if (propertiesType.isInstance(event.getSource())) {
             this.log = event.getDeferredLogFactory().getLog(getClass());
-            this.onConfigLoaded(event, (T) event.getConfigurableProperties());
+            this.onConfigLoaded(event, (T) event.getSource());
         }
     }
 

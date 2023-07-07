@@ -16,22 +16,22 @@ public class ContentCachingServletUtils {
     /**
      * Make request content cacheable to avoid stream closed error after inputStream closed
      */
-    public static HttpServletRequest wrapRequestIfRequired(HttpServletRequest request) {
+    public static ContentCachingRequestWrapper wrapRequestIfRequired(HttpServletRequest request) {
         Assert.notNull(request, "request must not be null");
         if (request instanceof ContentCachingRequestWrapper) {
-            return request;
+            return (ContentCachingRequestWrapper) request;
         } else {
-            return new ContentCachingRequestWrapper(request);
+            return new ContentCachingRequestWrapper(request, request.getContentLength());
         }
     }
 
     /**
      * Make response content cacheable to avoid stream closed error after outputStream closed
      */
-    public static HttpServletResponse wrapResponseIfRequired(HttpServletResponse response) {
+    public static ContentCachingResponseWrapper wrapResponseIfRequired(HttpServletResponse response) {
         Assert.notNull(response, "response must not be null");
         if (response instanceof ContentCachingResponseWrapper) {
-            return response;
+            return (ContentCachingResponseWrapper) response;
         } else {
             return new ContentCachingResponseWrapper(response);
         }

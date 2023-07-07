@@ -7,7 +7,9 @@ import lombok.Getter;
 import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Field;
 
-import static java.lang.invoke.MethodHandles.*;
+import static java.lang.invoke.MethodHandles.Lookup;
+import static java.lang.invoke.MethodHandles.lookup;
+import static java.lang.invoke.MethodHandles.privateLookupIn;
 
 /**
  * @author liaozan

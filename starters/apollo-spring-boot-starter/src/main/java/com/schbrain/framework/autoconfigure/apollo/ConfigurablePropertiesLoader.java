@@ -2,8 +2,8 @@ package com.schbrain.framework.autoconfigure.apollo;
 
 import com.ctrip.framework.apollo.Config;
 import com.ctrip.framework.apollo.ConfigService;
-import com.schbrain.framework.autoconfigure.apollo.config.OrderedMapPropertySource;
 import com.schbrain.common.util.support.ConfigurableProperties;
+import com.schbrain.framework.autoconfigure.apollo.config.OrderedMapPropertySource;
 import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
 import com.schbrain.framework.autoconfigure.apollo.event.listener.ConfigLoadedEventListener;
 import com.schbrain.framework.autoconfigure.apollo.properties.ApolloProperties;

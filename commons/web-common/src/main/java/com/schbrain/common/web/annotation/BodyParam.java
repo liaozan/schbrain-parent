@@ -1,5 +1,6 @@
 package com.schbrain.common.web.annotation;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ValueConstants;
@@ -7,6 +8,9 @@ import org.springframework.web.bind.annotation.ValueConstants;
 import java.lang.annotation.*;
 
 /**
+ * 支持从请求参数中多次获取所需参数
+ * {@link ObjectNode#findValue(String)}
+ *
  * @author liaozan
  * @see RequestParam
  * @since 2022-12-02

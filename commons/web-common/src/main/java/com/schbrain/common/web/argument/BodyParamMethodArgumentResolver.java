@@ -1,5 +1,6 @@
 package com.schbrain.common.web.argument;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.schbrain.common.util.JacksonUtils;
@@ -9,9 +10,11 @@ import org.springframework.core.MethodParameter;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.lang.reflect.Type;
 
 import static com.schbrain.common.web.utils.ContentCachingServletUtils.wrapRequestIfRequired;
 import static org.springframework.web.context.request.RequestAttributes.SCOPE_REQUEST;
@@ -50,18 +53,22 @@ public class BodyParamMethodArgumentResolver extends AbstractNamedValueMethodArg
     @Override
     protected Object resolveName(String name, MethodParameter parameter, NativeWebRequest request) throws Exception {
         JsonNode requestBody = getRequestBody(request);
-        JsonNode parameterValue = requestBody.get(name);
-        if (parameterValue == null || parameterValue.isNull()) {
+        JsonNode value = requestBody.findValue(name);
+        if (value == null || value.isNull()) {
             return null;
         }
-        Class<?> parameterType = parameter.getParameterType();
-        return objectMapper.convertValue(parameterValue, parameterType);
+        return objectMapper.convertValue(value, getJavaType(parameter));
+    }
+
+    private JavaType getJavaType(MethodParameter parameter) {
+        Type parameterType = parameter.getNestedGenericParameterType();
+        return objectMapper.constructType(parameterType);
     }
 
     private JsonNode getRequestBody(NativeWebRequest nativeWebRequest) throws IOException {
         JsonNode requestBody = (JsonNode) nativeWebRequest.getAttribute(REQUEST_BODY_CACHE, SCOPE_REQUEST);
         if (requestBody == null) {
-            HttpServletRequest request = wrapRequestIfRequired(nativeWebRequest.getNativeRequest(HttpServletRequest.class));
+            ContentCachingRequestWrapper request = wrapRequestIfRequired(nativeWebRequest.getNativeRequest(HttpServletRequest.class));
             requestBody = objectMapper.readTree(request.getInputStream());
             nativeWebRequest.setAttribute(REQUEST_BODY_CACHE, requestBody, SCOPE_REQUEST);
         }

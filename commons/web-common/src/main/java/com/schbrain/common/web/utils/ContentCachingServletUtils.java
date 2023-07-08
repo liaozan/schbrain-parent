@@ -21,7 +21,7 @@ public class ContentCachingServletUtils {
         if (request instanceof ContentCachingRequestWrapper) {
             return (ContentCachingRequestWrapper) request;
         } else {
-            return new ContentCachingRequestWrapper(request, request.getContentLength());
+            return new ContentCachingRequestWrapper(request);
         }
     }
 

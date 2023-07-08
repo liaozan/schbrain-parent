@@ -1,8 +1,8 @@
 package com.schbrain.framework.support.spring.defaults;
 
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.text.StrFormatter;
 import cn.hutool.core.util.ArrayUtil;
-import com.schbrain.common.constants.DateTimeFormatters;
 import com.schbrain.common.util.EnvUtils;
 import com.schbrain.common.util.PortUtils;
 import com.schbrain.framework.support.spring.LoggerAwareEnvironmentPostProcessor;
@@ -61,10 +61,10 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
         // mvc
         defaultProperties.put("spring.mvc.throw-exception-if-no-handler-found", true);
         // datetime
-        defaultProperties.put("spring.mvc.format.date", DateTimeFormatters.DATE_PATTERN);
-        defaultProperties.put("spring.mvc.format.time", DateTimeFormatters.TIME_PATTERN);
-        defaultProperties.put("spring.mvc.format.date-time", DateTimeFormatters.DATE_TIME_PATTERN);
-        defaultProperties.put("spring.jackson.date-format", DateTimeFormatters.DATE_TIME_PATTERN);
+        defaultProperties.put("spring.mvc.format.date", DatePattern.NORM_DATE_PATTERN);
+        defaultProperties.put("spring.mvc.format.time", DatePattern.NORM_TIME_FORMAT);
+        defaultProperties.put("spring.mvc.format.date-time", DatePattern.NORM_DATETIME_PATTERN);
+        defaultProperties.put("spring.jackson.date-format", DatePattern.NORM_DATETIME_PATTERN);
         defaultProperties.put("spring.jackson.time-zone", TimeZone.getDefault());
         // others
         defaultProperties.put("spring.mandatory-file-encoding", StandardCharsets.UTF_8.name());

@@ -1,5 +1,6 @@
 package com.schbrain.framework.autoconfigure.oss.util;
 
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.text.StrFormatter;
 import cn.hutool.core.util.URLUtil;
@@ -14,7 +15,6 @@ import com.aliyuncs.auth.sts.AssumeRoleResponse.Credentials;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
-import com.schbrain.common.constants.DateTimeFormatters;
 import com.schbrain.common.util.ApplicationName;
 import com.schbrain.common.util.ValidateUtils;
 import com.schbrain.framework.autoconfigure.oss.bean.*;
@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,9 +38,10 @@ import java.util.stream.Collectors;
  * @author liaozan
  * @since 2021/12/3
  */
-@SuppressWarnings("unused")
 @Slf4j
 public class OssUtils {
+
+    private static final DateTimeFormatter DATE_WITH_SLASH = DatePattern.createFormatter("yyyy/MM/dd");
 
     private static OSSClient ossClient;
 
@@ -189,7 +191,7 @@ public class OssUtils {
 
     public static String buildUploadPath(String objectKey) {
         objectKey = removePossibleSlash(objectKey);
-        String date = DateTimeFormatters.DATE_WITH_SLASH.format(LocalDate.now());
+        String date = DATE_WITH_SLASH.format(LocalDate.now());
         return String.format("%s/%s/%s", directory, date, objectKey);
     }
 

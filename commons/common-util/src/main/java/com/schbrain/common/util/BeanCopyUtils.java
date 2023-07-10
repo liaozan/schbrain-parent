@@ -1,6 +1,7 @@
 package com.schbrain.common.util;
 
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.convert.ConverterRegistry;
 import cn.hutool.core.lang.Singleton;
 import cn.hutool.core.util.ReflectUtil;
 import com.google.common.base.Joiner;
@@ -10,6 +11,7 @@ import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.cglib.core.Converter;
 import org.springframework.util.ClassUtils;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +69,11 @@ public class BeanCopyUtils {
         return CACHE_KEY_JOINER.join(source.getName(), target.getName());
     }
 
+    /**
+     * 基于 hutool 实现的转换
+     *
+     * @see ConverterRegistry#getConverter(Type, boolean)
+     */
     private static class DefaultConverter implements Converter {
 
         private static final DefaultConverter INSTANCE = new DefaultConverter();
@@ -79,11 +86,7 @@ public class BeanCopyUtils {
             if (ClassUtils.isAssignableValue(targetType, value)) {
                 return value;
             }
-            Object converted = Convert.convertQuietly(targetType, value, null);
-            if (converted == null) {
-                log.warn("Could not copy {} to {}, value type: {}", value, targetType, value.getClass());
-            }
-            return converted;
+            return Convert.convertQuietly(targetType, value);
         }
 
     }

@@ -1,6 +1,8 @@
 package com.schbrain.common.util;
 
+import cn.hutool.core.text.StrPool;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 import java.util.function.Function;
@@ -138,16 +140,24 @@ public class StreamUtils {
         return stream.collect(groupingBy(keyMapper, mapSupplier, mapping(valueMapper, collector)));
     }
 
-    public static <T> String join(Iterable<T> data, CharSequence delimiter) {
+    public static <T> String join(Iterable<T> data) {
+        return join(data, StrPool.COMMA);
+    }
+
+    public static <T> String join(Iterable<T> data, String delimiter) {
         return join(data, delimiter, Objects::toString);
     }
 
-    public static <T> String join(Iterable<T> data, CharSequence delimiter, Function<T, ? extends CharSequence> toStringFunction) {
-        return join(data, delimiter, "", "", toStringFunction);
+    public static <T> String join(Iterable<T> data, String delimiter, Function<T, String> mapper) {
+        return from(data).map(mapper).collect(joining(delimiter));
     }
 
-    public static <T> String join(Iterable<T> data, CharSequence delimiter, String prefix, String suffix, Function<T, ? extends CharSequence> toStringFunction) {
-        return from(data).map(toStringFunction).collect(joining(delimiter, prefix, suffix));
+    public static <T> List<T> split(String data, Function<String, T> mapper) {
+        return split(data, StrPool.COMMA, mapper);
+    }
+
+    public static <T> List<T> split(String data, String delimiter, Function<String, T> mapper) {
+        return Arrays.stream(StringUtils.split(data, delimiter)).map(mapper).collect(Collectors.toList());
     }
 
     public static <T> Stream<T> from(Iterable<T> iterable) {

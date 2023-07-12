@@ -16,11 +16,13 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -29,6 +31,7 @@ import java.util.function.Supplier;
  */
 public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> extends ServiceImpl<M, T> implements BaseService<T>, ValidateSupport, InitializingBean {
 
+    @Nullable
     private BizIdColumnField bizIdColumnField;
 
     @Override
@@ -56,10 +59,15 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 
     @Override
     public Map<Long, T> getMapByIds(Collection<Long> ids) {
+        return getMapByIds(ids, Function.identity());
+    }
+
+    @Override
+    public <V> Map<Long, V> getMapByIds(Collection<Long> ids, Function<T, V> mapper) {
         if (isEmpty(ids)) {
             return Collections.emptyMap();
         }
-        return StreamUtils.toMap(super.listByIds(ids), T::getId);
+        return StreamUtils.toMap(listByIds(ids), T::getId, mapper);
     }
 
     @Override
@@ -97,11 +105,16 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 
     @Override
     public <K> Map<K, T> getMapByBizIds(Collection<K> bizIds) {
+        return getMapByBizIds(bizIds, Function.identity());
+    }
+
+    @Override
+    public <K, V> Map<K, V> getMapByBizIds(Collection<K> bizIds, Function<T, V> mapper) {
         assertBidColumnFieldExist();
         if (isEmpty(bizIds)) {
             return Collections.emptyMap();
         }
-        return StreamUtils.toMap(listByBizIds(bizIds), entity -> bizIdColumnField.getValue(entity));
+        return StreamUtils.toMap(listByBizIds(bizIds), entity -> bizIdColumnField.getValue(entity), mapper);
     }
 
     @Override

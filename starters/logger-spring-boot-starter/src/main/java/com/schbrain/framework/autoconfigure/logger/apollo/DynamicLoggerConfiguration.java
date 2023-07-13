@@ -2,11 +2,10 @@ package com.schbrain.framework.autoconfigure.logger.apollo;
 
 import com.ctrip.framework.apollo.Config;
 import com.ctrip.framework.apollo.ConfigService;
-import com.schbrain.framework.autoconfigure.logger.apollo.listener.LoggingLevelChangeListener;
 import com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.logging.LoggingSystem;
-import org.springframework.util.StringUtils;
 
 /**
  * 动态日志配置
@@ -23,7 +22,7 @@ public class DynamicLoggerConfiguration {
 
     private void listenToLoggingLevelChange(LoggingSystem loggingSystem, LoggerProperties loggerProperties) {
         String loggerNamespace = loggerProperties.getNamespace();
-        if (!StringUtils.hasText(loggerNamespace)) {
+        if (StringUtils.isBlank(loggerNamespace)) {
             log.debug("logger level reload is disabled");
             return;
         }

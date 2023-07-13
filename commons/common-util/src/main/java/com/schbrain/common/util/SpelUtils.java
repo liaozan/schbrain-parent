@@ -1,6 +1,8 @@
 package com.schbrain.common.util;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.expression.BeanFactoryResolver;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
@@ -16,8 +18,9 @@ public class SpelUtils {
 
     private static final ConcurrentHashMap<String, Expression> expressionCache = new ConcurrentHashMap<>();
 
-    public static <T> T parse(String express, Map<String, Object> variables, Class<T> valueType) {
+    public static <T> T parse(String express, Map<String, Object> variables, Class<T> valueType, BeanFactory beanFactory) {
         StandardEvaluationContext ctx = new StandardEvaluationContext();
+        ctx.setBeanResolver(new BeanFactoryResolver(beanFactory));
         ctx.setVariables(variables);
         return parse(express, ctx, valueType);
     }

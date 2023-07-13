@@ -3,9 +3,9 @@ package com.schbrain.common.web.servlet;
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.util.ArrayUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.web.servlet.filter.OrderedFilter;
 import org.springframework.core.Ordered;
-import org.springframework.util.StringUtils;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
@@ -61,10 +61,10 @@ public class RequestLoggingFilter extends OncePerRequestFilter implements Ordere
         String body = getRequestBody(request);
         StringBuilder builder = new StringBuilder();
         builder.append("requestUri: ").append(method).append(CharPool.SPACE).append(requestUri);
-        if (StringUtils.hasText(queryString)) {
+        if (StringUtils.isNotBlank(queryString)) {
             builder.append(", queryString: ").append(queryString);
         }
-        if (StringUtils.hasText(body)) {
+        if (StringUtils.isNotBlank(body)) {
             builder.append(", body: ").append(body);
         }
         builder.append(", startTime: ").append(startTime);

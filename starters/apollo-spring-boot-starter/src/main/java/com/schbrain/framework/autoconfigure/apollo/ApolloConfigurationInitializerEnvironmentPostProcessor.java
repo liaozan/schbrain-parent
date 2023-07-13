@@ -5,12 +5,12 @@ import com.schbrain.common.util.ApplicationName;
 import com.schbrain.common.util.EnvUtils;
 import com.schbrain.framework.support.spring.LoggerAwareEnvironmentPostProcessor;
 import com.schbrain.framework.support.spring.defaults.DefaultPropertiesEnvironmentPostProcessor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.logging.DeferredLogFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.util.StringUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -109,21 +109,21 @@ public class ApolloConfigurationInitializerEnvironmentPostProcessor extends Logg
         // {env}.meta
         String searchKey = fallbackKey;
         String apolloUrl = environment.getProperty(searchKey);
-        if (StringUtils.hasText(apolloUrl)) {
+        if (StringUtils.isNotBlank(apolloUrl)) {
             return apolloUrl;
         }
 
         // apollo.meta.{env}
         searchKey = APOLLO_META_KEY + "." + env;
         apolloUrl = environment.getProperty(searchKey);
-        if (StringUtils.hasText(apolloUrl)) {
+        if (StringUtils.isNotBlank(apolloUrl)) {
             return apolloUrl;
         }
 
         // apollo.meta
         searchKey = APOLLO_META_KEY;
         apolloUrl = environment.getProperty(searchKey);
-        if (StringUtils.hasText(apolloUrl)) {
+        if (StringUtils.isNotBlank(apolloUrl)) {
             return apolloUrl;
         }
 

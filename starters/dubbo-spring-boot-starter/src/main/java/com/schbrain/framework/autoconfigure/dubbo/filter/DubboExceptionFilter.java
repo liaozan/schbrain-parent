@@ -3,7 +3,6 @@ package com.schbrain.framework.autoconfigure.dubbo.filter;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import com.schbrain.common.exception.BaseException;
 import com.schbrain.common.exception.ParamInvalidException;
-import com.schbrain.common.util.support.ValidationMessageBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
@@ -13,6 +12,8 @@ import org.apache.dubbo.rpc.service.GenericService;
 
 import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
+
+import static com.schbrain.common.util.support.ValidationMessageBuilder.buildConstraintViolationErrorMsg;
 
 /**
  * @author liaozan
@@ -47,7 +48,7 @@ public class DubboExceptionFilter extends ExceptionFilter {
     protected ParamInvalidException createParamInvalidException(Invocation invocation, ConstraintViolationException cause) {
         String serviceName = invocation.getInvoker().getInterface().getSimpleName();
         String methodName = invocation.getMethodName();
-        String errorMsg = ValidationMessageBuilder.buildConstraintViolationErrorMsg(cause.getConstraintViolations());
+        String errorMsg = buildConstraintViolationErrorMsg(cause.getConstraintViolations());
         return new ParamInvalidException(String.format("%s.%s %s", serviceName, methodName, errorMsg));
     }
 

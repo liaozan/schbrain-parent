@@ -4,7 +4,6 @@ import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.schbrain.common.constants.ResponseActionConstants;
 import com.schbrain.common.exception.BaseException;
-import com.schbrain.common.util.support.ValidationMessageBuilder;
 import com.schbrain.common.web.result.ResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
@@ -31,6 +30,8 @@ import java.util.List;
 
 import static com.schbrain.common.constants.ResponseCodeConstants.PARAM_INVALID;
 import static com.schbrain.common.constants.ResponseCodeConstants.SERVER_ERROR;
+import static com.schbrain.common.util.support.ValidationMessageBuilder.buildBindingErrorMsg;
+import static com.schbrain.common.util.support.ValidationMessageBuilder.buildConstraintViolationErrorMsg;
 
 /**
  * @author liaozan
@@ -183,14 +184,14 @@ public class GlobalExceptionHandler {
     /*************************************  Parameter Binding Exception Handing *************************************/
     @ExceptionHandler(BindException.class)
     public ResponseDTO<String> handleBindException(BindException ex) {
-        String errorMsg = ValidationMessageBuilder.buildBindingErrorMsg(ex.getBindingResult());
+        String errorMsg = buildBindingErrorMsg(ex.getBindingResult());
         log.error(errorMsg);
         return buildResponse(ex, PARAM_INVALID, errorMsg);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseDTO<String> handleConstraintViolationException(ConstraintViolationException ex) {
-        String errorMsg = ValidationMessageBuilder.buildConstraintViolationErrorMsg(ex.getConstraintViolations());
+        String errorMsg = buildConstraintViolationErrorMsg(ex.getConstraintViolations());
         log.error(errorMsg);
         return buildResponse(ex, PARAM_INVALID, errorMsg);
     }

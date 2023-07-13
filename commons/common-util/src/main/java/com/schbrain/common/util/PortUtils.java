@@ -23,7 +23,7 @@ public class PortUtils {
                 portTmp++;
             }
         }
-        throw new BaseException("no available port.");
+        throw new BaseException("No available port.");
     }
 
     public static boolean isPortUsed(int port) {
@@ -32,7 +32,7 @@ public class PortUtils {
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
-            log.warn("current port[{}] is in use", port);
+            log.warn("Current port[{}] is in use", port);
             used = true;
         } finally {
             if (serverSocket != null) {

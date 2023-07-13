@@ -22,7 +22,7 @@ import com.schbrain.framework.autoconfigure.oss.exception.OssException;
 import com.schbrain.framework.autoconfigure.oss.properties.OssProperties;
 import com.schbrain.framework.autoconfigure.oss.properties.OssProperties.StsProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.InputStream;
@@ -210,7 +210,7 @@ public class OssUtils {
     }
 
     public static String replaceWithDomain(String domain, String ossUrl) {
-        if (!StringUtils.hasText(domain)) {
+        if (StringUtils.isBlank(domain)) {
             return ossUrl;
         }
         domain = URLUtil.normalize(domain);
@@ -268,7 +268,7 @@ public class OssUtils {
         ValidateUtils.notEmpty(bucket, "bucket can not be empty");
         ValidateUtils.notEmpty(objectKeys, "objectKeys can not be empty");
         String notExistKeys = objectKeys.stream().filter(key -> !exist(bucket, key)).collect(Collectors.joining(","));
-        if (StringUtils.hasText(notExistKeys)) {
+        if (StringUtils.isNotBlank(notExistKeys)) {
             String errorMsg = StrFormatter.format("objectKeys:[{}] not exist", notExistKeys);
             return DeleteResult.fail(bucket, objectKeys, errorMsg);
         }

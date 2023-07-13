@@ -3,6 +3,8 @@ package com.schbrain.common.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Objects;
+
 /**
  * @author huangxi
  * @since 2022/08/23
@@ -23,12 +25,7 @@ public enum BooleanEnum {
     private final Integer value;
 
     public static boolean validate(Integer value) {
-        for (BooleanEnum booleanEnum : values()) {
-            if (booleanEnum.getValue().equals(value)) {
-                return true;
-            }
-        }
-        return false;
+        return Objects.equals(TRUE.value, value);
     }
 
 }

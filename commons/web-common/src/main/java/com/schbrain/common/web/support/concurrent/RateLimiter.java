@@ -1,7 +1,5 @@
 package com.schbrain.common.web.support.concurrent;
 
-import org.aspectj.lang.reflect.MethodSignature;
-
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
 
@@ -30,9 +28,7 @@ public @interface RateLimiter {
     int permits() default 3;
 
     /**
-     * 缓存的 key,使用 spel 进行解析
-     * <p>
-     * 可用的变量 {@link  RateLimitAspect#createEvaluationVariables(MethodSignature, Object[])}
+     * 缓存的 key,使用 spring el 进行解析
      */
     String cacheKey();
 

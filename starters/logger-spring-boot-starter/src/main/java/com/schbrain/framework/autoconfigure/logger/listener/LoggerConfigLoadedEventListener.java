@@ -12,12 +12,12 @@ import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
 import com.schbrain.framework.autoconfigure.apollo.event.listener.GenericConfigLoadedEventListener;
 import com.schbrain.framework.autoconfigure.logger.LoggerConfigurationInitializer;
 import com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.logging.LoggingApplicationListener;
 import org.springframework.boot.logging.LogFile;
 import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -71,7 +71,7 @@ public class LoggerConfigLoadedEventListener extends GenericConfigLoadedEventLis
         }
         ConfigFile loggingConfiguration = ConfigService.getConfigFile(logConfigNamespace, ConfigFileFormat.XML);
         String content = loggingConfiguration.getContent();
-        if (!StringUtils.hasText(content)) {
+        if (StringUtils.isBlank(content)) {
             log.warn("empty logging configuration, reinitialize loggingSystem is disabled");
             return;
         }

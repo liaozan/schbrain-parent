@@ -1,5 +1,6 @@
 package com.schbrain.common.util;
 
+import cn.hutool.poi.excel.ExcelUtil;
 import com.alibaba.excel.EasyExcel;
 import com.schbrain.common.util.support.excel.bean.ExcelReadResult;
 import com.schbrain.common.util.support.excel.exception.ExcelException;
@@ -21,7 +22,7 @@ import java.util.Map;
  * @author liaozan
  * @since 2022/1/6
  */
-public class ExcelUtils {
+public class ExcelUtils extends ExcelUtil {
 
     // file
     public static ExcelReadResult<Map<Integer, Object>> read(File excelFile) {

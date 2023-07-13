@@ -1,5 +1,6 @@
 package com.schbrain.common.web.utils;
 
+import cn.hutool.extra.servlet.ServletUtil;
 import com.schbrain.common.exception.BaseException;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author liaozan
  * @since 2022/1/6
  */
-public class ServletUtils {
+public class ServletUtils extends ServletUtil {
 
     public static HttpServletRequest getRequest() {
         ServletRequestAttributes requestAttributes = getRequestAttributes();

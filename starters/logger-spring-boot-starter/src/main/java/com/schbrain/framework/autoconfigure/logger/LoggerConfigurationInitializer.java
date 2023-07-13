@@ -20,11 +20,11 @@ import net.logstash.logback.appender.LogstashTcpSocketAppender;
 import net.logstash.logback.encoder.LogstashEncoder;
 import net.logstash.logback.fieldnames.ShortenedFieldNames;
 import org.apache.commons.collections4.IteratorUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.cloud.CloudPlatform;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.nio.file.Paths;
 import java.util.List;
@@ -86,7 +86,7 @@ public class LoggerConfigurationInitializer {
         }
 
         if (properties.isEnableJsonLogWriteToLogstash() || EnvUtils.runningOnCloudPlatform(environment)) {
-            if (!StringUtils.hasText(properties.getLogstashAddress())) {
+            if (StringUtils.isBlank(properties.getLogstashAddress())) {
                 log.warn("logstash address is unset, will NOT write log to logstash");
                 return;
             }

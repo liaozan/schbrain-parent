@@ -1,4 +1,4 @@
-package com.schbrain.framework.autoconfigure.logger.apollo.listener;
+package com.schbrain.framework.autoconfigure.logger.apollo;
 
 import com.ctrip.framework.apollo.ConfigChangeListener;
 import com.ctrip.framework.apollo.enums.PropertyChangeType;

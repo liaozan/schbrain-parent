@@ -1,4 +1,4 @@
-package com.schbrain.common.web.support.concurrent;
+package com.schbrain.framework.autoconfigure.cache.concurrent;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;

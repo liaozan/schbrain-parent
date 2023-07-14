@@ -1,4 +1,4 @@
-package com.schbrain.common.web.support.concurrent;
+package com.schbrain.framework.autoconfigure.cache.concurrent;
 
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;

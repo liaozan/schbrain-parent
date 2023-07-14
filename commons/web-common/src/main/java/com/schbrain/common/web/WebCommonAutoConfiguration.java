@@ -5,7 +5,6 @@ import com.schbrain.common.web.properties.WebProperties;
 import com.schbrain.common.web.result.ResponseBodyHandler;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -24,10 +23,14 @@ import java.util.List;
  * @author liaozan
  * @since 2021/11/19
  */
-@AutoConfiguration
 @ConditionalOnWebApplication(type = Type.SERVLET)
 @EnableConfigurationProperties(WebProperties.class)
-@Import({AuthenticationConfiguration.class, ExceptionHandingConfiguration.class, ServletComponentConfiguration.class, CorsFilterConfiguration.class})
+@Import({
+        AuthenticationConfiguration.class,
+        ExceptionHandingConfiguration.class,
+        ServletComponentConfiguration.class,
+        CorsFilterConfiguration.class
+})
 public class WebCommonAutoConfiguration {
 
     @Bean

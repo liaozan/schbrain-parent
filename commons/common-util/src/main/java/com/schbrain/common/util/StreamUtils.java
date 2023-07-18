@@ -26,15 +26,23 @@ import static java.util.stream.Collectors.mapping;
 public class StreamUtils {
 
     public static <T> List<T> filterToList(Iterable<T> data, Predicate<T> predicate) {
-        return filter(data, predicate, Collectors.toList());
+        return filterToList(data, predicate, Function.identity());
+    }
+
+    public static <T, V> List<V> filterToList(Iterable<T> data, Predicate<T> predicate, Function<T, V> mapper) {
+        return filter(data, predicate, mapper, Collectors.toList());
     }
 
     public static <T> Set<T> filterToSet(Iterable<T> data, Predicate<T> predicate) {
-        return filter(data, predicate, Collectors.toSet());
+        return filterToSet(data, predicate, Function.identity());
     }
 
-    public static <T, C extends Iterable<T>> C filter(Iterable<T> data, Predicate<T> predicate, Collector<T, ?, C> collector) {
-        return from(data).filter(predicate).collect(collector);
+    public static <T, V> Set<V> filterToSet(Iterable<T> data, Predicate<T> predicate, Function<T, V> mapper) {
+        return filter(data, predicate, mapper, Collectors.toSet());
+    }
+
+    public static <T, E, V extends Iterable<E>> V filter(Iterable<T> data, Predicate<T> predicate, Function<T, E> mapper, Collector<E, ?, V> collector) {
+        return from(data).filter(predicate).map(mapper).collect(collector);
     }
 
     public static <T, E> List<E> toList(Iterable<T> data, Function<T, E> mapper) {
@@ -76,11 +84,11 @@ public class StreamUtils {
         return stream.collect(collector);
     }
 
-    public static <K, T> Map<K, T> toMap(Iterable<T> data, Function<T, K> keyMapper) {
+    public static <K, V> Map<K, V> toMap(Iterable<V> data, Function<V, K> keyMapper) {
         return toMap(data, keyMapper, false);
     }
 
-    public static <K, T> Map<K, T> toMap(Iterable<T> data, Function<T, K> keyMapper, boolean ordered) {
+    public static <K, V> Map<K, V> toMap(Iterable<V> data, Function<V, K> keyMapper, boolean ordered) {
         return toMap(data, keyMapper, Function.identity(), ordered);
     }
 
@@ -100,7 +108,7 @@ public class StreamUtils {
         return from(data).collect(Collectors.toMap(keyMapper, valueMapper, (oldValue, newValue) -> oldValue, mapFactory));
     }
 
-    public static <K, T> Map<K, List<T>> groupBy(Iterable<T> data, Function<T, K> mapper) {
+    public static <K, V> Map<K, List<V>> groupBy(Iterable<V> data, Function<V, K> mapper) {
         return groupBy(data, mapper, false);
     }
 
@@ -128,11 +136,11 @@ public class StreamUtils {
         return groupBy(data, keyMapper, valueMapper, collector, false);
     }
 
-    public static <K, T, V, C> Map<K, C> groupBy(Iterable<T> data, Function<T, K> keyMapper, Function<T, V> valueMapper, Collector<V, ?, C> collector, boolean discardNullKey) {
+    public static <K, T, V, E> Map<K, E> groupBy(Iterable<T> data, Function<T, K> keyMapper, Function<T, V> valueMapper, Collector<V, ?, E> collector, boolean discardNullKey) {
         return groupBy(data, keyMapper, valueMapper, collector, discardNullKey, HashMap::new);
     }
 
-    public static <K, T, V, C> Map<K, C> groupBy(Iterable<T> data, Function<T, K> keyMapper, Function<T, V> valueMapper, Collector<V, ?, C> collector, boolean discardNullKey, Supplier<Map<K, C>> mapSupplier) {
+    public static <K, T, V, E> Map<K, E> groupBy(Iterable<T> data, Function<T, K> keyMapper, Function<T, V> valueMapper, Collector<V, ?, E> collector, boolean discardNullKey, Supplier<Map<K, E>> mapSupplier) {
         Stream<T> stream = from(data);
         if (discardNullKey) {
             stream = stream.filter(item -> null != keyMapper.apply(item));

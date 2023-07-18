@@ -1,4 +1,4 @@
-package com.schbrain.framework.support.spring.defaults;
+package com.schbrain.framework.support.spring.env;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.text.StrFormatter;
@@ -17,7 +17,6 @@ import org.springframework.boot.logging.DeferredLogFactory;
 import org.springframework.boot.web.server.Shutdown;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.util.ClassUtils;
 import org.springframework.util.unit.DataSize;
 
 import java.nio.charset.StandardCharsets;
@@ -37,8 +36,6 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
     public static final Integer DEFAULT_ORDER = ConfigDataEnvironmentPostProcessor.ORDER + 1;
 
     private static final String SPRING_PROFILE_ACTIVE = "spring.profiles.active";
-
-    private static final String DUBBO_REGISTER_KEY = "dubbo.registry.register";
 
     public DefaultPropertiesEnvironmentPostProcessor(DeferredLogFactory logFactory, ConfigurableBootstrapContext bootstrapContext) {
         super(logFactory, bootstrapContext);
@@ -72,8 +69,6 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
         defaultProperties.put("spring.main.allow-circular-references", true);
         defaultProperties.put("spring.main.banner-mode", Banner.Mode.OFF);
         defaultProperties.put("server.shutdown", Shutdown.GRACEFUL);
-        // dubbo
-        configureDubboRegistrationIfPresent(environment, defaultProperties);
         // active profile
         configureActiveProfileIfPresent(environment, defaultProperties);
         environment.setDefaultProfiles(EnvUtils.DEVELOPMENT);
@@ -91,24 +86,6 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
             defaultProperties.put(SPRING_PROFILE_ACTIVE, EnvUtils.DEVELOPMENT);
             log.info(StrFormatter.format("{} is unset, set to {} by default", SPRING_PROFILE_ACTIVE, EnvUtils.DEVELOPMENT));
         }
-    }
-
-    private void configureDubboRegistrationIfPresent(ConfigurableEnvironment environment, Map<String, Object> defaultProperties) {
-        if (!dubboInClassPath()) {
-            return;
-        }
-        if (EnvUtils.runningOnCloudPlatform(environment)) {
-            return;
-        }
-        if (!environment.containsProperty(DUBBO_REGISTER_KEY)) {
-            log.warn(StrFormatter.format("Not running on CloudPlatform, {} is set to false by default", DUBBO_REGISTER_KEY));
-            log.warn(StrFormatter.format("If you want force to register with Dubbo Registry, set {} = true", DUBBO_REGISTER_KEY));
-            defaultProperties.put(DUBBO_REGISTER_KEY, false);
-        }
-    }
-
-    private boolean dubboInClassPath() {
-        return ClassUtils.isPresent("org.apache.dubbo.config.bootstrap.DubboBootstrap", getClass().getClassLoader());
     }
 
 }

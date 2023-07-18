@@ -1,2 +1,2 @@
-org.springframework.boot.env.EnvironmentPostProcessor=com.schbrain.framework.support.spring.defaults.DefaultPropertiesEnvironmentPostProcessor
+org.springframework.boot.env.EnvironmentPostProcessor=com.schbrain.framework.support.spring.env.DefaultPropertiesEnvironmentPostProcessor
 org.springframework.context.ApplicationContextInitializer=com.schbrain.framework.support.spring.startup.BufferingApplicationStartupApplicationContextInitializer

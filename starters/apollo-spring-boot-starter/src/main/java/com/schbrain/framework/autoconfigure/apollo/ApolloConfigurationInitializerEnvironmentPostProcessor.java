@@ -4,7 +4,7 @@ import com.ctrip.framework.foundation.Foundation;
 import com.schbrain.common.util.ApplicationName;
 import com.schbrain.common.util.EnvUtils;
 import com.schbrain.framework.support.spring.LoggerAwareEnvironmentPostProcessor;
-import com.schbrain.framework.support.spring.defaults.DefaultPropertiesEnvironmentPostProcessor;
+import com.schbrain.framework.support.spring.env.DefaultPropertiesEnvironmentPostProcessor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;

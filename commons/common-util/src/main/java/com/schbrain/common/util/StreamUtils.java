@@ -29,59 +29,64 @@ public class StreamUtils {
         return filterToList(data, predicate, Function.identity());
     }
 
+    public static <T, V> List<V> filterToList(Iterable<T> data, Function<T, V> mapper, Predicate<V> predicate) {
+        return filter(data, mapper, predicate, Function.identity(), Collectors.toList());
+    }
+
     public static <T, V> List<V> filterToList(Iterable<T> data, Predicate<T> predicate, Function<T, V> mapper) {
-        return filter(data, predicate, mapper, Collectors.toList());
+        return filter(data, Function.identity(), predicate, mapper, Collectors.toList());
     }
 
     public static <T> Set<T> filterToSet(Iterable<T> data, Predicate<T> predicate) {
         return filterToSet(data, predicate, Function.identity());
     }
 
+    public static <T, V> Set<V> filterToSet(Iterable<T> data, Function<T, V> mapper, Predicate<V> predicate) {
+        return filter(data, mapper, predicate, Function.identity(), Collectors.toSet());
+    }
+
     public static <T, V> Set<V> filterToSet(Iterable<T> data, Predicate<T> predicate, Function<T, V> mapper) {
-        return filter(data, predicate, mapper, Collectors.toSet());
+        return filter(data, Function.identity(), predicate, mapper, Collectors.toSet());
     }
 
-    public static <T, E, V extends Iterable<E>> V filter(Iterable<T> data, Predicate<T> predicate, Function<T, E> mapper, Collector<E, ?, V> collector) {
-        return from(data).filter(predicate).map(mapper).collect(collector);
+    public static <T, E, V, R> R filter(Iterable<T> data, Function<T, E> keyMapper, Predicate<E> predicate, Function<E, V> valueMapper, Collector<V, ?, R> collector) {
+        return from(data).map(keyMapper).filter(predicate).map(valueMapper).collect(collector);
     }
 
-    public static <T, E> List<E> toList(Iterable<T> data, Function<T, E> mapper) {
-        return toList(data, mapper, false);
+    public static <T, E> List<E> toList(Iterable<T> data, Function<T, E> keyMapper) {
+        return toList(data, keyMapper, false);
     }
 
-    public static <T, E> List<E> toList(Iterable<T> data, Function<T, E> mapper, boolean distinct) {
-        return toList(data, mapper, distinct, false);
+    public static <T, E, V> List<V> toList(Iterable<T> data, Function<T, E> keyMapper, Function<E, V> valueMapper) {
+        return toList(data, keyMapper, valueMapper, false, false);
     }
 
-    public static <T, E> List<E> toList(Iterable<T> data, Function<T, E> mapper, boolean distinct, boolean discardNull) {
-        return extract(data, mapper, distinct, discardNull, Collectors.toList());
+    public static <T, E> List<E> toList(Iterable<T> data, Function<T, E> keyMapper, boolean distinct) {
+        return toList(data, keyMapper, Function.identity(), distinct, false);
     }
 
-    public static <T, E> Set<E> toSet(Iterable<T> data, Function<T, E> mapper) {
-        return toSet(data, mapper, false);
+    public static <T, E> List<E> toList(Iterable<T> data, Function<T, E> keyMapper, boolean distinct, boolean discardNull) {
+        return toList(data, keyMapper, Function.identity(), distinct, discardNull);
     }
 
-    public static <T, E> Set<E> toSet(Iterable<T> data, Function<T, E> mapper, boolean discardNull) {
-        return extract(data, mapper, discardNull, false, Collectors.toSet());
+    public static <T, E, V> List<V> toList(Iterable<T> data, Function<T, E> keyMapper, Function<E, V> valueMapper, boolean distinct, boolean discardNull) {
+        return extract(data, keyMapper, distinct, valueMapper, discardNull, Collectors.toList());
     }
 
-    public static <T, E, R> R extract(Iterable<T> data, Function<T, E> mapper, boolean distinct, boolean discardNull, Collector<E, ?, R> collector) {
-        Predicate<E> predicate = null;
-        if (discardNull) {
-            predicate = Objects::nonNull;
-        }
-        return extract(data, mapper, predicate, distinct, collector);
+    public static <T, E> Set<E> toSet(Iterable<T> data, Function<T, E> keyMapper) {
+        return toSet(data, keyMapper, Function.identity());
     }
 
-    public static <T, E, R> R extract(Iterable<T> data, Function<T, E> mapper, Predicate<E> predicate, boolean distinct, Collector<E, ?, R> collector) {
-        Stream<E> stream = from(data).map(mapper);
-        if (distinct) {
-            stream = stream.distinct();
-        }
-        if (predicate != null) {
-            stream = stream.filter(predicate);
-        }
-        return stream.collect(collector);
+    public static <T, E, V> Set<V> toSet(Iterable<T> data, Function<T, E> keyMapper, Function<E, V> valueMapper) {
+        return toSet(data, keyMapper, valueMapper, false);
+    }
+
+    public static <T, V> Set<V> toSet(Iterable<T> data, Function<T, V> keyMapper, boolean discardNull) {
+        return toSet(data, keyMapper, Function.identity(), discardNull);
+    }
+
+    public static <T, E, V> Set<V> toSet(Iterable<T> data, Function<T, E> keyMapper, Function<E, V> valueMapper, boolean discardNull) {
+        return extract(data, keyMapper, false, valueMapper, discardNull, Collectors.toSet());
     }
 
     public static <K, V> Map<K, V> toMap(Iterable<V> data, Function<V, K> keyMapper) {
@@ -108,20 +113,20 @@ public class StreamUtils {
         return from(data).collect(Collectors.toMap(keyMapper, valueMapper, (oldValue, newValue) -> oldValue, mapFactory));
     }
 
-    public static <K, V> Map<K, List<V>> groupBy(Iterable<V> data, Function<V, K> mapper) {
-        return groupBy(data, mapper, false);
+    public static <K, V> Map<K, List<V>> groupBy(Iterable<V> data, Function<V, K> keyMapper) {
+        return groupBy(data, keyMapper, false);
     }
 
     public static <K, T> Map<K, List<T>> groupBy(Iterable<T> data, Function<T, K> keyMapper, boolean ignoreNullKey) {
         return groupBy(data, keyMapper, Collectors.toList(), ignoreNullKey);
     }
 
-    public static <K, T, V> Map<K, V> groupBy(Iterable<T> data, Function<T, K> mapper, Collector<T, ?, V> collectors) {
-        return groupBy(data, mapper, collectors, false);
+    public static <K, T, V> Map<K, V> groupBy(Iterable<T> data, Function<T, K> keyMapper, Collector<T, ?, V> collectors) {
+        return groupBy(data, keyMapper, collectors, false);
     }
 
-    public static <K, T, V> Map<K, V> groupBy(Iterable<T> data, Function<T, K> mapper, Collector<T, ?, V> collectors, boolean discardNullKey) {
-        return groupBy(data, mapper, Function.identity(), collectors, discardNullKey);
+    public static <K, T, V> Map<K, V> groupBy(Iterable<T> data, Function<T, K> keyMapper, Collector<T, ?, V> collectors, boolean discardNullKey) {
+        return groupBy(data, keyMapper, Function.identity(), collectors, discardNullKey);
     }
 
     public static <K, T, V> Map<K, List<V>> groupBy(Iterable<T> data, Function<T, K> keyMapper, Function<T, V> valueMapper) {
@@ -156,8 +161,12 @@ public class StreamUtils {
         return join(data, delimiter, Objects::toString);
     }
 
-    public static <T> String join(Iterable<T> data, String delimiter, Function<T, String> mapper) {
-        return from(data).map(mapper).collect(joining(delimiter));
+    public static <T> String join(Iterable<T> data, String delimiter, Function<T, String> toStringFunction) {
+        return from(data).map(toStringFunction).collect(joining(delimiter));
+    }
+
+    public static List<String> split(String data) {
+        return split(data, Function.identity());
     }
 
     public static <T> List<T> split(String data, Function<String, T> mapper) {
@@ -165,6 +174,9 @@ public class StreamUtils {
     }
 
     public static <T> List<T> split(String data, String delimiter, Function<String, T> mapper) {
+        if (StringUtils.isBlank(data)) {
+            return new ArrayList<>();
+        }
         return Arrays.stream(StringUtils.split(data, delimiter)).map(mapper).collect(Collectors.toList());
     }
 
@@ -175,6 +187,22 @@ public class StreamUtils {
     public static <T> Stream<T> from(Iterable<T> iterable, boolean parallel) {
         Iterable<T> source = Optional.ofNullable(iterable).orElse(emptyList());
         return StreamSupport.stream(source.spliterator(), parallel);
+    }
+
+    private static <T, E, R, V> R extract(Iterable<T> data, Function<T, E> mapper, boolean distinct, Function<E, V> valueMapper, boolean discardNull, Collector<V, ?, R> collector) {
+        Predicate<E> predicate = any -> true;
+        if (discardNull) {
+            predicate = Objects::nonNull;
+        }
+        return extract(data, mapper, predicate, distinct, valueMapper, collector);
+    }
+
+    private static <T, E, R, V> R extract(Iterable<T> data, Function<T, E> keyMapper, Predicate<E> predicate, boolean distinct, Function<E, V> valueMapper, Collector<V, ?, R> collector) {
+        Stream<E> stream = from(data).map(keyMapper);
+        if (distinct) {
+            stream = stream.distinct();
+        }
+        return stream.filter(predicate).map(valueMapper).collect(collector);
     }
 
 }

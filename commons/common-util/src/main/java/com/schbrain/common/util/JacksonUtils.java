@@ -62,6 +62,9 @@ public class JacksonUtils {
     }
 
     public static String toJsonString(Object data, boolean pretty) {
+        if (data == null) {
+            return null;
+        }
         try {
             if (pretty) {
                 return getPrettyObjectMapper().writeValueAsString(data);
@@ -220,11 +223,7 @@ public class JacksonUtils {
     }
 
     public static <T> T convertValue(Object fromValue, Class<T> toValueType) {
-        try {
-            return getObjectMapper().convertValue(fromValue, toValueType);
-        } catch (Exception e) {
-            throw new JSONException("JSON 转换出错", e);
-        }
+        return convertValue(fromValue, constructType(toValueType));
     }
 
     public static <T> T convertValue(Object fromValue, JavaType toValueType) {

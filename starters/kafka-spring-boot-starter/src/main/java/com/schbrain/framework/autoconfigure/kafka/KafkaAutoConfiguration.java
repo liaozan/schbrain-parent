@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.config.KafkaListenerConfigUtils;
+import org.springframework.kafka.core.KafkaTemplate;
 
 /**
  * @author liaozan
@@ -22,8 +23,8 @@ public class KafkaAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public MessageProducer defaultMessageProducer() {
-        return new MessageProducer();
+    public KafkaMessageProducer defaultKafkaMessageProducer(KafkaTemplate<String, String> kafkaTemplate) {
+        return new KafkaMessageProducer(kafkaTemplate);
     }
 
 }

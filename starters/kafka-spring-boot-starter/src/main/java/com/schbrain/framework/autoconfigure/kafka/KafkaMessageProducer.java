@@ -1,7 +1,6 @@
 package com.schbrain.framework.autoconfigure.kafka;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.util.concurrent.ListenableFutureCallback;
@@ -11,10 +10,13 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
  * @since 2023/7/17
  */
 @Slf4j
-public class MessageProducer {
+public class KafkaMessageProducer {
 
-    @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
+
+    public KafkaMessageProducer(KafkaTemplate<String, String> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
     /**
      * producer 异步方式发送数据

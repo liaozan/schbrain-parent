@@ -20,7 +20,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.unit.DataSize;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -43,18 +43,18 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
 
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-        Map<String, Object> defaultProperties = new HashMap<>();
+        Map<String, Object> defaultProperties = new LinkedHashMap<>();
         // management
         defaultProperties.put("management.trace.http.enabled", false);
         defaultProperties.put("management.endpoints.web.exposure.include", "*");
         defaultProperties.put("management.endpoints.enabled-by-default", true);
-        defaultProperties.put("management.endpoint.health.show-details", Show.ALWAYS);
-        defaultProperties.put("management.endpoint.health.show-components", Show.ALWAYS);
-        defaultProperties.put("management.info.git.mode", Mode.FULL);
+        defaultProperties.put("management.endpoint.health.show-details", Show.ALWAYS.name());
+        defaultProperties.put("management.endpoint.health.show-components", Show.ALWAYS.name());
+        defaultProperties.put("management.info.git.mode", Mode.FULL.name());
         defaultProperties.put("management.server.port", PortUtils.findAvailablePort(1024));
         // servlet
-        defaultProperties.put("spring.servlet.multipart.max-file-size", DataSize.ofBytes(-1));
-        defaultProperties.put("spring.servlet.multipart.max-request-size", DataSize.ofBytes(-1));
+        defaultProperties.put("spring.servlet.multipart.max-file-size", DataSize.ofBytes(-1).toString());
+        defaultProperties.put("spring.servlet.multipart.max-request-size", DataSize.ofBytes(-1).toString());
         // mvc
         defaultProperties.put("spring.mvc.throw-exception-if-no-handler-found", true);
         // datetime
@@ -62,13 +62,13 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
         defaultProperties.put("spring.mvc.format.time", DatePattern.NORM_TIME_PATTERN);
         defaultProperties.put("spring.mvc.format.date-time", DatePattern.NORM_DATETIME_PATTERN);
         defaultProperties.put("spring.jackson.date-format", DatePattern.NORM_DATETIME_PATTERN);
-        defaultProperties.put("spring.jackson.time-zone", TimeZone.getDefault());
+        defaultProperties.put("spring.jackson.time-zone", TimeZone.getDefault().getID());
         // others
         defaultProperties.put("spring.mandatory-file-encoding", StandardCharsets.UTF_8.name());
         defaultProperties.put("spring.web.resources.add-mappings", false);
         defaultProperties.put("spring.main.allow-circular-references", true);
-        defaultProperties.put("spring.main.banner-mode", Banner.Mode.OFF);
-        defaultProperties.put("server.shutdown", Shutdown.GRACEFUL);
+        defaultProperties.put("spring.main.banner-mode", Banner.Mode.OFF.name());
+        defaultProperties.put("server.shutdown", Shutdown.GRACEFUL.name());
         // active profile
         configureActiveProfileIfPresent(environment, defaultProperties);
         environment.setDefaultProfiles(EnvUtils.DEVELOPMENT);

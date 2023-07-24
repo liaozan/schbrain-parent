@@ -64,6 +64,7 @@ public class DubboProperties implements ConfigurableProperties {
         return "dubbo-common";
     }
 
+    @Data
     static class Scan {
 
         /**
@@ -72,14 +73,6 @@ public class DubboProperties implements ConfigurableProperties {
          * @see EnableDubbo#scanBasePackages()
          */
         private Set<String> basePackages = new LinkedHashSet<>();
-
-        public Set<String> getBasePackages() {
-            return basePackages;
-        }
-
-        public void setBasePackages(Set<String> basePackages) {
-            this.basePackages = basePackages;
-        }
 
     }
 

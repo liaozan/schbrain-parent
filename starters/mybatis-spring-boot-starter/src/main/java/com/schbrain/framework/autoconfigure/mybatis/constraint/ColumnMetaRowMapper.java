@@ -17,14 +17,14 @@ public class ColumnMetaRowMapper implements RowMapper<ColumnMeta> {
         columnMeta.setTableName(resultSet.getString("TABLE_NAME"));
         columnMeta.setColumnName(resultSet.getString("COLUMN_NAME"));
         columnMeta.setDataType(resultSet.getString("DATA_TYPE"));
-        columnMeta.setNullable(isNullable(resultSet.getString("IS_NULLABLE")));
+        columnMeta.setNullable(toBoolean(resultSet.getString("IS_NULLABLE")));
         columnMeta.setColumnDefault(resultSet.getString("COLUMN_DEFAULT"));
         columnMeta.setExtra(resultSet.getString("EXTRA"));
         columnMeta.setIndexName(resultSet.getString("INDEX_NAME"));
         return columnMeta;
     }
 
-    private boolean isNullable(String value) {
+    private boolean toBoolean(String value) {
         return "YES".equalsIgnoreCase(value);
     }
 

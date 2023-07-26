@@ -11,7 +11,6 @@ import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConst
  * @author liaozan
  * @since 2022/8/30
  */
-@SuppressWarnings("DuplicatedCode")
 public class DefaultTableConstraintChecker implements TableConstraintChecker {
 
     @Override
@@ -33,24 +32,25 @@ public class DefaultTableConstraintChecker implements TableConstraintChecker {
         if (bizColumnField == null) {
             return;
         }
-        ColumnMeta columnMeta = table.getColumnMeta(bizColumnField.getColumnName());
-        if (columnMeta == null) {
-            addMissingFieldError(table, bizColumnField.getColumnName());
+
+        ColumnMeta bizColumnMeta = getColumnMeta(table, bizColumnField.getColumnName());
+        if (bizColumnMeta == null) {
             return;
         }
-        if (columnMeta.getIndexName() == null) {
-            addError(table, columnMeta, "BizId field should create an index");
+
+        checkNotNull(table, bizColumnMeta);
+        if (bizColumnMeta.getIndexName() == null) {
+            addError(table, bizColumnMeta, "BizId field should create an index");
         }
     }
 
     protected void checkIdField(Table table) {
-        ColumnMeta idColumnMeta = table.getColumnMeta(ID);
+        ColumnMeta idColumnMeta = getColumnMeta(table, ID);
         if (idColumnMeta == null) {
-            addMissingFieldError(table, ID);
             return;
         }
 
-        checkNullable(table, idColumnMeta);
+        checkNotNull(table, idColumnMeta);
         if (!MysqlType.BIGINT.getName().equalsIgnoreCase(idColumnMeta.getDataType())) {
             addError(table, idColumnMeta, "should be type of 'bigint'");
         }
@@ -60,61 +60,47 @@ public class DefaultTableConstraintChecker implements TableConstraintChecker {
     }
 
     protected void checkCreateTimeField(Table table) {
-        ColumnMeta createTimeColumnMeta = table.getColumnMeta(CREATE_TIME);
+        ColumnMeta createTimeColumnMeta = getColumnMeta(table, CREATE_TIME);
         if (createTimeColumnMeta == null) {
-            addMissingFieldError(table, CREATE_TIME);
             return;
         }
 
-        checkNullable(table, createTimeColumnMeta);
-        if (!MysqlType.DATETIME.getName().equalsIgnoreCase(createTimeColumnMeta.getDataType())) {
-            addError(table, createTimeColumnMeta, "should be type of 'datetime'");
-        }
-        if (!CURRENT_TIMESTAMP.equalsIgnoreCase(createTimeColumnMeta.getColumnDefault())) {
-            addError(table, createTimeColumnMeta, "default value should be 'current_timestamp'");
-        }
+        checkNotNull(table, createTimeColumnMeta);
+        checkDatetimeField(table, createTimeColumnMeta);
     }
 
     protected void checkModifyTimeField(Table table) {
-        ColumnMeta modifyTimeColumnMeta = table.getColumnMeta(MODIFY_TIME);
+        ColumnMeta modifyTimeColumnMeta = getColumnMeta(table, MODIFY_TIME);
         if (modifyTimeColumnMeta == null) {
-            addMissingFieldError(table, MODIFY_TIME);
             return;
         }
 
-        checkNullable(table, modifyTimeColumnMeta);
-        if (!MysqlType.DATETIME.getName().equalsIgnoreCase(modifyTimeColumnMeta.getDataType())) {
-            addError(table, modifyTimeColumnMeta, "should be type of 'datetime'");
-        }
-        if (!CURRENT_TIMESTAMP.equalsIgnoreCase(modifyTimeColumnMeta.getColumnDefault())) {
-            addError(table, modifyTimeColumnMeta, "default value should be 'current_timestamp'");
-        }
+        checkNotNull(table, modifyTimeColumnMeta);
+        checkDatetimeField(table, modifyTimeColumnMeta);
         if (!modifyTimeColumnMeta.getExtra().toLowerCase().contains(UPDATE_WITH_CURRENT_TIMESTAMP)) {
             addError(table, modifyTimeColumnMeta, "need set to 'on update current_timestamp'");
         }
     }
 
     protected void checkDeletedField(Table table) {
-        ColumnMeta deletedColumnMeta = table.getColumnMeta(DELETED);
+        ColumnMeta deletedColumnMeta = getColumnMeta(table, DELETED);
         if (deletedColumnMeta == null) {
-            addMissingFieldError(table, DELETED);
             return;
         }
 
-        checkNullable(table, deletedColumnMeta);
+        checkNotNull(table, deletedColumnMeta);
         if (!MysqlType.TINYINT.getName().equalsIgnoreCase(deletedColumnMeta.getDataType())) {
             addError(table, deletedColumnMeta, "should be type of 'tinyint'");
         }
     }
 
     protected void checkDeleteVersionField(Table table) {
-        ColumnMeta deleteVersionColumnMeta = table.getColumnMeta(DELETE_VERSION);
+        ColumnMeta deleteVersionColumnMeta = getColumnMeta(table, DELETE_VERSION);
         if (deleteVersionColumnMeta == null) {
-            addMissingFieldError(table, DELETE_VERSION);
             return;
         }
 
-        checkNullable(table, deleteVersionColumnMeta);
+        checkNotNull(table, deleteVersionColumnMeta);
         if (!MysqlType.BIGINT.getName().equalsIgnoreCase(deleteVersionColumnMeta.getDataType())) {
             addError(table, deleteVersionColumnMeta, "should be type of 'bigint'");
         }
@@ -123,18 +109,36 @@ public class DefaultTableConstraintChecker implements TableConstraintChecker {
         }
     }
 
-    protected void checkNullable(Table table, ColumnMeta columnMeta) {
+    protected void checkNotNull(Table table, ColumnMeta columnMeta) {
         if (columnMeta.isNullable()) {
             addError(table, columnMeta, "should be 'not null'");
         }
     }
 
-    private void addError(Table table, ColumnMeta columnMeta, String errorMsg) {
-        addError(table, columnMeta.getColumnName(), errorMsg);
+    private ColumnMeta getColumnMeta(Table table, String columnName) {
+        ColumnMeta columnMeta = table.getColumnMeta(columnName);
+        if (columnMeta == null) {
+            addMissingFieldError(table, columnName);
+            return null;
+        }
+        return columnMeta;
+    }
+
+    private void checkDatetimeField(Table table, ColumnMeta columnMeta) {
+        if (!MysqlType.DATETIME.getName().equalsIgnoreCase(columnMeta.getDataType())) {
+            addError(table, columnMeta, "should be type of 'datetime'");
+        }
+        if (!CURRENT_TIMESTAMP.equalsIgnoreCase(columnMeta.getColumnDefault())) {
+            addError(table, columnMeta, "default value should be 'current_timestamp'");
+        }
     }
 
     private void addMissingFieldError(Table table, String columnName) {
-        addError(table, columnName, "not exist");
+        table.addError(TableConstraintException.ofColumnNotExist(table.getTableName(), columnName));
+    }
+
+    private void addError(Table table, ColumnMeta columnMeta, String errorMsg) {
+        addError(table, columnMeta.getColumnName(), errorMsg);
     }
 
     private void addError(Table table, String columnName, String errorMsg) {

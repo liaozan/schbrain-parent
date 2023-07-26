@@ -64,8 +64,7 @@ public class TableConstraintCheckerBean implements SmartInitializingSingleton, B
         List<TableMetaDataLoader> metaDataLoaders = beanFactory.getBeanProvider(TableMetaDataLoader.class).orderedStream().collect(toList());
         if (CollectionUtils.isEmpty(metaDataLoaders)) {
             JdbcTemplate jdbcTemplate = beanFactory.getBean(JdbcTemplate.class);
-            // Avoid add to a immutable collection
-            metaDataLoaders = List.of(new DefaultTableMetaDataLoader(jdbcTemplate));
+            metaDataLoaders.add(new DefaultTableMetaDataLoader(jdbcTemplate));
         }
 
         Map<String, List<ColumnMeta>> tableMetadata = loadTableMetadata(metaDataLoaders);
@@ -76,8 +75,7 @@ public class TableConstraintCheckerBean implements SmartInitializingSingleton, B
 
         List<TableConstraintChecker> checkers = beanFactory.getBeanProvider(TableConstraintChecker.class).orderedStream().collect(toList());
         if (CollectionUtils.isEmpty(checkers)) {
-            // Avoid add to a immutable collection
-            checkers = List.of(new DefaultTableConstraintChecker());
+            checkers.add(new DefaultTableConstraintChecker());
         }
 
         List<TableConstraintException> errors = new ArrayList<>();
@@ -172,7 +170,7 @@ public class TableConstraintCheckerBean implements SmartInitializingSingleton, B
     private void checkAllFieldExist(Table table) {
         for (FieldInfo fieldInfo : table.getFieldInfoList()) {
             if (!table.containsColumn(fieldInfo.getColumn())) {
-                table.addError(new TableConstraintException(table.getTableName(), fieldInfo.getColumn(), "not exist"));
+                table.addError(TableConstraintException.ofColumnNotExist(table.getTableName(), fieldInfo.getColumn()));
             }
         }
     }

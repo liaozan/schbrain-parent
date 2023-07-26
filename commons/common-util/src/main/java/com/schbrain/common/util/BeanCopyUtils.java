@@ -17,7 +17,9 @@ import java.util.List;
 
 /**
  * 注意！！！此类是基于 cglib 实现的
+ * <p>
  * 默认的 cglib 只支持同名,同类型的属性转换,本类对此场景进行了增强,具体逻辑见 {@link DefaultConverter}
+ * <p>
  * 另外最重要的, cglib 是浅拷贝,意味着如果是引用类型,修改源对象会导致目标对象的值也被修改,使用时请注意！！！
  *
  * @author liaozan

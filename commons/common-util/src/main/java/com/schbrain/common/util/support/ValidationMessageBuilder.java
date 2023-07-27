@@ -1,6 +1,7 @@
 package com.schbrain.common.util.support;
 
-import org.hibernate.validator.internal.engine.path.PathImpl;
+import cn.hutool.core.text.StrPool;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -36,10 +37,20 @@ public class ValidationMessageBuilder {
         String prefix = "参数验证失败: ";
         StringJoiner joiner = new StringJoiner(", ");
         for (ConstraintViolation<?> violation : constraintViolations) {
-            PathImpl propertyPath = (PathImpl) violation.getPropertyPath();
-            joiner.add(propertyPath.asString() + " " + violation.getMessage());
+            String propertyPath = violation.getPropertyPath().toString();
+            joiner.add(getActualProperty(propertyPath) + " " + violation.getMessage());
         }
         return prefix + joiner;
+    }
+
+    private static String getActualProperty(String propertyPath) {
+        if (StringUtils.isBlank(propertyPath)) {
+            return propertyPath;
+        }
+        if (!propertyPath.contains(StrPool.DOT)) {
+            return propertyPath;
+        }
+        return propertyPath.substring(propertyPath.lastIndexOf(StrPool.DOT) + 1);
     }
 
 }

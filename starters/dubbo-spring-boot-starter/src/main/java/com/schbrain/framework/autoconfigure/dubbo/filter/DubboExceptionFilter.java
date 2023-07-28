@@ -29,16 +29,15 @@ public class DubboExceptionFilter extends ExceptionFilter {
             return;
         }
 
-        Throwable cause = ExceptionUtil.getRootCause(appResponse.getException());
-
-        if (cause instanceof ConstraintViolationException) {
-            cause = createParamInvalidException(invocation, (ConstraintViolationException) cause);
+        Throwable rootCause = ExceptionUtil.getRootCause(appResponse.getException());
+        if (rootCause instanceof ConstraintViolationException) {
+            rootCause = createParamInvalidException(invocation, (ConstraintViolationException) rootCause);
         }
+        appResponse.setException(rootCause);
 
-        appResponse.setException(cause);
-        logErrorDetail(invocation, cause);
+        logErrorDetail(invocation, rootCause);
 
-        if (cause instanceof BaseException) {
+        if (rootCause instanceof BaseException) {
             return;
         }
 

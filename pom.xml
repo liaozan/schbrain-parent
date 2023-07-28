@@ -734,6 +734,14 @@
                 <docker.registry>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain_dev</docker.registry>
             </properties>
         </profile>
+        <!-- 测试环境 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.profile>test</spring.profile>
+                <docker.registry>registry-vpc.cn-hangzhou.aliyuncs.com/schbrain_dev</docker.registry>
+            </properties>
+        </profile>
         <!-- 生产环境 -->
         <profile>
             <id>prod</id>

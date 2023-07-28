@@ -4,6 +4,7 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -31,6 +32,16 @@ public class TreeUtils {
                                               Function<T, E> childMapper,
                                               BiConsumer<E, List<E>> childrenSetter,
                                               @Nullable K parentId) {
+        return buildTree(nodes, keyExtractor, parentKeyExtractor, childMapper, childrenSetter, null, parentId);
+    }
+
+    public static <T, K, E> List<E> buildTree(List<T> nodes,
+                                              Function<T, K> keyExtractor,
+                                              Function<T, K> parentKeyExtractor,
+                                              Function<T, E> childMapper,
+                                              BiConsumer<E, List<E>> childrenSetter,
+                                              Comparator<E> childrenComparator,
+                                              @Nullable K parentId) {
         if (CollectionUtils.isEmpty(nodes)) {
             return new ArrayList<>();
         }
@@ -40,20 +51,24 @@ public class TreeUtils {
             List<T> subNodes = StreamUtils.filterToList(nodes, node -> parentKeyExtractor.apply(node) == null);
             parentWithSubNodes.put(null, subNodes);
         }
-        return buildTree(keyExtractor, childrenSetter, childMapper, parentWithSubNodes, parentId);
+        return doBuildTree(keyExtractor, childrenSetter, childMapper, parentWithSubNodes, childrenComparator, parentId);
     }
 
-    private static <E, K, T> List<E> buildTree(Function<T, K> keyExtractor,
-                                               BiConsumer<E, List<E>> childrenSetter,
-                                               Function<T, E> childMapper,
-                                               Map<K, List<T>> parentWithSubNodes,
-                                               K parentId) {
-        List<T> subNodes = parentWithSubNodes.get(parentId);
+    private static <E, K, T> List<E> doBuildTree(Function<T, K> keyExtractor,
+                                                 BiConsumer<E, List<E>> childrenSetter,
+                                                 Function<T, E> childMapper,
+                                                 Map<K, List<T>> parentWithSubNodes,
+                                                 Comparator<E> childrenComparator,
+                                                 K parentId) {
+        List<T> subNodes = parentWithSubNodes.remove(parentId);
         return StreamUtils.toList(subNodes, subNode -> {
-            E convertedSubNode = childMapper.apply(subNode);
-            List<E> children = buildTree(keyExtractor, childrenSetter, childMapper, parentWithSubNodes, keyExtractor.apply(subNode));
-            childrenSetter.accept(convertedSubNode, children);
-            return convertedSubNode;
+            E child = childMapper.apply(subNode);
+            List<E> children = doBuildTree(keyExtractor, childrenSetter, childMapper, parentWithSubNodes, childrenComparator, keyExtractor.apply(subNode));
+            if (CollectionUtils.isNotEmpty(children) && childrenComparator != null) {
+                children.sort(Comparator.nullsLast(childrenComparator));
+            }
+            childrenSetter.accept(child, children);
+            return child;
         });
     }
 

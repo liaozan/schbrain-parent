@@ -1,5 +1,6 @@
 package com.schbrain.common.util;
 
+import cn.hutool.core.collection.ListUtil;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.annotation.Nullable;
@@ -61,15 +62,21 @@ public class TreeUtils {
                                                  Comparator<E> childrenComparator,
                                                  K parentId) {
         List<T> subNodes = parentWithSubNodes.remove(parentId);
-        return StreamUtils.toList(subNodes, subNode -> {
+        List<E> treeList = StreamUtils.toList(subNodes, subNode -> {
             E child = childMapper.apply(subNode);
             List<E> children = doBuildTree(keyExtractor, childrenSetter, childMapper, parentWithSubNodes, childrenComparator, keyExtractor.apply(subNode));
-            if (CollectionUtils.isNotEmpty(children) && childrenComparator != null) {
-                children.sort(Comparator.nullsLast(childrenComparator));
-            }
+            sort(children, childrenComparator);
             childrenSetter.accept(child, children);
             return child;
         });
+        sort(treeList, childrenComparator);
+        return treeList;
+    }
+
+    private static <E> void sort(List<E> dataList, Comparator<E> comparator) {
+        if (comparator != null) {
+            ListUtil.sort(dataList, Comparator.nullsLast(comparator));
+        }
     }
 
 }

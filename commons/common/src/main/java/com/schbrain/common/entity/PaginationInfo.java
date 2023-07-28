@@ -1,10 +1,8 @@
 package com.schbrain.common.entity;
 
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +16,8 @@ import static com.schbrain.common.constants.PageConstants.DEFAULT_TOTAL_PAGE_COU
  * @since 2021/10/15
  */
 @Data
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class PaginationInfo<T> implements Serializable {
-
-    public static final long serialVersionUID = 1320105164315113239L;
+@NoArgsConstructor
+public class PaginationInfo<T> {
 
     /**
      * 页索引

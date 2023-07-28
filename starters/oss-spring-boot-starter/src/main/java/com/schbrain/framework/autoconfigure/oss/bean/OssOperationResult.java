@@ -2,16 +2,12 @@ package com.schbrain.framework.autoconfigure.oss.bean;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
  * @author liaozan
  * @since 2021/12/19
  */
 @Data
-public class OssOperationResult implements Serializable {
-
-    private static final long serialVersionUID = 3651584115463313214L;
+public class OssOperationResult {
 
     protected boolean success;
 

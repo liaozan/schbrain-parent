@@ -6,16 +6,12 @@ import com.schbrain.common.exception.BaseException;
 import com.schbrain.common.util.TraceIdUtils;
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
  * @author liaozan
  * @since 2021/10/15
  */
 @Data
-public class ResponseDTO<T> implements Serializable {
-
-    private static final long serialVersionUID = 8559474982311419998L;
+public class ResponseDTO<T> {
 
     private int code;
 

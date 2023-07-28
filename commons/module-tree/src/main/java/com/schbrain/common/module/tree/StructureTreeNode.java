@@ -2,7 +2,6 @@ package com.schbrain.common.module.tree;
 
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,9 +11,7 @@ import java.util.List;
  * @since 2019/1/21
  */
 @Data
-public class StructureTreeNode<NODE> implements Serializable {
-
-    private static final long serialVersionUID = -7732621737666937981L;
+public class StructureTreeNode<NODE> {
 
     private NODE node;
 

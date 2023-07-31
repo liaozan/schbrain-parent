@@ -13,15 +13,15 @@ import java.util.Map;
  */
 public class OrderedMapPropertySource extends MapPropertySource {
 
-    public OrderedMapPropertySource(String name, Map<String, String> source) {
+    public OrderedMapPropertySource(String name, Map<String, Object> source) {
         super(name, new LinkedHashMap<>(source));
     }
 
-    public void addProperties(Map<String, String> properties) {
+    public void addProperties(Map<String, Object> properties) {
         getSource().putAll(properties);
     }
 
-    public void addProperty(String propertyName, String propertyValue) {
+    public void addProperty(String propertyName, Object propertyValue) {
         getSource().put(propertyName, propertyValue);
     }
 

@@ -43,7 +43,7 @@ public class LoggerConfigLoadedEventListener extends GenericConfigLoadedEventLis
     @Override
     protected void onConfigLoaded(ConfigLoadedEvent event, LoggerProperties properties) {
         HostInfo hostInfo = InetUtils.findFirstNonLoopBackHostInfo();
-        Map<String, String> hostInfoProperties = buildHostInfoProperties(hostInfo);
+        Map<String, Object> hostInfoProperties = buildHostInfoProperties(hostInfo);
         event.getPropertySource().addProperties(hostInfoProperties);
         configLoggingFileLocation(event.getEnvironment(), properties.getLogConfigNamespace());
         this.loggerInitializer = new LoggerConfigurationInitializer(event.getEnvironment(), properties, hostInfo);
@@ -52,8 +52,8 @@ public class LoggerConfigLoadedEventListener extends GenericConfigLoadedEventLis
     /**
      * hostInfo properties, for logging pattern
      */
-    private Map<String, String> buildHostInfoProperties(HostInfo hostInfo) {
-        Map<String, String> properties = Maps.newHashMapWithExpectedSize(2);
+    private Map<String, Object> buildHostInfoProperties(HostInfo hostInfo) {
+        Map<String, Object> properties = Maps.newHashMapWithExpectedSize(2);
         properties.put("application.hostname", hostInfo.getHostname());
         properties.put("application.ipAddress", hostInfo.getIpAddress());
         return properties;

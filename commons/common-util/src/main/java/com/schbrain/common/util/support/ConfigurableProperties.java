@@ -1,7 +1,6 @@
 package com.schbrain.common.util.support;
 
 import com.schbrain.common.util.ConfigurationPropertiesUtils;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.core.Ordered;
@@ -33,13 +32,7 @@ public interface ConfigurableProperties extends Ordered {
     /**
      * the prefix of properties
      */
-    private String getPropertiesPrefix() {
-        ConfigurationProperties annotation = getClass().getAnnotation(ConfigurationProperties.class);
-        if (annotation == null) {
-            String className = ConfigurationProperties.class.getName();
-            String errorDetail = getClass().getSimpleName() + " must annotated @" + className + " or overwrite getPrefix method";
-            throw new IllegalStateException(errorDetail);
-        }
+    default String getPropertiesPrefix() {
         return ConfigurationPropertiesUtils.getPrefix(getClass());
     }
 

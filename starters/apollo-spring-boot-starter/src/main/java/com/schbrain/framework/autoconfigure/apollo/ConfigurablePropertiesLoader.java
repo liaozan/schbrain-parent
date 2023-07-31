@@ -2,13 +2,15 @@ package com.schbrain.framework.autoconfigure.apollo;
 
 import com.ctrip.framework.apollo.Config;
 import com.ctrip.framework.apollo.ConfigService;
+import com.google.common.collect.Maps;
+import com.schbrain.common.util.ConfigurationPropertiesUtils;
 import com.schbrain.common.util.support.ConfigurableProperties;
 import com.schbrain.framework.autoconfigure.apollo.config.OrderedMapPropertySource;
 import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
 import com.schbrain.framework.autoconfigure.apollo.event.listener.ConfigLoadedEventListener;
 import com.schbrain.framework.autoconfigure.apollo.properties.ApolloProperties;
-import com.schbrain.framework.autoconfigure.apollo.util.ConfigUtils;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.logging.Log;
 import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;
@@ -18,10 +20,11 @@ import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.Environment;
 import org.springframework.util.ClassUtils;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.Map.Entry;
 
 import static org.springframework.core.io.support.SpringFactoriesLoader.loadFactories;
 
@@ -47,7 +50,7 @@ class ConfigurablePropertiesLoader {
     void load(ConfigurableEnvironment environment, SpringApplication application) {
         List<ConfigurableProperties> propertiesList = loadFactories(ConfigurableProperties.class, getClass().getClassLoader());
         if (CollectionUtils.isEmpty(propertiesList)) {
-            log.warn("There is no configuration properties found");
+            log.warn("There is no configurable properties found");
             return;
         }
 
@@ -55,31 +58,32 @@ class ConfigurablePropertiesLoader {
         boolean remoteFirst = ApolloProperties.get(environment).isRemoteFirst();
 
         for (ConfigurableProperties properties : propertiesList) {
-            OrderedMapPropertySource propertySource = loadFromRemote(environment, remoteFirst, properties.getNamespace());
-            if (propertySource == null) {
-                continue;
-            }
-            // multicast event
+            OrderedMapPropertySource propertySource = buildPropertySource(environment, remoteFirst, properties);
             ConfigLoadedEvent event = createEvent(environment, application, propertySource, properties);
             eventMulticaster.multicastEvent(event, ResolvableType.forClass(event.getClass()));
         }
     }
 
-    private OrderedMapPropertySource loadFromRemote(ConfigurableEnvironment environment, boolean remoteFirst, String namespace) {
-        Config config = ConfigService.getConfig(namespace);
-        OrderedMapPropertySource propertySource = ConfigUtils.toPropertySource(namespace, config);
-        if (propertySource == null) {
-            log.warn("No configuration properties loaded under namespace: " + namespace);
-            return null;
-        }
+    private OrderedMapPropertySource buildPropertySource(ConfigurableEnvironment environment, boolean remoteFirst, ConfigurableProperties properties) {
+        Map<String, Object> mergedProperties = loadAndMergeLocalDefaults(properties);
+        OrderedMapPropertySource propertySource = createPropertySource(environment, properties.getNamespace(), mergedProperties);
         if (remoteFirst) {
             environment.getPropertySources().addFirst(propertySource);
         } else {
             environment.getPropertySources().addLast(propertySource);
         }
-        // resolve any placeHolders
-        ConfigUtils.resolvePlaceHolders(environment, propertySource);
         return propertySource;
+    }
+
+    private Map<String, Object> loadAndMergeLocalDefaults(ConfigurableProperties properties) {
+        String namespace = properties.getNamespace();
+        Config config = ConfigService.getConfig(namespace);
+        Map<String, Object> loadedProperties = toPropertiesMap(config);
+        if (MapUtils.isEmpty(loadedProperties)) {
+            log.warn("No configuration properties loaded under namespace: " + namespace);
+        }
+        Map<String, Object> defaultProperties = ConfigurationPropertiesUtils.toMap(properties);
+        return mergeProperties(loadedProperties, defaultProperties);
     }
 
     private ConfigLoadedEvent createEvent(ConfigurableEnvironment environment, SpringApplication application,
@@ -96,6 +100,37 @@ class ConfigurablePropertiesLoader {
             }
         }
         return eventMulticaster;
+    }
+
+    private Map<String, Object> toPropertiesMap(Config config) {
+        Set<String> propertyNames = config.getPropertyNames();
+        if (propertyNames.isEmpty()) {
+            return Collections.emptyMap();
+        }
+        Map<String, Object> configs = Maps.newLinkedHashMapWithExpectedSize(propertyNames.size());
+        for (String propertyName : propertyNames) {
+            String property = config.getProperty(propertyName, null);
+            configs.put(propertyName, property);
+        }
+        return configs;
+    }
+
+    private Map<String, Object> mergeProperties(Map<String, Object> loadedProperties, Map<String, Object> defaultProperties) {
+        Map<String, Object> mergedProperties = new LinkedHashMap<>();
+        mergedProperties.putAll(defaultProperties);
+        mergedProperties.putAll(loadedProperties);
+        return mergedProperties;
+    }
+
+    private OrderedMapPropertySource createPropertySource(Environment environment, String namespace, Map<String, Object> source) {
+        for (Entry<String, Object> entry : source.entrySet()) {
+            Object value = entry.getValue();
+            if (value instanceof String) {
+                String resolvedValue = environment.resolvePlaceholders((String) value);
+                source.put(entry.getKey(), resolvedValue);
+            }
+        }
+        return new OrderedMapPropertySource(namespace, source);
     }
 
 }

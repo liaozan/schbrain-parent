@@ -29,7 +29,8 @@ import java.util.List;
         AuthenticationConfiguration.class,
         ExceptionHandingConfiguration.class,
         ServletComponentConfiguration.class,
-        CorsFilterConfiguration.class
+        CorsFilterConfiguration.class,
+        ObjectMapperConfiguration.class
 })
 public class WebCommonAutoConfiguration {
 

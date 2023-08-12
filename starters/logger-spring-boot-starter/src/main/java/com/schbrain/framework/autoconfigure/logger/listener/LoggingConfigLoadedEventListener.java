@@ -6,12 +6,12 @@ import com.ctrip.framework.apollo.ConfigFile;
 import com.ctrip.framework.apollo.ConfigService;
 import com.ctrip.framework.apollo.core.enums.ConfigFileFormat;
 import com.google.common.collect.Maps;
-import com.schbrain.common.util.InetUtils;
-import com.schbrain.common.util.InetUtils.HostInfo;
+import com.schbrain.common.util.HostInfoHolder;
+import com.schbrain.common.util.HostInfoHolder.HostInfo;
 import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
-import com.schbrain.framework.autoconfigure.apollo.event.listener.GenericConfigLoadedEventListener;
-import com.schbrain.framework.autoconfigure.logger.LoggerConfigurationInitializer;
-import com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties;
+import com.schbrain.framework.autoconfigure.apollo.event.listener.ConfigLoadedEventListenerAdaptor;
+import com.schbrain.framework.autoconfigure.logger.JSONLoggingInitializer;
+import com.schbrain.framework.autoconfigure.logger.properties.LoggingProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.logging.LoggingApplicationListener;
 import org.springframework.boot.logging.LogFile;
@@ -31,28 +31,24 @@ import static org.springframework.boot.context.logging.LoggingApplicationListene
  * @author liaozan
  * @since 2023-04-28
  */
-public class LoggerConfigLoadedEventListener extends GenericConfigLoadedEventListener<LoggerProperties> {
-
-    private LoggerConfigurationInitializer loggerInitializer;
+public class LoggingConfigLoadedEventListener extends ConfigLoadedEventListenerAdaptor<LoggingProperties> {
 
     @Override
-    public void initialize(ConfigurableApplicationContext applicationContext) {
-        loggerInitializer.init();
+    protected void onConfigLoaded(ConfigLoadedEvent event, LoggingProperties properties) {
+        event.getPropertySource().addProperties(buildHostInfoProperties());
+        configLoggingFileLocation(event.getEnvironment(), properties.getLogConfigNamespace());
     }
 
     @Override
-    protected void onConfigLoaded(ConfigLoadedEvent event, LoggerProperties properties) {
-        HostInfo hostInfo = InetUtils.findFirstNonLoopBackHostInfo();
-        Map<String, Object> hostInfoProperties = buildHostInfoProperties(hostInfo);
-        event.getPropertySource().addProperties(hostInfoProperties);
-        configLoggingFileLocation(event.getEnvironment(), properties.getLogConfigNamespace());
-        this.loggerInitializer = new LoggerConfigurationInitializer(event.getEnvironment(), properties, hostInfo);
+    protected void onApplicationContextInitialized(ConfigurableApplicationContext context, LoggingProperties properties) {
+        JSONLoggingInitializer.init(context.getEnvironment(), properties);
     }
 
     /**
-     * hostInfo properties, for logging pattern
+     * hostInfo properties, for logging pattern, used in logback-spring.xml
      */
-    private Map<String, Object> buildHostInfoProperties(HostInfo hostInfo) {
+    private Map<String, Object> buildHostInfoProperties() {
+        HostInfo hostInfo = HostInfoHolder.getHostInfo();
         Map<String, Object> properties = Maps.newHashMapWithExpectedSize(2);
         properties.put("application.hostname", hostInfo.getHostname());
         properties.put("application.ipAddress", hostInfo.getIpAddress());

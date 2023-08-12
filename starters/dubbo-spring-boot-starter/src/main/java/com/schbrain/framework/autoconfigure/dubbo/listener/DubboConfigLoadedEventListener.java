@@ -2,8 +2,7 @@ package com.schbrain.framework.autoconfigure.dubbo.listener;
 
 import com.schbrain.framework.autoconfigure.apollo.config.OrderedMapPropertySource;
 import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
-import com.schbrain.framework.autoconfigure.apollo.event.listener.GenericConfigLoadedEventListener;
-import com.schbrain.framework.autoconfigure.dubbo.initializer.DubboValidationInitializer;
+import com.schbrain.framework.autoconfigure.apollo.event.listener.ConfigLoadedEventListenerAdaptor;
 import com.schbrain.framework.autoconfigure.dubbo.properties.DubboProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -16,7 +15,7 @@ import static org.apache.dubbo.config.ConfigKeys.DUBBO_SCAN_BASE_PACKAGES;
  * @author liaozan
  * @since 2023-04-28
  */
-public class DubboConfigLoadedEventListener extends GenericConfigLoadedEventListener<DubboProperties> {
+public class DubboConfigLoadedEventListener extends ConfigLoadedEventListenerAdaptor<DubboProperties> {
 
     @Override
     public int getOrder() {
@@ -24,14 +23,13 @@ public class DubboConfigLoadedEventListener extends GenericConfigLoadedEventList
     }
 
     @Override
-    public void initialize(ConfigurableApplicationContext applicationContext) {
-        applicationContext.addApplicationListener(new DubboConfigInitEventListener(applicationContext));
+    protected void onConfigLoaded(ConfigLoadedEvent event, DubboProperties properties) {
+        addRequiredProperties(event.getEnvironment(), event.getSpringApplication(), event.getPropertySource());
     }
 
     @Override
-    protected void onConfigLoaded(ConfigLoadedEvent event, DubboProperties properties) {
-        addRequiredProperties(event.getEnvironment(), event.getSpringApplication(), event.getPropertySource());
-        DubboValidationInitializer.initialize(event.getPropertySource());
+    protected void onApplicationContextInitialized(ConfigurableApplicationContext context, DubboProperties properties) {
+        context.addApplicationListener(new DubboConfigInitEventListener(context));
     }
 
     private void addRequiredProperties(ConfigurableEnvironment environment, SpringApplication application, OrderedMapPropertySource propertySource) {

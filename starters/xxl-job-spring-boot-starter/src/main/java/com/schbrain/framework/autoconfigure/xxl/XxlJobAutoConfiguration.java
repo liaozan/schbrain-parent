@@ -1,7 +1,7 @@
 package com.schbrain.framework.autoconfigure.xxl;
 
 import com.schbrain.common.util.ApplicationName;
-import com.schbrain.framework.autoconfigure.logger.properties.LoggerProperties;
+import com.schbrain.framework.autoconfigure.logger.properties.LoggingProperties;
 import com.schbrain.framework.autoconfigure.xxl.condition.XxlJobShouldAvailableCondition;
 import com.schbrain.framework.autoconfigure.xxl.properties.XxlJobProperties;
 import com.xxl.job.core.executor.XxlJobExecutor;
@@ -25,7 +25,7 @@ public class XxlJobAutoConfiguration {
 
     @Bean(initMethod = "start", destroyMethod = "destroy")
     @ConditionalOnMissingBean(XxlJobExecutor.class)
-    public XxlJobSpringExecutor xxlJobSpringExecutor(XxlJobProperties xxlJobProperties, LoggerProperties loggingProperties) {
+    public XxlJobSpringExecutor xxlJobSpringExecutor(XxlJobProperties xxlJobProperties, LoggingProperties loggingProperties) {
         XxlJobSpringExecutor executor = new XxlJobSpringExecutor();
         executor.setAdminAddresses(xxlJobProperties.getAdminAddresses());
         executor.setIp(xxlJobProperties.getIp());

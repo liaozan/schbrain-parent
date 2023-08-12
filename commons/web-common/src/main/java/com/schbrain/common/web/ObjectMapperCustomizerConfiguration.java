@@ -11,10 +11,10 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
  * @since 2023/8/9
  */
 @ConditionalOnClass(Jackson2ObjectMapperBuilder.class)
-public class ObjectMapperConfiguration {
+public class ObjectMapperCustomizerConfiguration {
 
     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jacksonCustomizer() {
+    public Jackson2ObjectMapperBuilderCustomizer longToStringSerializerJacksonCustomizer() {
         return builder -> builder.serializerByType(Long.class, LongToStringSerializer.instance);
     }
 

@@ -13,7 +13,7 @@ import java.time.Duration;
  */
 @Data
 @ConfigurationProperties(prefix = "schbrain.logging.file")
-public class LoggerProperties implements ConfigurableProperties, PriorityOrdered {
+public class LoggingProperties implements ConfigurableProperties, PriorityOrdered {
 
     public static final String DEFAULT_LOG_PATH = "/data/logs";
 

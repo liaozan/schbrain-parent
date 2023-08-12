@@ -8,40 +8,31 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
 import java.util.Enumeration;
 
 /**
- * Copy from SpringCloud
- *
  * @author liaozan
  * @since 2021/11/19
  */
 @Slf4j
-public class InetUtils {
+public class HostInfoHolder {
 
-    public static HostInfo findFirstNonLoopBackHostInfo() {
+    private static final HostInfo HOST_INFO = findFirstNonLoopBackHostInfo();
+
+    public static HostInfo getHostInfo() {
+        return HOST_INFO;
+    }
+
+    private static HostInfo findFirstNonLoopBackHostInfo() {
         InetAddress address = findFirstNonLoopBackAddress();
         if (address != null) {
             return convertAddress(address);
         }
+        log.warn("Cannot find first non-loopBack address, fallback to localhost");
         HostInfo hostInfo = new HostInfo();
         hostInfo.setHostname("localhost");
         hostInfo.setIpAddress("127.0.0.1");
         return hostInfo;
-    }
-
-    public static int getIpAddressAsInt(HostInfo hostInfo) {
-        String host = hostInfo.getIpAddress();
-        if (host == null) {
-            host = hostInfo.getHostname();
-        }
-        try {
-            InetAddress inetAddress = InetAddress.getByName(host);
-            return ByteBuffer.wrap(inetAddress.getAddress()).getInt();
-        } catch (final UnknownHostException e) {
-            throw new IllegalArgumentException(e);
-        }
     }
 
     private static InetAddress findFirstNonLoopBackAddress() {

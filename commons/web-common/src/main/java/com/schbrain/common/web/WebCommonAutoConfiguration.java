@@ -30,7 +30,7 @@ import java.util.List;
         ExceptionHandingConfiguration.class,
         ServletComponentConfiguration.class,
         CorsFilterConfiguration.class,
-        ObjectMapperConfiguration.class
+        ObjectMapperCustomizerConfiguration.class
 })
 public class WebCommonAutoConfiguration {
 

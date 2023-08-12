@@ -1,1 +1,1 @@
-com.schbrain.framework.autoconfigure.logger.LoggerAutoConfiguration
+com.schbrain.framework.autoconfigure.logger.LoggingAutoConfiguration

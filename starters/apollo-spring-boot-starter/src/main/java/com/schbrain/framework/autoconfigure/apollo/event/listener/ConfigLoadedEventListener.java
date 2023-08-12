@@ -17,9 +17,4 @@ public interface ConfigLoadedEventListener extends ApplicationListener<ConfigLoa
         return Ordered.LOWEST_PRECEDENCE;
     }
 
-    @Override
-    default void initialize(ConfigurableApplicationContext applicationContext) {
-
-    }
-
 }

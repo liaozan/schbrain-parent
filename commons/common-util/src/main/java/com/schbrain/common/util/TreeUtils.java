@@ -41,7 +41,7 @@ public class TreeUtils {
                                               Function<T, K> parentKeyExtractor,
                                               Function<T, E> childMapper,
                                               BiConsumer<E, List<E>> childrenSetter,
-                                              Comparator<E> childrenComparator,
+                                              @Nullable Comparator<E> childrenComparator,
                                               @Nullable K parentId) {
         if (CollectionUtils.isEmpty(nodes)) {
             return new ArrayList<>();

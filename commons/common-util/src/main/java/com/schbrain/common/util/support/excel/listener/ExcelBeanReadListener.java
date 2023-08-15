@@ -7,7 +7,8 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import static com.schbrain.common.util.support.ValidationMessageBuilder.buildConstraintViolationErrorMsg;
 
 /**
  * @author liaozan
@@ -27,11 +28,10 @@ public class ExcelBeanReadListener<T> extends ExcelReadListenerBase<T> {
     }
 
     protected void collectErrorMsg(AnalysisContext context, Set<ConstraintViolation<T>> violations) {
-        String errorMsg = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.joining(","));
         ReadSheetHolder currentSheet = context.readSheetHolder();
         String sheetName = currentSheet.getSheetName();
         Integer rowIndex = currentSheet.getRowIndex();
-        getErrors().put(sheetName, rowIndex + 1, errorMsg);
+        getErrors().put(sheetName, rowIndex + 1, buildConstraintViolationErrorMsg(violations));
     }
 
 }

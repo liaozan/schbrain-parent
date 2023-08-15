@@ -18,7 +18,6 @@ import java.util.StringJoiner;
 public class ValidationMessageBuilder {
 
     public static String buildBindingErrorMsg(BindingResult bindingResult) {
-        String prefix = "参数验证失败: ";
         StringJoiner joiner = new StringJoiner(", ");
         for (ObjectError error : bindingResult.getAllErrors()) {
             String errorMessage = Optional.ofNullable(error.getDefaultMessage()).orElse("验证失败");
@@ -30,17 +29,16 @@ public class ValidationMessageBuilder {
             }
             joiner.add(source + " " + errorMessage);
         }
-        return prefix + joiner;
+        return joiner.toString();
     }
 
-    public static String buildConstraintViolationErrorMsg(Set<ConstraintViolation<?>> constraintViolations) {
-        String prefix = "参数验证失败: ";
+    public static <T> String buildConstraintViolationErrorMsg(Set<ConstraintViolation<T>> constraintViolations) {
         StringJoiner joiner = new StringJoiner(", ");
         for (ConstraintViolation<?> violation : constraintViolations) {
             String propertyPath = violation.getPropertyPath().toString();
             joiner.add(getActualProperty(propertyPath) + " " + violation.getMessage());
         }
-        return prefix + joiner;
+        return joiner.toString();
     }
 
     private static String getActualProperty(String propertyPath) {

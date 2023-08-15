@@ -32,9 +32,9 @@ public class ValidationMessageBuilder {
         return joiner.toString();
     }
 
-    public static <T> String buildConstraintViolationErrorMsg(Set<ConstraintViolation<T>> constraintViolations) {
+    public static String buildConstraintViolationErrorMsg(Set<ConstraintViolation<?>> violations) {
         StringJoiner joiner = new StringJoiner(", ");
-        for (ConstraintViolation<?> violation : constraintViolations) {
+        for (ConstraintViolation<?> violation : violations) {
             String propertyPath = violation.getPropertyPath().toString();
             joiner.add(getActualProperty(propertyPath) + " " + violation.getMessage());
         }

@@ -26,18 +26,16 @@ import java.util.Map;
 public class ExcelReadListenerBase<T> extends AnalysisEventListener<T> {
 
     protected final Validator validator = SpringUtil.getBean(Validator.class);
+    protected final Map<Integer, String> headers = new HashMap<>();
 
     protected List<T> dataList = new LinkedList<>();
-
-    protected Map<Integer, String> headers = new HashMap<>();
-
     protected Table<String, Integer, String> errors = HashBasedTable.create();
 
     protected boolean terminateOnValidateFail = false;
 
     @Override
     public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
-        this.headers = headMap;
+        this.headers.putAll(headMap);
     }
 
     @Override
@@ -47,13 +45,13 @@ public class ExcelReadListenerBase<T> extends AnalysisEventListener<T> {
 
     @Override
     public void invoke(T data, AnalysisContext context) {
-        boolean validated = validate(data, context);
-        if (!validated) {
+        if (validate(data, context)) {
+            this.dataList.add(data);
+        } else {
             if (isTerminateOnValidateFail()) {
                 throw new ExcelException(getErrorMsg());
             }
         }
-        this.dataList.add(data);
     }
 
     @Override

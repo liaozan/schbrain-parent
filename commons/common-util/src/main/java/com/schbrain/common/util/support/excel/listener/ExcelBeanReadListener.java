@@ -1,7 +1,7 @@
 package com.schbrain.common.util.support.excel.listener;
 
 import com.alibaba.excel.context.AnalysisContext;
-import com.alibaba.excel.read.metadata.holder.ReadSheetHolder;
+import com.schbrain.common.util.StreamUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -28,10 +28,13 @@ public class ExcelBeanReadListener<T> extends ExcelReadListenerBase<T> {
     }
 
     protected void collectErrorMsg(AnalysisContext context, Set<ConstraintViolation<T>> violations) {
-        ReadSheetHolder currentSheet = context.readSheetHolder();
-        String sheetName = currentSheet.getSheetName();
-        Integer rowIndex = currentSheet.getRowIndex();
-        getErrors().put(sheetName, rowIndex + 1, buildConstraintViolationErrorMsg(violations));
+        String sheetName = context.readSheetHolder().getSheetName();
+        Integer rowIndex = context.readRowHolder().getRowIndex();
+        getErrors().put(sheetName, rowIndex + 1, buildErrorMsg(violations));
+    }
+
+    protected String buildErrorMsg(Set<ConstraintViolation<T>> violations) {
+        return buildConstraintViolationErrorMsg(StreamUtils.toSet(violations, self -> self));
     }
 
 }

@@ -32,8 +32,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @EqualsAndHashCode(callSuper = true)
 public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExceptionResolver {
 
-    private final boolean wrapResponse;
-
     private final GlobalExceptionHandler exceptionHandler;
 
     private final ExceptionHandlerMethodResolver handlerMethodResolver;
@@ -44,8 +42,7 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
 
     private final Map<Class<?>, ExceptionHandlerMethodResolver> exceptionHandlerMethodResolvers = new ConcurrentHashMap<>(64);
 
-    public DefaultGlobalExceptionResolver(ExceptionHandlerExceptionResolver handlerMethodResolver, boolean wrapResponse, GlobalExceptionHandler exceptionHandler) {
-        this.wrapResponse = wrapResponse;
+    public DefaultGlobalExceptionResolver(ExceptionHandlerExceptionResolver handlerMethodResolver, GlobalExceptionHandler exceptionHandler) {
         this.exceptionHandler = exceptionHandler;
         this.handlerMethodResolver = new ExceptionHandlerMethodResolver(exceptionHandler.getClass());
         this.argumentResolverComposite = handlerMethodResolver.getArgumentResolvers();
@@ -55,10 +52,6 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
 
     @Override
     protected boolean shouldApplyTo(HttpServletRequest request, @Nullable Object handler) {
-        if (!wrapResponse) {
-            return false;
-        }
-
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             ResponseWrapOption responseWrapOption = HandlerMethodAnnotationUtils.getAnnotation(handlerMethod, ResponseWrapOption.class);

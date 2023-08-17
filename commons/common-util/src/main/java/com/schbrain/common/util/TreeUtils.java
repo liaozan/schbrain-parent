@@ -55,6 +55,25 @@ public class TreeUtils {
         return doBuildTree(keyExtractor, childrenSetter, childMapper, parentWithSubNodes, childrenComparator, parentId);
     }
 
+    public static <T, E> List<E> buildNodeList(List<T> treeList,
+                                               Function<T, List<T>> childrenGetter,
+                                               Function<T, E> mapper) {
+        List<E> nodes = new ArrayList<>();
+        doBuildNodeList(treeList, childrenGetter, mapper, nodes);
+        return nodes;
+    }
+
+    private static <E, T> void doBuildNodeList(List<T> treeList,
+                                               Function<T, List<T>> childrenGetter,
+                                               Function<T, E> mapper,
+                                               List<E> nodes) {
+        if (CollectionUtils.isEmpty(treeList)) {
+            return;
+        }
+        nodes.addAll(StreamUtils.toList(treeList, mapper));
+        treeList.forEach(tree -> doBuildNodeList(childrenGetter.apply(tree), childrenGetter, mapper, nodes));
+    }
+
     private static <E, K, T> List<E> doBuildTree(Function<T, K> keyExtractor,
                                                  BiConsumer<E, List<E>> childrenSetter,
                                                  Function<T, E> childMapper,

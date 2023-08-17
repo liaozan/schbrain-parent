@@ -1,7 +1,6 @@
 package com.schbrain.common.util;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.schbrain.common.exception.BaseException;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.EnvironmentCapable;
 
@@ -17,7 +16,7 @@ public class ApplicationName {
         return Optional.ofNullable(SpringUtil.getApplicationContext())
                 .map(EnvironmentCapable::getEnvironment)
                 .map(ApplicationName::get)
-                .orElseThrow(() -> new BaseException("Could not get application name"));
+                .orElseThrow();
     }
 
     public static String get(Environment environment) {

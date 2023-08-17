@@ -10,7 +10,7 @@ import org.springframework.core.Ordered;
  * @author liaozan
  * @since 2023-06-01
  */
-public class DefaultExceptionTranslator implements ExceptionTranslator {
+public class DefaultExceptionTranslator implements ExceptionTranslator<ResponseDTO<String>> {
 
     private final boolean isProduction;
 

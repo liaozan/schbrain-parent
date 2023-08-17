@@ -3,6 +3,7 @@ package com.schbrain.common.web;
 import com.schbrain.common.web.argument.BodyParamArgumentResolverWebMvcConfigurer;
 import com.schbrain.common.web.properties.WebProperties;
 import com.schbrain.common.web.result.ResponseBodyHandler;
+import com.schbrain.common.web.support.converter.Jsr310DateTimeWebMvcConfigurer;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
@@ -38,6 +39,12 @@ public class WebCommonAutoConfiguration {
     @ConditionalOnMissingBean
     public BodyParamArgumentResolverWebMvcConfigurer defaultBodyParamArgumentResolverWebMvcConfigurer() {
         return new BodyParamArgumentResolverWebMvcConfigurer();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public Jsr310DateTimeWebMvcConfigurer defaultJsr310DateTimeWebMvcConfigurer() {
+        return new Jsr310DateTimeWebMvcConfigurer();
     }
 
     @Bean

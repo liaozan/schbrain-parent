@@ -8,12 +8,12 @@ import org.springframework.core.Ordered;
  * @since 2023-06-01
  */
 @FunctionalInterface
-public interface ExceptionTranslator extends Ordered {
+public interface ExceptionTranslator<T> extends Ordered {
 
     /**
      * Translate the exception to {@link ResponseDTO}
      */
-    ResponseDTO<String> translate(Throwable throwable, int code, int action, String message);
+    T translate(Throwable throwable, int code, int action, String message);
 
     @Override
     default int getOrder() {

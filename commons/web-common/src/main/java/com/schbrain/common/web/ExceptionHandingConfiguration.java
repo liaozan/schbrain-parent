@@ -5,6 +5,7 @@ import com.schbrain.common.web.exception.ExceptionHandingWebMvcConfigurer;
 import com.schbrain.common.web.exception.ExceptionTranslator;
 import com.schbrain.common.web.exception.GlobalExceptionHandler;
 import com.schbrain.common.web.properties.WebProperties;
+import com.schbrain.common.web.result.ResponseDTO;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -23,13 +24,13 @@ public class ExceptionHandingConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ExceptionTranslator defaultExceptionTranslator() {
+    public ExceptionTranslator<ResponseDTO<String>> defaultExceptionTranslator() {
         return new DefaultExceptionTranslator();
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public GlobalExceptionHandler defaultGlobalExceptionHandler(ObjectProvider<ExceptionTranslator> exceptionTranslators) {
+    public GlobalExceptionHandler defaultGlobalExceptionHandler(ObjectProvider<ExceptionTranslator<?>> exceptionTranslators) {
         return new GlobalExceptionHandler(exceptionTranslators.orderedStream().collect(Collectors.toList()));
     }
 

@@ -1,6 +1,5 @@
 package com.schbrain.common.web.utils;
 
-import cn.hutool.core.util.ArrayUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 import org.springframework.util.StreamUtils;
@@ -58,11 +57,7 @@ public class ContentCachingServletUtils {
                 return null;
             }
         }
-        byte[] content = nativeRequest.getContentAsByteArray();
-        if (ArrayUtil.isEmpty(content)) {
-            return null;
-        }
-        return new String(content, charset);
+        return new String(nativeRequest.getContentAsByteArray(), charset);
     }
 
 }

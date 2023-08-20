@@ -3,6 +3,7 @@ package com.schbrain.common.web;
 import com.schbrain.common.web.properties.WebProperties;
 import com.schbrain.common.web.servlet.CharacterEncodingServletContextInitializer;
 import com.schbrain.common.web.servlet.RequestLoggingFilter;
+import com.schbrain.common.web.servlet.RequestWrapperFilter;
 import com.schbrain.common.web.servlet.TraceIdInitializeServletListener;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -20,19 +21,25 @@ public class ServletComponentConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public TraceIdInitializeServletListener traceIdInitializeServletListener() {
+    public TraceIdInitializeServletListener defaultTraceIdInitializeServletListener() {
         return new TraceIdInitializeServletListener();
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public CharacterEncodingServletContextInitializer characterEncodingServletContextInitializer(WebProperties webProperties) {
+    public CharacterEncodingServletContextInitializer defaultCharacterEncodingServletContextInitializer(WebProperties webProperties) {
         return new CharacterEncodingServletContextInitializer(webProperties.getEncoding());
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public RequestContextFilter requestContextFilter() {
+    public RequestWrapperFilter defaukltRequestWrapperFilter() {
+        return new RequestWrapperFilter();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public RequestContextFilter defaultRequestContextFilter() {
         OrderedRequestContextFilter requestContextFilter = new OrderedRequestContextFilter();
         requestContextFilter.setThreadContextInheritable(true);
         return requestContextFilter;
@@ -41,7 +48,7 @@ public class ServletComponentConfiguration {
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnProperty(value = "schbrain.web.enable-request-logging", havingValue = "true", matchIfMissing = true)
-    public RequestLoggingFilter requestLoggingFilter() {
+    public RequestLoggingFilter defaultRequestLoggingFilter() {
         return new RequestLoggingFilter();
     }
 

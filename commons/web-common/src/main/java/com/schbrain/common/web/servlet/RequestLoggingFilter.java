@@ -1,7 +1,6 @@
 package com.schbrain.common.web.servlet;
 
 import cn.hutool.core.text.CharPool;
-import com.schbrain.common.web.utils.ContentCachingServletUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.web.servlet.filter.OrderedFilter;
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.schbrain.common.web.utils.ContentCachingServletUtils.getRequestBody;
 import static com.schbrain.common.web.utils.ContentCachingServletUtils.wrapRequestIfRequired;
 
 /**
@@ -55,14 +55,14 @@ public class RequestLoggingFilter extends OncePerRequestFilter implements Ordere
         String method = request.getMethod();
         String requestUri = request.getRequestURI();
         String queryString = request.getQueryString();
-        String body = ContentCachingServletUtils.getRequestBody(request, false);
+        String requestBody = getRequestBody(request, false);
         StringBuilder builder = new StringBuilder();
         builder.append("requestUri: ").append(method).append(CharPool.SPACE).append(requestUri);
         if (StringUtils.isNotBlank(queryString)) {
             builder.append(", queryString: ").append(queryString);
         }
-        if (StringUtils.isNotBlank(body)) {
-            builder.append(", body: ").append(body);
+        if (StringUtils.isNotBlank(requestBody)) {
+            builder.append(", body: ").append(requestBody);
         }
         builder.append(", startTime: ").append(startTime);
         builder.append(", endTime: ").append(endTime);

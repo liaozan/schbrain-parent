@@ -5,12 +5,14 @@ import org.springframework.util.Assert;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
-import org.springframework.web.util.WebUtils;
 
+import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.Charset;
+
+import static org.springframework.web.util.WebUtils.getNativeRequest;
 
 /**
  * @author liaozan
@@ -43,8 +45,12 @@ public class ContentCachingServletUtils {
         }
     }
 
+    /**
+     * Get request body content
+     */
+    @Nullable
     public static String getRequestBody(HttpServletRequest request, boolean readFromInputStream) {
-        ContentCachingRequestWrapper nativeRequest = WebUtils.getNativeRequest(request, ContentCachingRequestWrapper.class);
+        ContentCachingRequestWrapper nativeRequest = getNativeRequest(request, ContentCachingRequestWrapper.class);
         if (nativeRequest == null) {
             return null;
         }
@@ -53,7 +59,7 @@ public class ContentCachingServletUtils {
             try {
                 return StreamUtils.copyToString(request.getInputStream(), charset);
             } catch (IOException e) {
-                log.warn("Failed to read body content from request inputStream");
+                log.warn("Failed to read body content from request inputStream", e);
                 return null;
             }
         }

@@ -31,15 +31,15 @@ public abstract class AbstractSignatureValidationInterceptor<T extends Signature
         String appKey = wrappedRequest.getHeader(SCH_APP_KEY);
         String timestamp = wrappedRequest.getHeader(SCH_TIMESTAMP);
         String signature = wrappedRequest.getHeader(SCH_SIGNATURE);
+        String expireTime = wrappedRequest.getHeader(SCH_EXPIRE_TIME);
 
         // 空校验
-        if (StringUtils.isAnyBlank(appKey, timestamp, signature)) {
+        if (StringUtils.isAnyBlank(appKey, timestamp, signature, expireTime)) {
             throw new SignatureValidationException("签名参数为空！");
         }
 
         // 过期校验
-        String expireTime = wrappedRequest.getHeader(SCH_EXPIRE_TIME);
-        if (StringUtils.isNotBlank(expireTime) && System.currentTimeMillis() > Long.parseLong(expireTime)) {
+        if (System.currentTimeMillis() > Long.parseLong(expireTime)) {
             throw new SignatureValidationException("请求信息已过期！");
         }
 

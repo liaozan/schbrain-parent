@@ -9,7 +9,7 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Objects;
 
 import static cn.hutool.core.text.StrPool.UNDERLINE;
@@ -68,7 +68,7 @@ public abstract class AbstractSignatureValidationInterceptor<T extends Signature
     }
 
     protected String signParams(String requestUri, String queryString, String bodyString, String timestamp, String appKey, String appSecret) {
-        String toSign = StreamUtils.join(List.of(requestUri, queryString, bodyString, timestamp, appKey, appSecret), UNDERLINE, StringUtils::isNotBlank);
+        String toSign = StreamUtils.join(Arrays.asList(requestUri, queryString, bodyString, timestamp, appKey, appSecret), UNDERLINE, StringUtils::isNotBlank);
         return DigestUtil.sha256Hex(toSign);
     }
 

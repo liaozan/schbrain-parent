@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static cn.hutool.core.text.StrPool.UNDERLINE;
-import static com.schbrain.common.web.utils.ContentCachingServletUtils.getRequestBody;
+import static com.schbrain.common.web.utils.RequestContentCachingUtils.getRequestBody;
 import static org.springframework.web.util.WebUtils.getNativeRequest;
 
 public abstract class AbstractSignatureValidationInterceptor<T extends SignatureContext> extends BaseHandlerInterceptor {
@@ -51,7 +51,7 @@ public abstract class AbstractSignatureValidationInterceptor<T extends Signature
 
         String requestUri = wrappedRequest.getRequestURI();
         String queryString = wrappedRequest.getQueryString();
-        String requestBody = getRequestBody(wrappedRequest, true);
+        String requestBody = getRequestBody(wrappedRequest);
 
         // 校验签名
         String calculatedSignature = signParams(requestUri, queryString, requestBody, timestamp, appKey, context.getAppSecret());

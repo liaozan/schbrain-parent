@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.schbrain.common.web.utils.ContentCachingServletUtils.wrapRequestIfRequired;
+import static com.schbrain.common.web.utils.RequestContentCachingUtils.wrapIfRequired;
 
 /**
  * @author liaozan
@@ -25,7 +25,7 @@ public class RequestWrapperFilter extends OncePerRequestFilter implements Ordere
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        chain.doFilter(wrapRequestIfRequired(request), response);
+        chain.doFilter(wrapIfRequired(request), response);
     }
 
 }

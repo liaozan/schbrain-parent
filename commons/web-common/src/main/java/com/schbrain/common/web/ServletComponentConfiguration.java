@@ -33,13 +33,7 @@ public class ServletComponentConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public RequestWrapperFilter defaukltRequestWrapperFilter() {
-        return new RequestWrapperFilter();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public RequestContextFilter defaultRequestContextFilter() {
+    public RequestContextFilter requestContextFilter() {
         OrderedRequestContextFilter requestContextFilter = new OrderedRequestContextFilter();
         requestContextFilter.setThreadContextInheritable(true);
         return requestContextFilter;
@@ -47,8 +41,14 @@ public class ServletComponentConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
+    public RequestWrapperFilter requestWrapperFilter() {
+        return new RequestWrapperFilter();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
     @ConditionalOnProperty(value = "schbrain.web.enable-request-logging", havingValue = "true", matchIfMissing = true)
-    public RequestLoggingFilter defaultRequestLoggingFilter() {
+    public RequestLoggingFilter requestLoggingFilter() {
         return new RequestLoggingFilter();
     }
 

@@ -5,18 +5,18 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.schbrain.common.util.JacksonUtils;
 import com.schbrain.common.web.annotation.BodyParam;
+import com.schbrain.common.web.servlet.ContentCachingRequest;
 import lombok.Setter;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver;
-import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.lang.reflect.Type;
 
-import static com.schbrain.common.web.utils.ContentCachingServletUtils.wrapRequestIfRequired;
+import static com.schbrain.common.web.utils.RequestContentCachingUtils.wrapIfRequired;
 import static org.springframework.web.context.request.RequestAttributes.SCOPE_REQUEST;
 
 /**
@@ -68,15 +68,15 @@ public class BodyParamMethodArgumentResolver extends AbstractNamedValueMethodArg
     private JsonNode getRequestBody(NativeWebRequest nativeWebRequest) throws IOException {
         JsonNode requestBody = (JsonNode) nativeWebRequest.getAttribute(REQUEST_BODY_CACHE, SCOPE_REQUEST);
         if (requestBody == null) {
-            ContentCachingRequestWrapper request = wrapRequest(nativeWebRequest);
+            ContentCachingRequest request = wrapRequest(nativeWebRequest);
             requestBody = objectMapper.readTree(request.getInputStream());
             nativeWebRequest.setAttribute(REQUEST_BODY_CACHE, requestBody, SCOPE_REQUEST);
         }
         return requestBody;
     }
 
-    private ContentCachingRequestWrapper wrapRequest(NativeWebRequest nativeWebRequest) {
-        return wrapRequestIfRequired(nativeWebRequest.getNativeRequest(HttpServletRequest.class));
+    private ContentCachingRequest wrapRequest(NativeWebRequest request) {
+        return wrapIfRequired(request.getNativeRequest(HttpServletRequest.class));
     }
 
 }

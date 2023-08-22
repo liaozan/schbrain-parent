@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.schbrain.common.web.utils.ContentCachingServletUtils.getRequestBody;
-import static com.schbrain.common.web.utils.ContentCachingServletUtils.wrapRequestIfRequired;
+import static com.schbrain.common.web.utils.RequestContentCachingUtils.getRequestBody;
+import static com.schbrain.common.web.utils.RequestContentCachingUtils.wrapIfRequired;
 
 /**
  * 请求日志拦截器
@@ -35,7 +35,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter implements Ordere
             return;
         }
 
-        request = wrapRequestIfRequired(request);
+        request = wrapIfRequired(request);
 
         long startTime = System.currentTimeMillis();
         try {
@@ -55,7 +55,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter implements Ordere
         String method = request.getMethod();
         String requestUri = request.getRequestURI();
         String queryString = request.getQueryString();
-        String requestBody = getRequestBody(request, false);
+        String requestBody = getRequestBody(request);
         StringBuilder builder = new StringBuilder();
         builder.append("requestUri: ").append(method).append(CharPool.SPACE).append(requestUri);
         if (StringUtils.isNotBlank(queryString)) {

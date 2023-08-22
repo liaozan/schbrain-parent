@@ -1,7 +1,7 @@
 package com.schbrain.common.web.support.signature;
 
 import cn.hutool.crypto.digest.DigestUtil;
-import com.google.common.base.Joiner;
+import com.schbrain.common.util.StreamUtils;
 import com.schbrain.common.web.support.BaseHandlerInterceptor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.method.HandlerMethod;
@@ -9,6 +9,7 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Objects;
 
 import static cn.hutool.core.text.StrPool.UNDERLINE;
@@ -16,8 +17,6 @@ import static com.schbrain.common.web.utils.ContentCachingServletUtils.getReques
 import static org.springframework.web.util.WebUtils.getNativeRequest;
 
 public abstract class AbstractSignatureValidationInterceptor<T extends SignatureContext> extends BaseHandlerInterceptor {
-
-    private static final Joiner JOINER = Joiner.on(UNDERLINE).skipNulls();
 
     private static final String SCH_APP_KEY = "Sch-App-Key";
     private static final String SCH_TIMESTAMP = "Sch-Timestamp";
@@ -69,7 +68,7 @@ public abstract class AbstractSignatureValidationInterceptor<T extends Signature
     }
 
     protected String signParams(String requestUri, String queryString, String bodyString, String timestamp, String appKey, String appSecret) {
-        String toSign = JOINER.join(requestUri, queryString, bodyString, timestamp, appKey, appSecret);
+        String toSign = StreamUtils.join(List.of(requestUri, queryString, bodyString, timestamp, appKey, appSecret), UNDERLINE, StringUtils::isNotBlank);
         return DigestUtil.sha256Hex(toSign);
     }
 

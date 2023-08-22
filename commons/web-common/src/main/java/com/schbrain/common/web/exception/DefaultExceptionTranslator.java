@@ -12,11 +12,7 @@ import org.springframework.core.Ordered;
  */
 public class DefaultExceptionTranslator implements ExceptionTranslator<ResponseDTO<String>> {
 
-    private final boolean isProduction;
-
-    public DefaultExceptionTranslator() {
-        this.isProduction = EnvUtils.isProduction();
-    }
+    private final boolean isProduction = EnvUtils.isProduction();
 
     @Override
     public ResponseDTO<String> translate(Throwable throwable, int code, int action, String message) {

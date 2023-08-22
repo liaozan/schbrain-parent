@@ -158,11 +158,15 @@ public class StreamUtils {
     }
 
     public static <T> String join(Iterable<T> data, String delimiter) {
-        return join(data, delimiter, Objects::toString);
+        return join(data, delimiter, Objects::toString, any -> true);
     }
 
-    public static <T> String join(Iterable<T> data, String delimiter, Function<T, String> toStringFunction) {
-        return from(data).map(toStringFunction).collect(joining(delimiter));
+    public static <T> String join(Iterable<T> data, String delimiter, Predicate<String> predicate) {
+        return join(data, delimiter, Objects::toString, predicate);
+    }
+
+    public static <T> String join(Iterable<T> data, String delimiter, Function<T, String> toStringFunction, Predicate<String> predicate) {
+        return from(data).map(toStringFunction).filter(predicate).collect(joining(delimiter));
     }
 
     public static List<String> split(String data) {

@@ -2,10 +2,10 @@ package com.schbrain.common.web.support.signature;
 
 import cn.hutool.crypto.digest.DigestUtil;
 import com.schbrain.common.util.StreamUtils;
+import com.schbrain.common.web.servlet.ContentCachingRequest;
 import com.schbrain.common.web.support.BaseHandlerInterceptor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +26,7 @@ public abstract class AbstractSignatureValidationInterceptor<T extends Signature
 
     @Override
     protected boolean preHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handler) {
-        ContentCachingRequestWrapper wrappedRequest = getWrappedRequest(request);
+        ContentCachingRequest wrappedRequest = getWrappedRequest(request);
 
         String appKey = wrappedRequest.getHeader(SCH_APP_KEY);
         String timestamp = wrappedRequest.getHeader(SCH_TIMESTAMP);
@@ -76,8 +76,8 @@ public abstract class AbstractSignatureValidationInterceptor<T extends Signature
 
     protected abstract T getSignatureContext(String appKey);
 
-    private ContentCachingRequestWrapper getWrappedRequest(HttpServletRequest request) {
-        ContentCachingRequestWrapper wrapper = getNativeRequest(request, ContentCachingRequestWrapper.class);
+    private ContentCachingRequest getWrappedRequest(HttpServletRequest request) {
+        ContentCachingRequest wrapper = getNativeRequest(request, ContentCachingRequest.class);
         if (wrapper == null) {
             throw new SignatureValidationException("请求异常");
         }

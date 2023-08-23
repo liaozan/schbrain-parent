@@ -10,12 +10,12 @@ import org.springframework.core.Ordered;
  * @author liaozan
  * @since 2023-06-01
  */
-public class DefaultExceptionTranslator implements ExceptionTranslator<ResponseDTO<String>> {
+public class DefaultExceptionTranslator implements ExceptionTranslator<ResponseDTO<Void>> {
 
     private final boolean isProduction = EnvUtils.isProduction();
 
     @Override
-    public ResponseDTO<String> translate(Throwable throwable, int code, int action, String message) {
+    public ResponseDTO<Void> translate(Throwable throwable, int code, int action, String message) {
         if (throwable instanceof BaseException) {
             return ResponseDTO.error((BaseException) throwable);
         }

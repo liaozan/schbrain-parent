@@ -1,13 +1,12 @@
 package com.schbrain.common.util;
 
 import cn.hutool.core.collection.ListUtil;
+import com.google.common.collect.Maps;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -55,23 +54,49 @@ public class TreeUtils {
         return doBuildTree(keyExtractor, childrenSetter, childMapper, parentWithSubNodes, childrenComparator, parentId);
     }
 
-    public static <T, E> List<E> buildNodeList(List<T> treeList,
-                                               Function<T, List<T>> childrenGetter,
-                                               Function<T, E> mapper) {
+    public static <T, E> List<E> getParents(E id, List<T> nodeList, Function<T, E> keyMapper, Function<T, E> parentMapper, boolean includeSelf) {
+        // toMap 不允许 value 为空，当 parentId 为空时，单独处理下
+        Map<E, E> parentMap = Maps.newHashMapWithExpectedSize(nodeList.size());
+        for (T node : nodeList) {
+            parentMap.put(keyMapper.apply(node), parentMapper.apply(node));
+        }
+        return getParents(id, parentMap, includeSelf);
+    }
+
+    public static <T> List<T> getParents(T id, Map<T, T> parentMap, boolean includeSelf) {
+        List<T> parentIds = new LinkedList<>();
+        if (includeSelf) {
+            parentIds.add(id);
+        }
+        if (MapUtils.isEmpty(parentMap)) {
+            return parentIds;
+        }
+        return getParents(id, parentMap, parentIds);
+    }
+
+    public static <T, E> List<E> buildNodeList(List<T> tree, Function<T, List<T>> childGetter, Function<T, E> mapper) {
         List<E> nodes = new ArrayList<>();
-        doBuildNodeList(treeList, childrenGetter, mapper, nodes);
+        if (CollectionUtils.isEmpty(tree)) {
+            return nodes;
+        }
+        doBuildNodeList(tree, childGetter, mapper, nodes);
         return nodes;
     }
 
-    private static <E, T> void doBuildNodeList(List<T> treeList,
-                                               Function<T, List<T>> childrenGetter,
-                                               Function<T, E> mapper,
-                                               List<E> nodes) {
-        if (CollectionUtils.isEmpty(treeList)) {
-            return;
+    private static <E, T> void doBuildNodeList(List<T> tree, Function<T, List<T>> childGetter, Function<T, E> mapper, List<E> nodes) {
+        tree.forEach(node -> {
+            nodes.add(mapper.apply(node));
+            doBuildNodeList(childGetter.apply(node), childGetter, mapper, nodes);
+        });
+    }
+
+    private static <T> List<T> getParents(T id, Map<T, T> parentMap, List<T> parentIds) {
+        T parentId = parentMap.get(id);
+        if (parentId == null) {
+            return parentIds;
         }
-        nodes.addAll(StreamUtils.toList(treeList, mapper));
-        treeList.forEach(tree -> doBuildNodeList(childrenGetter.apply(tree), childrenGetter, mapper, nodes));
+        parentIds.add(0, parentId);
+        return getParents(parentId, parentMap, parentIds);
     }
 
     private static <E, K, T> List<E> doBuildTree(Function<T, K> keyExtractor,

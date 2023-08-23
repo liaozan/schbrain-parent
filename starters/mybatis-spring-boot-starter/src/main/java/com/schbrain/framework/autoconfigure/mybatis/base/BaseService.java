@@ -1,11 +1,11 @@
 package com.schbrain.framework.autoconfigure.mybatis.base;
 
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public interface BaseService<T extends BaseEntity> extends IService<T> {
@@ -32,7 +32,7 @@ public interface BaseService<T extends BaseEntity> extends IService<T> {
     /**
      * 根据 id 获取
      */
-    <V> Map<Long, V> getMapByIds(Collection<Long> ids, Function<T, V> mapper);
+    <V> Map<Long, V> getMapByIds(Collection<Long> ids, SFunction<T, V> mapper);
 
     /**
      * 根据业务主键获取记录
@@ -66,7 +66,7 @@ public interface BaseService<T extends BaseEntity> extends IService<T> {
     /**
      * 根据业务主键获取
      */
-    <K, V> Map<K, V> getMapByBizIds(Collection<K> bizIds, Function<T, V> mapper);
+    <K, V> Map<K, V> getMapByBizIds(Collection<K> bizIds, SFunction<T, V> mapper);
 
     /**
      * 根据 id 更新,null 会被更新为 null

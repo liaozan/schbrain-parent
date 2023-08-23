@@ -2,6 +2,7 @@ package com.schbrain.framework.autoconfigure.mybatis.base;
 
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.schbrain.common.exception.BaseException;
@@ -22,7 +23,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -33,6 +33,10 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 
     @Nullable
     private BizIdColumnField bizIdColumnField;
+
+    private static <T> SFunction<T, T> identity() {
+        return any -> any;
+    }
 
     @Override
     public T getById(Serializable id) {
@@ -59,15 +63,17 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 
     @Override
     public Map<Long, T> getMapByIds(Collection<Long> ids) {
-        return getMapByIds(ids, Function.identity());
+        return getMapByIds(ids, identity());
     }
 
     @Override
-    public <V> Map<Long, V> getMapByIds(Collection<Long> ids, Function<T, V> mapper) {
+    public <V> Map<Long, V> getMapByIds(Collection<Long> ids, SFunction<T, V> mapper) {
         if (isEmpty(ids)) {
             return Collections.emptyMap();
         }
-        return StreamUtils.toMap(listByIds(ids), T::getId, mapper);
+        // noinspection unchecked
+        List<T> dataList = lambdaQuery().select(T::getId, mapper).in(T::getId, ids).list();
+        return StreamUtils.toMap(dataList, T::getId, mapper);
     }
 
     @Override
@@ -86,8 +92,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 
     @Override
     public T getByBizId(Object bizId, Supplier<? extends RuntimeException> notFoundSupplier) {
-        assertBidColumnFieldExist();
-        T entity = query().eq(bizIdColumnField.getColumnName(), bizId).one();
+        T entity = query().eq(getBidColumnField().getColumnName(), bizId).one();
         if (entity == null && notFoundSupplier != null) {
             throw notFoundSupplier.get();
         }
@@ -96,25 +101,24 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 
     @Override
     public <K> List<T> listByBizIds(Collection<K> bizIds) {
-        assertBidColumnFieldExist();
         if (isEmpty(bizIds)) {
             return Collections.emptyList();
         }
-        return query().in(bizIdColumnField.getColumnName(), bizIds).list();
+        return query().in(getBidColumnField().getColumnName(), bizIds).list();
     }
 
     @Override
     public <K> Map<K, T> getMapByBizIds(Collection<K> bizIds) {
-        return getMapByBizIds(bizIds, Function.identity());
+        return getMapByBizIds(bizIds, identity());
     }
 
     @Override
-    public <K, V> Map<K, V> getMapByBizIds(Collection<K> bizIds, Function<T, V> mapper) {
-        assertBidColumnFieldExist();
+    public <K, V> Map<K, V> getMapByBizIds(Collection<K> bizIds, SFunction<T, V> mapper) {
         if (isEmpty(bizIds)) {
             return Collections.emptyMap();
         }
-        return StreamUtils.toMap(listByBizIds(bizIds), entity -> bizIdColumnField.getValue(entity), mapper);
+        // How to get the mapper fieldName ?
+        return StreamUtils.toMap(listByBizIds(bizIds), entity -> getBidColumnField().getValue(entity), mapper);
     }
 
     @Override
@@ -150,10 +154,11 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
         }, field -> field.isAnnotationPresent(BizId.class));
     }
 
-    private void assertBidColumnFieldExist() {
+    protected BizIdColumnField getBidColumnField() {
         if (bizIdColumnField == null) {
             throw new BaseException(String.format("@BizId not exist in Class: \"%s\"", entityClass.getName()));
         }
+        return bizIdColumnField;
     }
 
     private String getUpdateByIdWithNullStatementId(Class<M> mapperClass) {

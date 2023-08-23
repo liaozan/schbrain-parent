@@ -24,7 +24,7 @@ public class ExceptionHandingConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ExceptionTranslator<ResponseDTO<String>> defaultExceptionTranslator() {
+    public ExceptionTranslator<ResponseDTO<Void>> defaultExceptionTranslator() {
         return new DefaultExceptionTranslator();
     }
 

@@ -20,7 +20,7 @@ public class BaseEntityWithLogicDelete extends BaseEntity {
      */
     @TableLogic
     @TableField(value = MybatisConstants.DELETED, select = false)
-    protected boolean deleted;
+    protected Boolean deleted;
 
     /**
      * 逻辑删除版本

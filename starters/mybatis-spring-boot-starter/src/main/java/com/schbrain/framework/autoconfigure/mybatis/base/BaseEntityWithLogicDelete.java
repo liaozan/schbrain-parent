@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
+ * 带逻辑删除的基础实体类, 此类属性不需要显式设置, 框架会自动处理
+ *
  * @author liaozan
  * @since 2021/11/25
  */
@@ -16,7 +18,8 @@ public class BaseEntityWithLogicDelete extends BaseEntity {
 
     /**
      * 逻辑删除
-     * 注意：只有写 sql 明确指定查询此字段的时候才有值, update 时，无法修改此字段
+     * <p>
+     * 注意：默认不参与查询, 只有写 sql 明确指定查询此字段的时候才有值
      */
     @TableLogic
     @TableField(value = MybatisConstants.DELETED, select = false)
@@ -24,7 +27,10 @@ public class BaseEntityWithLogicDelete extends BaseEntity {
 
     /**
      * 逻辑删除版本
-     * 注意：只有写 sql 明确指定查询此字段的时候才有值
+     * <p>
+     * 注意：默认不参与查询, 只有写 sql 明确指定查询此字段的时候才有值
+     *
+     * @see com.schbrain.framework.autoconfigure.mybatis.core.LogicDeleteSupportSqlSource
      */
     @TableField(value = MybatisConstants.DELETE_VERSION, select = false)
     protected Long deleteVersion;

@@ -20,10 +20,12 @@ import org.springframework.util.ReflectionUtils;
 import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
 
 /**
  * @author liaozan
@@ -33,10 +35,6 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 
     @Nullable
     private BizIdColumnField bizIdColumnField;
-
-    private static <T> SFunction<T, T> identity() {
-        return any -> any;
-    }
 
     @Override
     public T getById(Serializable id) {
@@ -63,13 +61,17 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 
     @Override
     public Map<Long, T> getMapByIds(Collection<Long> ids) {
-        return getMapByIds(ids, identity());
+        // Cannot call the override method here, because override method use mapper to judge the fields to select
+        if (isEmpty(ids)) {
+            return emptyMap();
+        }
+        return StreamUtils.toMap(listByIds(ids), T::getId);
     }
 
     @Override
     public <V> Map<Long, V> getMapByIds(Collection<Long> ids, SFunction<T, V> mapper) {
         if (isEmpty(ids)) {
-            return Collections.emptyMap();
+            return emptyMap();
         }
         // noinspection unchecked
         List<T> dataList = lambdaQuery().select(T::getId, mapper).in(T::getId, ids).list();
@@ -102,22 +104,26 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
     @Override
     public <K> List<T> listByBizIds(Collection<K> bizIds) {
         if (isEmpty(bizIds)) {
-            return Collections.emptyList();
+            return emptyList();
         }
         return query().in(getBidColumnField().getColumnName(), bizIds).list();
     }
 
     @Override
     public <K> Map<K, T> getMapByBizIds(Collection<K> bizIds) {
-        return getMapByBizIds(bizIds, identity());
+        // Cannot call the override method here, because override method use mapper to judge the fields to select
+        if (isEmpty(bizIds)) {
+            return emptyMap();
+        }
+        return StreamUtils.toMap(listByBizIds(bizIds), entity -> getBidColumnField().getValue(entity));
     }
 
     @Override
     public <K, V> Map<K, V> getMapByBizIds(Collection<K> bizIds, SFunction<T, V> mapper) {
         if (isEmpty(bizIds)) {
-            return Collections.emptyMap();
+            return emptyMap();
         }
-        // How to get the mapper fieldName ?
+        // How to get the mapper column ?
         return StreamUtils.toMap(listByBizIds(bizIds), entity -> getBidColumnField().getValue(entity), mapper);
     }
 

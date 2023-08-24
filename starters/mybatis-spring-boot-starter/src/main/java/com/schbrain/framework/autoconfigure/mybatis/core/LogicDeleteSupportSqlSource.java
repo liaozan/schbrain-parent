@@ -12,17 +12,17 @@ import java.util.List;
  */
 public class LogicDeleteSupportSqlSource implements SqlSource {
 
-    public static final String DELETE_VERSION = "deleteVersion";
+    private static final String DELETE_VERSION = "deleteVersion";
 
-    private final SqlSource sqlSource;
+    private final SqlSource delegate;
 
-    public LogicDeleteSupportSqlSource(SqlSource sqlSource) {
-        this.sqlSource = sqlSource;
+    public LogicDeleteSupportSqlSource(SqlSource delegate) {
+        this.delegate = delegate;
     }
 
     @Override
     public BoundSql getBoundSql(Object parameterObject) {
-        BoundSql boundSql = sqlSource.getBoundSql(parameterObject);
+        BoundSql boundSql = delegate.getBoundSql(parameterObject);
         if (hasDeleteVersionProperty(boundSql.getParameterMappings())) {
             boundSql.setAdditionalParameter(DELETE_VERSION, System.currentTimeMillis());
         }

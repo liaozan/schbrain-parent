@@ -17,6 +17,20 @@ public class SignatureContextUtil {
     }
 
     /**
+     * 获取appKey
+     */
+    public static String getAppKey() {
+        return get(SignatureContext.class).getAppKey();
+    }
+
+    /**
+     * 获取appSecret
+     */
+    public static String getAppSecret() {
+        return get(SignatureContext.class).getAppSecret();
+    }
+
+    /**
      * 赋值
      */
     public static <T extends SignatureContext> void set(T signatureContext) {

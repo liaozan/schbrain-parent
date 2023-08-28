@@ -34,9 +34,9 @@ public class BizIdColumnField {
         this.fieldType = bizIdField.getType();
         try {
             Lookup lookup = privateLookupIn(entityClass, lookup());
-            this.getter = lookup.findGetter(entityClass, bizIdField.getName(), fieldType);
-            this.setter = lookup.findSetter(entityClass, bizIdField.getName(), fieldType);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
+            this.getter = lookup.unreflectGetter(bizIdField);
+            this.setter = lookup.unreflectSetter(bizIdField);
+        } catch (IllegalAccessException e) {
             throw new BaseException(e.getMessage(), e);
         }
     }

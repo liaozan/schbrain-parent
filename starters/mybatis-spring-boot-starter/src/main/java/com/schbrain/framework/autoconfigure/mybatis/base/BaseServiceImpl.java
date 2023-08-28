@@ -12,6 +12,7 @@ import com.schbrain.framework.autoconfigure.mybatis.annotation.BizId;
 import com.schbrain.framework.autoconfigure.mybatis.biz.BizIdColumnField;
 import com.schbrain.framework.autoconfigure.mybatis.biz.BizIdHelper;
 import com.schbrain.framework.autoconfigure.mybatis.exception.NoSuchRecordException;
+import com.schbrain.framework.autoconfigure.mybatis.util.LambdaUtils;
 import org.apache.ibatis.binding.MapperMethod.ParamMap;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.transaction.annotation.Transactional;
@@ -123,8 +124,12 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
         if (isEmpty(bizIds)) {
             return emptyMap();
         }
-        // How to get the mapper column ?
-        return StreamUtils.toMap(listByBizIds(bizIds), entity -> getBidColumnField().getValue(entity), mapper);
+        String bizIdColumnName = getBidColumnField().getColumnName();
+        List<T> dataList = query()
+                .select(bizIdColumnName, LambdaUtils.getColumnName(mapper))
+                .in(bizIdColumnName, bizIds)
+                .list();
+        return StreamUtils.toMap(dataList, entity -> getBidColumnField().getValue(entity), mapper);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.schbrain.common.util;
 
-import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
@@ -18,28 +18,28 @@ import java.util.function.Function;
  */
 public class TreeUtils {
 
-    public static <T, K> List<T> buildTree(List<T> nodes,
+    public static <T, K> List<T> buildTree(Collection<T> nodes,
                                            Function<T, K> keyExtractor,
                                            Function<T, K> parentKeyExtractor,
-                                           BiConsumer<T, List<T>> childrenSetter,
+                                           BiConsumer<T, Collection<T>> childrenSetter,
                                            @Nullable K parentId) {
         return buildTree(nodes, keyExtractor, parentKeyExtractor, Function.identity(), childrenSetter, parentId);
     }
 
-    public static <T, K, E> List<E> buildTree(List<T> nodes,
+    public static <T, K, E> List<E> buildTree(Collection<T> nodes,
                                               Function<T, K> keyExtractor,
                                               Function<T, K> parentKeyExtractor,
                                               Function<T, E> childMapper,
-                                              BiConsumer<E, List<E>> childrenSetter,
+                                              BiConsumer<E, Collection<E>> childrenSetter,
                                               @Nullable K parentId) {
         return buildTree(nodes, keyExtractor, parentKeyExtractor, childMapper, childrenSetter, null, parentId);
     }
 
-    public static <T, K, E> List<E> buildTree(List<T> nodes,
+    public static <T, K, E> List<E> buildTree(Collection<T> nodes,
                                               Function<T, K> keyExtractor,
                                               Function<T, K> parentKeyExtractor,
                                               Function<T, E> childMapper,
-                                              BiConsumer<E, List<E>> childrenSetter,
+                                              BiConsumer<E, Collection<E>> childrenSetter,
                                               @Nullable Comparator<E> childrenComparator,
                                               @Nullable K parentId) {
         if (CollectionUtils.isEmpty(nodes)) {
@@ -54,10 +54,10 @@ public class TreeUtils {
         return doBuildTree(keyExtractor, childrenSetter, childMapper, parentWithSubNodes, childrenComparator, parentId);
     }
 
-    public static <T, E> List<E> getParents(E id, List<T> nodeList, Function<T, E> keyMapper, Function<T, E> parentMapper, boolean includeSelf) {
+    public static <T, E> List<E> getParents(E id, Collection<T> nodes, Function<T, E> keyMapper, Function<T, E> parentMapper, boolean includeSelf) {
         // toMap 不允许 value 为空，当 parentId 为空时，单独处理下
-        Map<E, E> parentMap = Maps.newHashMapWithExpectedSize(nodeList.size());
-        for (T node : nodeList) {
+        Map<E, E> parentMap = Maps.newHashMapWithExpectedSize(nodes.size());
+        for (T node : nodes) {
             parentMap.put(keyMapper.apply(node), parentMapper.apply(node));
         }
         return getParents(id, parentMap, includeSelf);
@@ -74,7 +74,7 @@ public class TreeUtils {
         return getParents(id, parentMap, parentIds);
     }
 
-    public static <T, E> List<E> buildNodeList(List<T> tree, Function<T, List<T>> childGetter, Function<T, E> mapper) {
+    public static <T, E> List<E> buildNodeList(Collection<T> tree, Function<T, Collection<T>> childGetter, Function<T, E> mapper) {
         List<E> nodes = new ArrayList<>();
         if (CollectionUtils.isEmpty(tree)) {
             return nodes;
@@ -83,7 +83,7 @@ public class TreeUtils {
         return nodes;
     }
 
-    private static <E, T> void doBuildNodeList(List<T> tree, Function<T, List<T>> childGetter, Function<T, E> mapper, List<E> nodes) {
+    private static <E, T> void doBuildNodeList(Collection<T> tree, Function<T, Collection<T>> childGetter, Function<T, E> mapper, List<E> nodes) {
         tree.forEach(node -> {
             nodes.add(mapper.apply(node));
             doBuildNodeList(childGetter.apply(node), childGetter, mapper, nodes);
@@ -100,15 +100,15 @@ public class TreeUtils {
     }
 
     private static <E, K, T> List<E> doBuildTree(Function<T, K> keyExtractor,
-                                                 BiConsumer<E, List<E>> childrenSetter,
+                                                 BiConsumer<E, Collection<E>> childrenSetter,
                                                  Function<T, E> childMapper,
                                                  Map<K, List<T>> parentWithSubNodes,
                                                  Comparator<E> childrenComparator,
                                                  K parentId) {
-        List<T> subNodes = parentWithSubNodes.remove(parentId);
+        Collection<T> subNodes = parentWithSubNodes.remove(parentId);
         List<E> treeList = StreamUtils.toList(subNodes, subNode -> {
             E child = childMapper.apply(subNode);
-            List<E> children = doBuildTree(keyExtractor, childrenSetter, childMapper, parentWithSubNodes, childrenComparator, keyExtractor.apply(subNode));
+            Collection<E> children = doBuildTree(keyExtractor, childrenSetter, childMapper, parentWithSubNodes, childrenComparator, keyExtractor.apply(subNode));
             sort(children, childrenComparator);
             childrenSetter.accept(child, children);
             return child;
@@ -117,9 +117,9 @@ public class TreeUtils {
         return treeList;
     }
 
-    private static <E> void sort(List<E> dataList, Comparator<E> comparator) {
-        if (comparator != null) {
-            ListUtil.sort(dataList, Comparator.nullsLast(comparator));
+    private static <E> void sort(Collection<E> data, Comparator<E> comparator) {
+        if (comparator != null && CollectionUtils.isNotEmpty(data)) {
+            CollectionUtil.sort(data, comparator);
         }
     }
 

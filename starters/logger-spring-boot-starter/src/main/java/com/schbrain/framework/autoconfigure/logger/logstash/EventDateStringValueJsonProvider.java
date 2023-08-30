@@ -27,7 +27,7 @@ public class EventDateStringValueJsonProvider extends AbstractFieldJsonProvider<
 
     @Override
     public void writeTo(JsonGenerator generator, ILoggingEvent event) throws IOException {
-        JsonWritingUtils.writeStringField(generator, FIELD_EVENT_DATE, getEventDate(event));
+        JsonWritingUtils.writeStringField(generator, getFieldName(), getEventDate(event));
     }
 
     private String getEventDate(ILoggingEvent event) {

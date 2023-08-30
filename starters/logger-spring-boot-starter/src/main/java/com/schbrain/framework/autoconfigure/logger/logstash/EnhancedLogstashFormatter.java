@@ -28,6 +28,7 @@ public class EnhancedLogstashFormatter extends LogstashFormatter {
     }
 
     private void addAdditionalProviders() {
+        getProviders().addProvider(new NodeIpJsonProvider());
         getProviders().addProvider(new EventDateStringValueJsonProvider());
     }
 

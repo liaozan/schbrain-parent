@@ -76,14 +76,14 @@ public class TreeUtils {
 
     public static <T, E> List<E> buildNodeList(Collection<T> tree, Function<T, Collection<T>> childGetter, Function<T, E> mapper) {
         List<E> nodes = new ArrayList<>();
-        if (CollectionUtils.isEmpty(tree)) {
-            return nodes;
-        }
         doBuildNodeList(tree, childGetter, mapper, nodes);
         return nodes;
     }
 
     private static <E, T> void doBuildNodeList(Collection<T> tree, Function<T, Collection<T>> childGetter, Function<T, E> mapper, List<E> nodes) {
+        if (CollectionUtils.isEmpty(tree)) {
+            return;
+        }
         tree.forEach(node -> {
             nodes.add(mapper.apply(node));
             doBuildNodeList(childGetter.apply(node), childGetter, mapper, nodes);

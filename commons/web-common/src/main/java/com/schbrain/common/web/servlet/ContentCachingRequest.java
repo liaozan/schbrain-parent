@@ -18,7 +18,7 @@ public class ContentCachingRequest extends HttpServletRequestWrapper {
 
     public ContentCachingRequest(HttpServletRequest request) {
         super(request);
-        this.inputStream = initWrappedInputStream(request);
+        this.inputStream = createWrappedInputStream(request);
     }
 
     @Override
@@ -27,7 +27,9 @@ public class ContentCachingRequest extends HttpServletRequestWrapper {
     }
 
     /**
-     * Return the cached request content as a String. The Charset used to decode the cached content is the same as returned by getCharacterEncoding.
+     * Return the cached request content as a String.
+     * <p>
+     * The Charset used to decode the cached content is the same as returned by getCharacterEncoding.
      */
     public String getContentAsString() {
         return getContentAsString(getCharacterEncoding());
@@ -40,7 +42,10 @@ public class ContentCachingRequest extends HttpServletRequestWrapper {
         return inputStream.getContentAsString(charset);
     }
 
-    private WrappedByteArrayInputStream initWrappedInputStream(HttpServletRequest request) {
+    /**
+     * Wrap request inputStream to WrappedByteArrayInputStream
+     */
+    private WrappedByteArrayInputStream createWrappedInputStream(HttpServletRequest request) {
         try {
             byte[] bytes = StreamUtils.copyToByteArray(request.getInputStream());
             return new WrappedByteArrayInputStream(bytes);

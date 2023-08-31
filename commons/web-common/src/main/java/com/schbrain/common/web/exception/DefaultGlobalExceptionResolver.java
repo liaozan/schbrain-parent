@@ -1,7 +1,6 @@
 package com.schbrain.common.web.exception;
 
 import com.schbrain.common.web.annotation.ResponseWrapOption;
-import com.schbrain.common.web.utils.HandlerMethodAnnotationUtils;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -24,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.schbrain.common.web.utils.HandlerMethodAnnotationUtils.getAnnotation;
+
 /**
  * @author liaozan
  * @since 2022/8/30
@@ -33,13 +34,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExceptionResolver {
 
     private final GlobalExceptionHandler exceptionHandler;
-
     private final ExceptionHandlerMethodResolver handlerMethodResolver;
-
     private final HandlerMethodArgumentResolverComposite argumentResolverComposite;
-
     private final HandlerMethodReturnValueHandlerComposite returnValueHandlerComposite;
-
     private final Map<Class<?>, ExceptionHandlerMethodResolver> exceptionHandlerMethodResolvers = new ConcurrentHashMap<>(64);
 
     public DefaultGlobalExceptionResolver(ExceptionHandlerExceptionResolver handlerMethodResolver, GlobalExceptionHandler exceptionHandler) {
@@ -54,8 +51,7 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
     protected boolean shouldApplyTo(HttpServletRequest request, @Nullable Object handler) {
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
-            ResponseWrapOption responseWrapOption = HandlerMethodAnnotationUtils.getAnnotation(handlerMethod, ResponseWrapOption.class);
-
+            ResponseWrapOption responseWrapOption = getAnnotation(handlerMethod, ResponseWrapOption.class);
             if (responseWrapOption == null) {
                 return true;
             }
@@ -123,9 +119,6 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
         return exceptionHandlerMethodResolvers.computeIfAbsent(handlerType, key -> new ExceptionHandlerMethodResolver(handlerType));
     }
 
-    /**
-     * copy from spring
-     */
     private Object[] getArguments(Exception exception, HandlerMethod handlerMethod) {
         List<Throwable> exceptions = new ArrayList<>();
         Throwable exToExpose = exception;

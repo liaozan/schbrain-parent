@@ -2,13 +2,13 @@ package com.schbrain.common.web.support.authentication;
 
 import cn.hutool.extra.servlet.ServletUtil;
 import com.schbrain.common.util.JacksonUtils;
+import com.schbrain.common.util.ValidateUtils;
 import com.schbrain.common.web.result.ResponseDTO;
 import com.schbrain.common.web.support.BaseHandlerInterceptor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.core.Ordered;
 import org.springframework.http.MediaType;
-import org.springframework.util.Assert;
 import org.springframework.web.method.HandlerMethod;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ public class AuthenticationInterceptor extends BaseHandlerInterceptor implements
     private Authenticator authenticator;
 
     public AuthenticationInterceptor(Authenticator authenticator) {
-        Assert.notNull(authenticator, "authenticator must not be null");
+        ValidateUtils.notNull(authenticator, "authenticator must not be null");
         this.authenticator = authenticator;
     }
 
@@ -39,8 +39,7 @@ public class AuthenticationInterceptor extends BaseHandlerInterceptor implements
 
     @Override
     protected boolean preHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) {
-        boolean validated = authenticator.validate(request, response, handlerMethod);
-        if (validated) {
+        if (authenticator.validate(request, response, handlerMethod)) {
             return true;
         }
         writeResult(response, buildAccessDeniedResponse());

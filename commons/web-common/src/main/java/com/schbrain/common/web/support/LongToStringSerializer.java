@@ -22,11 +22,11 @@ public class LongToStringSerializer extends StdSerializer<Long> {
     }
 
     @Override
-    public void serialize(Long value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+    public void serialize(Long value, JsonGenerator generator, SerializerProvider provider) throws IOException {
         if (value.doubleValue() > FRONT_MAX_VALUE) {
-            gen.writeString(value.toString());
+            generator.writeString(value.toString());
         } else {
-            gen.writeNumber(value);
+            generator.writeNumber(value);
         }
     }
 

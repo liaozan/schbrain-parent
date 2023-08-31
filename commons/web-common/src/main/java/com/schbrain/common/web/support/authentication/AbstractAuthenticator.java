@@ -3,7 +3,6 @@ package com.schbrain.common.web.support.authentication;
 import cn.hutool.extra.spring.SpringUtil;
 import com.schbrain.common.annotation.IgnoreLogin;
 import com.schbrain.common.web.properties.WebProperties;
-import com.schbrain.common.web.utils.HandlerMethodAnnotationUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -13,6 +12,8 @@ import org.springframework.web.method.HandlerMethod;
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import static com.schbrain.common.web.utils.HandlerMethodAnnotationUtils.hasAnnotation;
 
 /**
  * @author liaozan
@@ -35,8 +36,7 @@ public abstract class AbstractAuthenticator implements Authenticator {
 
     @Override
     public boolean validate(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) {
-        boolean ignore = HandlerMethodAnnotationUtils.hasAnnotation(handlerMethod, IgnoreLogin.class);
-        if (ignore) {
+        if (hasAnnotation(handlerMethod, IgnoreLogin.class)) {
             return true;
         }
         String authentication = getAuthentication(request);

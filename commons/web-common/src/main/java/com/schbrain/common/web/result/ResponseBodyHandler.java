@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static org.springframework.core.annotation.AnnotationUtils.getAnnotation;
+
 /**
  * @author liaozan
  * @since 2021/10/15
@@ -53,18 +55,16 @@ public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
             return false;
         }
 
-        Class<?> declaringClass = targetMethod.getDeclaringClass();
-
-        ResponseWrapOption responseWrapOption = targetMethod.getAnnotation(ResponseWrapOption.class);
+        ResponseWrapOption responseWrapOption = getAnnotation(targetMethod, ResponseWrapOption.class);
         if (responseWrapOption == null) {
-            responseWrapOption = declaringClass.getAnnotation(ResponseWrapOption.class);
+            responseWrapOption = getAnnotation(targetMethod.getDeclaringClass(), ResponseWrapOption.class);
         }
 
         if (responseWrapOption != null) {
             return !responseWrapOption.ignore();
         }
 
-        String packageName = declaringClass.getPackage().getName();
+        String packageName = targetMethod.getDeclaringClass().getPackage().getName();
         return basePackages.stream().anyMatch(packageName::startsWith);
     }
 

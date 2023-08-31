@@ -21,14 +21,14 @@ public class ExcelUtils extends com.schbrain.common.util.ExcelUtils {
 
     public static <T> void writeToResponse(List<T> dataList, String fileName) {
         if (CollectionUtils.isEmpty(dataList)) {
-            throw new ExcelException("DataList is empty");
+            throw new ExcelException("dataList is empty");
         }
         writeToResponse(dataList, dataList.get(0).getClass(), fileName);
     }
 
     public static <T> void writeToResponse(List<T> dataList, Class<?> head, String fileName) {
         if (CollectionUtils.isEmpty(dataList)) {
-            throw new ExcelException("DataList is empty");
+            throw new ExcelException("dataList is empty");
         }
         try {
             HttpServletResponse response = ServletUtils.getResponse();

@@ -21,7 +21,7 @@ public class ResponseDTO<T> {
 
     private T data;
 
-    private String uuid = TraceIdUtils.get();
+    private String requestId = TraceIdUtils.get();
 
     public static <T> ResponseDTO<T> success() {
         return success(null);

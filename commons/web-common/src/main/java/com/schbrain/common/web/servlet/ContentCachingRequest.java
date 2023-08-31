@@ -14,18 +14,15 @@ import java.io.IOException;
 @Slf4j
 public class ContentCachingRequest extends HttpServletRequestWrapper {
 
-    private WrappedByteArrayInputStream inputStream;
+    private final WrappedByteArrayInputStream inputStream;
 
     public ContentCachingRequest(HttpServletRequest request) {
         super(request);
+        this.inputStream = initWrappedInputStream(request);
     }
 
     @Override
-    public WrappedByteArrayInputStream getInputStream() throws IOException {
-        if (inputStream == null) {
-            byte[] bytes = StreamUtils.copyToByteArray(super.getInputStream());
-            this.inputStream = new WrappedByteArrayInputStream(bytes);
-        }
+    public WrappedByteArrayInputStream getInputStream() {
         return inputStream;
     }
 
@@ -40,8 +37,13 @@ public class ContentCachingRequest extends HttpServletRequestWrapper {
      * Return the cached request content as a String
      */
     public String getContentAsString(String charset) {
+        return inputStream.getContentAsString(charset);
+    }
+
+    private WrappedByteArrayInputStream initWrappedInputStream(HttpServletRequest request) {
         try {
-            return getInputStream().getContentAsString(charset);
+            byte[] bytes = StreamUtils.copyToByteArray(request.getInputStream());
+            return new WrappedByteArrayInputStream(bytes);
         } catch (IOException e) {
             throw new IllegalStateException(e.getMessage(), e);
         }

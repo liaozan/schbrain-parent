@@ -110,7 +110,7 @@
         <!-- dingtalk -->
         <alibaba-dingtalk-service-sdk.version>2.0.0</alibaba-dingtalk-service-sdk.version>
         <cube-sdk-java.version>1.0.2-RELEASE</cube-sdk-java.version>
-        <dingtalk.version>2.0.32</dingtalk.version>
+        <dingtalk.version>2.0.33</dingtalk.version>
 
         <!-- maven settings -->
         <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>

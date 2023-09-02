@@ -29,7 +29,7 @@ public class ApolloConfigurationInitializerEnvironmentPostProcessor extends Logg
     /**
      * load properties after set the default properties
      */
-    public static final Integer DEFAULT_ORDER = DefaultPropertiesEnvironmentPostProcessor.DEFAULT_ORDER + 1;
+    public static final int DEFAULT_ORDER = DefaultPropertiesEnvironmentPostProcessor.DEFAULT_ORDER + 1;
 
     private static final String ENV_KEY = "env";
 

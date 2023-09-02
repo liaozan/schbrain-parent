@@ -33,7 +33,7 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
     /**
      * set default properties after configData loaded
      */
-    public static final Integer DEFAULT_ORDER = ConfigDataEnvironmentPostProcessor.ORDER + 1;
+    public static final int DEFAULT_ORDER = ConfigDataEnvironmentPostProcessor.ORDER + 1;
 
     private static final String SPRING_PROFILE_ACTIVE = "spring.profiles.active";
 

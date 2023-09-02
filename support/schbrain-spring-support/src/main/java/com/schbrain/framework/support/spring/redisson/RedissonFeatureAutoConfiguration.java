@@ -1,8 +1,9 @@
 package com.schbrain.framework.support.spring.redisson;
 
-import org.redisson.config.Config;
+import org.redisson.api.RedissonClient;
 import org.redisson.spring.starter.RedissonAutoConfigurationCustomizer;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 
@@ -11,7 +12,8 @@ import org.springframework.context.annotation.Bean;
  * @since 2023/8/25
  */
 @AutoConfiguration
-@ConditionalOnClass(Config.class)
+@ConditionalOnBean(RedissonClient.class)
+@ConditionalOnClass(RedissonAutoConfigurationCustomizer.class)
 public class RedissonFeatureAutoConfiguration {
 
     @Bean

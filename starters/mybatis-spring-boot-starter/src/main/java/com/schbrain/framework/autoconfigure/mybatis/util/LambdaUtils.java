@@ -10,8 +10,7 @@ import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 public class LambdaUtils {
 
     public static <T> String getColumnName(SFunction<T, ?> column) {
-        LambdaQueryWrapperExt<T> query = new LambdaQueryWrapperExt<>();
-        return query.columnToString(column);
+        return new LambdaQueryWrapperExt<T>().columnToString(column);
     }
 
     /**

@@ -29,28 +29,20 @@ public class StreamUtils {
         return filterToList(data, predicate, Function.identity());
     }
 
-    public static <T, V> List<V> filterToList(Iterable<T> data, Function<T, V> mapper, Predicate<V> predicate) {
-        return filter(data, mapper, predicate, Function.identity(), Collectors.toList());
-    }
-
     public static <T, V> List<V> filterToList(Iterable<T> data, Predicate<T> predicate, Function<T, V> mapper) {
-        return filter(data, Function.identity(), predicate, mapper, Collectors.toList());
+        return filter(data, predicate, mapper, Collectors.toList());
     }
 
     public static <T> Set<T> filterToSet(Iterable<T> data, Predicate<T> predicate) {
         return filterToSet(data, predicate, Function.identity());
     }
 
-    public static <T, V> Set<V> filterToSet(Iterable<T> data, Function<T, V> mapper, Predicate<V> predicate) {
-        return filter(data, mapper, predicate, Function.identity(), Collectors.toSet());
-    }
-
     public static <T, V> Set<V> filterToSet(Iterable<T> data, Predicate<T> predicate, Function<T, V> mapper) {
-        return filter(data, Function.identity(), predicate, mapper, Collectors.toSet());
+        return filter(data, predicate, mapper, Collectors.toSet());
     }
 
-    public static <T, E, V, R> R filter(Iterable<T> data, Function<T, E> keyMapper, Predicate<E> predicate, Function<E, V> valueMapper, Collector<V, ?, R> collector) {
-        return from(data).map(keyMapper).filter(predicate).map(valueMapper).collect(collector);
+    public static <T, E, V, R> R filter(Iterable<T> data, Predicate<T> predicate, Function<T, V> valueMapper, Collector<V, ?, R> collector) {
+        return from(data).filter(predicate).map(valueMapper).collect(collector);
     }
 
     public static <T, E> List<E> toList(Iterable<T> data, Function<T, E> keyMapper) {

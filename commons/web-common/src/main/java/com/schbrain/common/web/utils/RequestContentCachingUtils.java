@@ -3,10 +3,13 @@ package com.schbrain.common.web.utils;
 import com.schbrain.common.util.ValidateUtils;
 import com.schbrain.common.web.servlet.ContentCachingRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.util.WebUtils.getNativeRequest;
 
 /**
@@ -19,10 +22,10 @@ public class RequestContentCachingUtils {
     /**
      * Make request content cacheable to avoid stream closed error after inputStream closed
      */
-    public static ContentCachingRequest wrapIfRequired(HttpServletRequest request) {
+    public static HttpServletRequest wrapIfRequired(HttpServletRequest request) {
         ValidateUtils.notNull(request, "request must not be null");
-        if (request instanceof ContentCachingRequest) {
-            return (ContentCachingRequest) request;
+        if (request instanceof ContentCachingRequest || !isJsonPostRequest(request)) {
+            return request;
         } else {
             return new ContentCachingRequest(request);
         }
@@ -43,10 +46,13 @@ public class RequestContentCachingUtils {
     public static String getRequestBody(HttpServletRequest request, String characterEncoding) {
         ContentCachingRequest requestToUse = getNativeRequest(request, ContentCachingRequest.class);
         if (requestToUse == null) {
-            log.warn("request is not an instance of {}", ContentCachingRequest.class.getSimpleName());
             return null;
         }
         return requestToUse.getContentAsString(characterEncoding);
+    }
+
+    private static boolean isJsonPostRequest(HttpServletRequest request) {
+        return POST.matches(request.getMethod()) && StringUtils.contains(request.getContentType(), APPLICATION_JSON_VALUE);
     }
 
 }

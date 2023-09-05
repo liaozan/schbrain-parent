@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.schbrain.common.util.JacksonUtils;
 import com.schbrain.common.web.annotation.BodyParam;
-import com.schbrain.common.web.servlet.ContentCachingRequest;
 import lombok.Setter;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.Assert;
@@ -68,14 +67,14 @@ public class BodyParamMethodArgumentResolver extends AbstractNamedValueMethodArg
     private JsonNode getRequestBody(NativeWebRequest nativeWebRequest) throws IOException {
         JsonNode requestBody = (JsonNode) nativeWebRequest.getAttribute(REQUEST_BODY_CACHE, SCOPE_REQUEST);
         if (requestBody == null) {
-            ContentCachingRequest request = wrapRequest(nativeWebRequest);
+            HttpServletRequest request = wrapRequest(nativeWebRequest);
             requestBody = objectMapper.readTree(request.getInputStream());
             nativeWebRequest.setAttribute(REQUEST_BODY_CACHE, requestBody, SCOPE_REQUEST);
         }
         return requestBody;
     }
 
-    private ContentCachingRequest wrapRequest(NativeWebRequest request) {
+    private HttpServletRequest wrapRequest(NativeWebRequest request) {
         return wrapIfRequired(request.getNativeRequest(HttpServletRequest.class));
     }
 

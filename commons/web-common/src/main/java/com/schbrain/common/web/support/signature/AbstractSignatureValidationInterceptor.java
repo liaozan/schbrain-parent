@@ -2,7 +2,6 @@ package com.schbrain.common.web.support.signature;
 
 import cn.hutool.crypto.digest.DigestUtil;
 import com.schbrain.common.util.StreamUtils;
-import com.schbrain.common.web.servlet.ContentCachingRequest;
 import com.schbrain.common.web.support.BaseHandlerInterceptor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.method.HandlerMethod;
@@ -15,7 +14,6 @@ import java.util.Objects;
 
 import static cn.hutool.core.text.StrPool.UNDERLINE;
 import static com.schbrain.common.web.utils.RequestContentCachingUtils.getRequestBody;
-import static org.springframework.web.util.WebUtils.getNativeRequest;
 
 public abstract class AbstractSignatureValidationInterceptor<T extends SignatureContext> extends BaseHandlerInterceptor {
 
@@ -26,12 +24,10 @@ public abstract class AbstractSignatureValidationInterceptor<T extends Signature
 
     @Override
     protected boolean preHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handler) {
-        ContentCachingRequest wrappedRequest = getWrappedRequest(request);
-
-        String appKey = wrappedRequest.getHeader(SCH_APP_KEY);
-        String timestamp = wrappedRequest.getHeader(SCH_TIMESTAMP);
-        String signature = wrappedRequest.getHeader(SCH_SIGNATURE);
-        String expireTime = wrappedRequest.getHeader(SCH_EXPIRE_TIME);
+        String appKey = request.getHeader(SCH_APP_KEY);
+        String timestamp = request.getHeader(SCH_TIMESTAMP);
+        String signature = request.getHeader(SCH_SIGNATURE);
+        String expireTime = request.getHeader(SCH_EXPIRE_TIME);
 
         // 空校验
         if (StringUtils.isAnyBlank(appKey, timestamp, signature, expireTime)) {
@@ -49,9 +45,9 @@ public abstract class AbstractSignatureValidationInterceptor<T extends Signature
             throw new SignatureValidationException("appSecret不存在！");
         }
 
-        String requestUri = wrappedRequest.getRequestURI();
-        String queryString = wrappedRequest.getQueryString();
-        String requestBody = getRequestBody(wrappedRequest);
+        String requestUri = request.getRequestURI();
+        String queryString = request.getQueryString();
+        String requestBody = getRequestBody(request);
 
         // 校验签名
         String calculatedSignature = signParams(requestUri, queryString, requestBody, timestamp, appKey, context.getAppSecret());
@@ -75,13 +71,5 @@ public abstract class AbstractSignatureValidationInterceptor<T extends Signature
     }
 
     protected abstract T getSignatureContext(String appKey);
-
-    private ContentCachingRequest getWrappedRequest(HttpServletRequest request) {
-        ContentCachingRequest wrapper = getNativeRequest(request, ContentCachingRequest.class);
-        if (wrapper == null) {
-            throw new SignatureValidationException("请求异常");
-        }
-        return wrapper;
-    }
 
 }

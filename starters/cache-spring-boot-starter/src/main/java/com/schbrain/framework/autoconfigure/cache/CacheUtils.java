@@ -26,6 +26,13 @@ public class CacheUtils {
     }
 
     /**
+     * 缓存是否存在
+     */
+    public static boolean hasKey(String cacheKey) {
+        return getCacheProvider().hasKey(cacheKey);
+    }
+
+    /**
      * 缓存是否过期
      */
     public static boolean isExpired(String cacheKey) {

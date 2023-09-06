@@ -41,7 +41,7 @@ public class StreamUtils {
         return filter(data, predicate, mapper, Collectors.toSet());
     }
 
-    public static <T, E, V, R> R filter(Iterable<T> data, Predicate<T> predicate, Function<T, V> valueMapper, Collector<V, ?, R> collector) {
+    public static <T, V, R> R filter(Iterable<T> data, Predicate<T> predicate, Function<T, V> valueMapper, Collector<V, ?, R> collector) {
         return from(data).filter(predicate).map(valueMapper).collect(collector);
     }
 

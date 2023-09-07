@@ -11,7 +11,7 @@ import org.springframework.context.event.ApplicationContextEvent;
 import static org.springframework.util.ObjectUtils.nullSafeEquals;
 
 /**
- * 使用此类可以避免事件被处罚两次导致意外
+ * 使用此类可以避免事件被触发两次导致意外
  * <p>
  * 当类路径下存在 actuator,并且指定了不同端口的时候,实现了{@link ApplicationContextEvent}的事件会触发两次
  *

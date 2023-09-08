@@ -2,6 +2,7 @@ package com.schbrain.common.web.support.signature;
 
 import cn.hutool.crypto.digest.DigestUtil;
 import com.schbrain.common.util.StreamUtils;
+import com.schbrain.common.util.TraceIdUtils;
 import com.schbrain.common.web.support.BaseHandlerInterceptor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.method.HandlerMethod;
@@ -28,6 +29,11 @@ public abstract class AbstractSignatureValidationInterceptor<T extends Signature
         String timestamp = request.getHeader(SCH_TIMESTAMP);
         String signature = request.getHeader(SCH_SIGNATURE);
         String expireTime = request.getHeader(SCH_EXPIRE_TIME);
+
+        String traceId = request.getHeader(TraceIdUtils.TRACE_ID);
+        if (StringUtils.isNotBlank(traceId)) {
+            TraceIdUtils.set(traceId);
+        }
 
         // 空校验
         if (StringUtils.isAnyBlank(appKey, timestamp, signature, expireTime)) {

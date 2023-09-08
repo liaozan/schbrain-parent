@@ -43,7 +43,7 @@
     </distributionManagement>
 
     <properties>
-        <revision>3.0.5.4</revision>
+        <revision>3.0.6-SNAPSHOT</revision>
         <java.version>11</java.version>
         <!-- 2th part versions -->
         <schbrain-apollo.version>${revision}</schbrain-apollo.version>

@@ -1,5 +1,6 @@
 package com.schbrain.framework.dao.mybatis.mapper;
 
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Converter;
@@ -7,6 +8,7 @@ import com.schbrain.framework.dao.mybatis.mapper.sqlsource.*;
 import org.apache.ibatis.builder.StaticSqlSource;
 import org.apache.ibatis.executor.keygen.Jdbc3KeyGenerator;
 import org.apache.ibatis.mapping.*;
+import org.apache.ibatis.mapping.MappedStatement.Builder;
 import org.apache.ibatis.scripting.LanguageDriver;
 import org.apache.ibatis.session.Configuration;
 
@@ -21,30 +23,22 @@ import java.util.*;
  */
 public class BaseMapperStatement {
 
+    private static final Converter<String, String> CONVERTER = CaseFormat.LOWER_CAMEL.converterTo(CaseFormat.LOWER_UNDERSCORE);
     private static final String GMT_UPDATE_FIELD = "gmtUpdate";
-
     private static final String GMT_CREATE_FIELD = "gmtCreate";
 
-    private final Configuration configuration;
-
-    private final Class<?> mapperInterface;
-
-    private final LanguageDriver languageDriver;
-
     private final Map<String, String> fieldColumnMap = new LinkedHashMap<>();
-
-    private final String tableName;
-
-    private final Class<?> domainClass;
-
-    private final Field[] fields;
-
     private final List<ResultMap> objectResultMapList = new ArrayList<>(1);
-
     private final List<ResultMap> intResultMapList = new ArrayList<>(1);
 
-    private String selectClause;
+    private final Configuration configuration;
+    private final Class<?> mapperInterface;
+    private final LanguageDriver languageDriver;
+    private final String tableName;
+    private final Class<?> domainClass;
+    private final Field[] fields;
 
+    private String selectClause;
     private String insertClause;
 
     public BaseMapperStatement(Configuration configuration, Class<?> mapperInterface, Class<?> domainClass, String tableName, Field[] fields) {
@@ -74,8 +68,7 @@ public class BaseMapperStatement {
     }
 
     public String getAddMSId() {
-        String methodName = "add";
-        return mapperInterface.getName() + "." + methodName;
+        return mapperInterface.getName() + ".add";
     }
 
     public String getAddListMSId(String... fields) {
@@ -88,72 +81,58 @@ public class BaseMapperStatement {
     }
 
     public String getGetByIdMSId() {
-        String methodName = "getById";
-        return mapperInterface.getName() + "." + methodName;
+        return mapperInterface.getName() + ".getById";
     }
 
     public String getListByIdListMSId() {
-        String methodName = "getByIdList";
-        return mapperInterface.getName() + "." + methodName;
+        return mapperInterface.getName() + ".getByIdList";
     }
 
     public String getListByConditionMSId() {
-        String methodName = "listByCondition";
-        return mapperInterface.getName() + "." + methodName;
+        return mapperInterface.getName() + ".listByCondition";
     }
 
     public String getListByObjectMSId() {
-        String methodName = "listByObject";
-        return mapperInterface.getName() + "." + methodName;
+        return mapperInterface.getName() + ".listByObject";
     }
 
     public String getGetOneByObjectMSId() {
-        String methodName = "getOneByObject";
-        return mapperInterface.getName() + "." + methodName;
+        return mapperInterface.getName() + ".getOneByObject";
     }
 
     public String getCountByConditionMSId() {
-        String methodName = "getCountByCondition";
-        return mapperInterface.getName() + "." + methodName;
+        return mapperInterface.getName() + ".getCountByCondition";
     }
 
     public String getDeleteByIdMSId() {
-        String methodName = "deleteById";
-        return mapperInterface.getName() + "." + methodName;
+        return mapperInterface.getName() + ".deleteById";
     }
 
     public String getDeleteByIdListMSId() {
-        String methodName = "deleteByIdList";
-        return mapperInterface.getName() + "." + methodName;
+        return mapperInterface.getName() + ".deleteByIdList";
     }
 
     public String getDeleteByConditionMSId() {
-        String methodName = "deleteByCondition";
-        return mapperInterface.getName() + "." + methodName;
+        return mapperInterface.getName() + ".deleteByCondition";
     }
 
     public String getUpdateByIdMSId() {
-        String methodName = "updateById";
-        return mapperInterface.getName() + "." + methodName;
+        return mapperInterface.getName() + ".updateById";
     }
 
     public String getUpdateByIdWithNullMSId() {
-        String methodName = "updateByIdWithNull";
-        return mapperInterface.getName() + "." + methodName;
+        return mapperInterface.getName() + ".updateByIdWithNull";
     }
 
     public String getUpdateByConditionMSId() {
-        String methodName = "updateByCondition";
-        return mapperInterface.getName() + "." + methodName;
+        return mapperInterface.getName() + ".updateByCondition";
     }
 
     public String getUpdateByCompleteSqlMSId() {
-        String methodName = "updateByCompleteSql";
-        return mapperInterface.getName() + "." + methodName;
+        return mapperInterface.getName() + ".updateByCompleteSql";
     }
 
     private void setClause() {
-        Converter<String, String> converter = CaseFormat.LOWER_CAMEL.converterTo(CaseFormat.LOWER_UNDERSCORE);
         StringBuilder selectClause = new StringBuilder("select ");
         StringBuilder insertClause = new StringBuilder("insert into ");
         insertClause.append(tableName).append("(");
@@ -162,7 +141,7 @@ public class BaseMapperStatement {
                 continue;
             }
             String fieldName = field.getName();
-            String columnName = converter.convert(fieldName);
+            String columnName = CONVERTER.convert(fieldName);
             fieldColumnMap.put(fieldName, columnName);
             selectClause.append(" ").append(columnName).append(",");
             insertClause.append(" ").append(columnName).append(",");
@@ -218,7 +197,7 @@ public class BaseMapperStatement {
     private String getInsertListScript(String... fields) {
         String tmpInsertClause;
         Set<String> fieldSet;
-        if (null == fields || 0 == fields.length) {
+        if (ArrayUtil.isEmpty(fields)) {
             tmpInsertClause = insertClause;
             fieldSet = fieldColumnMap.keySet();
         } else {
@@ -277,9 +256,7 @@ public class BaseMapperStatement {
 
     ///////////////////listByIdList
     private void addListByIdListMS() {
-        String sql = "<script>" + selectClause
-                + " where id in <foreach close=')' collection='list' item='id' open='(' separator=','>"
-                + "#{id}</foreach></script>";
+        String sql = "<script>" + selectClause + " where id in <foreach open='(' close=')' collection='list' item='id' separator=','>#{id}</foreach></script>";
         SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, List.class);
         addSelectMappedStatement(getListByIdListMSId(), sqlSource);
     }
@@ -330,9 +307,7 @@ public class BaseMapperStatement {
 
     ///////////////////deleteByIdList
     private void addDeleteByIdListMS() {
-        String sql = "<script>delete from " + tableName
-                + " where id in <foreach close=')' collection='list' item='id' open='(' separator=','>"
-                + "#{id}</foreach></script>";
+        String sql = "<script>delete from " + tableName + " where id in <foreach open='(' close=')' collection='list' item='id' separator=','>#{id}</foreach></script>";
         SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, List.class);
         addUpdateMappedStatement(getDeleteByIdListMSId(), sqlSource, SqlCommandType.DELETE);
     }
@@ -408,8 +383,7 @@ public class BaseMapperStatement {
         if (configuration.hasStatement(msId)) {
             return;
         }
-        MappedStatement ms = new MappedStatement.Builder(configuration, msId, sqlSource, SqlCommandType.SELECT)
-                .resultMaps(objectResultMapList).flushCacheRequired(true).build();
+        MappedStatement ms = new Builder(configuration, msId, sqlSource, SqlCommandType.SELECT).resultMaps(objectResultMapList).flushCacheRequired(true).build();
         configuration.addMappedStatement(ms);
     }
 
@@ -417,8 +391,7 @@ public class BaseMapperStatement {
         if (configuration.hasStatement(msId)) {
             return;
         }
-        MappedStatement ms = new MappedStatement.Builder(configuration, msId, sqlSource, SqlCommandType.SELECT)
-                .resultMaps(intResultMapList).build();
+        MappedStatement ms = new Builder(configuration, msId, sqlSource, SqlCommandType.SELECT).resultMaps(intResultMapList).build();
         configuration.addMappedStatement(ms);
     }
 
@@ -428,12 +401,9 @@ public class BaseMapperStatement {
         }
         MappedStatement ms;
         if (SqlCommandType.INSERT == sqlCommandType) {
-            ms = new MappedStatement.Builder(configuration, msId, sqlSource, sqlCommandType)
-                    .resultMaps(intResultMapList).keyGenerator(Jdbc3KeyGenerator.INSTANCE)
-                    .keyColumn("id").keyProperty("id").build();
+            ms = new Builder(configuration, msId, sqlSource, sqlCommandType).resultMaps(intResultMapList).keyGenerator(Jdbc3KeyGenerator.INSTANCE).keyColumn("id").keyProperty("id").build();
         } else {
-            ms = new MappedStatement.Builder(configuration, msId, sqlSource, sqlCommandType)
-                    .resultMaps(intResultMapList).build();
+            ms = new Builder(configuration, msId, sqlSource, sqlCommandType).resultMaps(intResultMapList).build();
         }
         configuration.addMappedStatement(ms);
     }

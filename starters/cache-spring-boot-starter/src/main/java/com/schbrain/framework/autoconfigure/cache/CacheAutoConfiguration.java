@@ -1,8 +1,8 @@
 package com.schbrain.framework.autoconfigure.cache;
 
 import com.schbrain.framework.autoconfigure.cache.properties.CacheProperties;
-import com.schbrain.framework.autoconfigure.cache.provider.CacheProvider;
-import com.schbrain.framework.autoconfigure.cache.provider.CacheProviderDelegate;
+import com.schbrain.framework.autoconfigure.cache.provider.CacheOperation;
+import com.schbrain.framework.autoconfigure.cache.provider.PrefixedCacheOperation;
 import com.schbrain.framework.autoconfigure.cache.provider.redis.RedisCacheConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -23,11 +23,11 @@ import org.springframework.context.annotation.Import;
 public class CacheAutoConfiguration {
 
     @Bean
-    @ConditionalOnBean(CacheProvider.class)
-    public CacheProvider cacheProvider(CacheProvider cacheProvider, CacheProperties cacheProperties) {
-        CacheProvider provider = new CacheProviderDelegate(cacheProperties, cacheProvider);
-        CacheUtils.setCacheProvider(provider);
-        return provider;
+    @ConditionalOnBean(CacheOperation.class)
+    public PrefixedCacheOperation prefixedCacheOperation(CacheOperation cacheOperation, CacheProperties cacheProperties) {
+        PrefixedCacheOperation operation = new PrefixedCacheOperation(cacheProperties, cacheOperation);
+        CacheUtils.setCacheOperation(operation);
+        return operation;
     }
 
 }

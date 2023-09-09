@@ -21,10 +21,10 @@ public class RedisCacheConfiguration {
 
     @Bean
     @ConditionalOnBean(RedisConnectionFactory.class)
-    @ConditionalOnMissingBean(RedisCacheProvider.class)
-    public RedisCacheProvider redisCacheProvider(RedisConnectionFactory redisConnectionFactory, ObjectProvider<StringRedisTemplate> redisTemplate) {
-        StringRedisTemplate stringRedisTemplate = redisTemplate.getIfAvailable(() -> new StringRedisTemplate(redisConnectionFactory));
-        return new RedisCacheProvider(stringRedisTemplate);
+    @ConditionalOnMissingBean(RedisCacheOperation.class)
+    public RedisCacheOperation redisCacheProvider(RedisConnectionFactory factory, ObjectProvider<StringRedisTemplate> redisTemplate) {
+        StringRedisTemplate stringRedisTemplate = redisTemplate.getIfAvailable(() -> new StringRedisTemplate(factory));
+        return new RedisCacheOperation(stringRedisTemplate);
     }
 
 }

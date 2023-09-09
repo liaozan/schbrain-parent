@@ -17,14 +17,13 @@ import java.util.Map.Entry;
  * @author liaozan
  * @since 2022/8/1
  */
-public class CacheProviderDelegate implements CacheProvider {
+public class PrefixedCacheOperation {
 
+    private final CacheOperation cacheOperation;
     private final String prefixWithDelimiter;
 
-    private final CacheProvider cacheProvider;
-
-    public CacheProviderDelegate(CacheProperties properties, CacheProvider cacheProvider) {
-        this.cacheProvider = cacheProvider;
+    public PrefixedCacheOperation(CacheProperties properties, CacheOperation cacheOperation) {
+        this.cacheOperation = cacheOperation;
         if (properties.isAppendPrefix()) {
             String prefix = properties.getPrefix();
             if (StringUtils.isBlank(prefix)) {
@@ -36,54 +35,45 @@ public class CacheProviderDelegate implements CacheProvider {
         }
     }
 
-    @Override
-    public boolean isExpired(String cacheKey) {
-        return getCacheProvider().isExpired(withKeyPrefix(cacheKey));
+    public boolean hasKey(String cacheKey) {
+        return cacheOperation.hasKey(withKeyPrefix(cacheKey));
     }
 
-    @Override
+    public boolean isExpired(String cacheKey) {
+        return cacheOperation.isExpired(withKeyPrefix(cacheKey));
+    }
+
     public void expire(String cacheKey, Duration expiration) {
         checkDuration(expiration);
-        getCacheProvider().expire(withKeyPrefix(cacheKey), expiration);
+        cacheOperation.expire(withKeyPrefix(cacheKey), expiration);
     }
 
-    @Override
     public Duration getExpire(String cacheKey) {
-        return getCacheProvider().getExpire(withKeyPrefix(cacheKey));
+        return cacheOperation.getExpire(withKeyPrefix(cacheKey));
     }
 
-    @Override
-    public boolean hasKey(String cacheKey) {
-        return getCacheProvider().hasKey(withKeyPrefix(cacheKey));
-    }
-
-    @Override
     public Set<String> keys(String pattern, long limit) {
-        Set<String> keys = getCacheProvider().keys(withKeyPrefix(pattern), limit);
+        Set<String> keys = cacheOperation.keys(withKeyPrefix(pattern), limit);
         return StreamUtils.toSet(keys, this::removeKeyPrefix);
     }
 
-    @Override
     public void del(List<String> cacheKeys) {
         if (CollectionUtils.isEmpty(cacheKeys)) {
             return;
         }
         List<String> keysWithPrefix = StreamUtils.toList(cacheKeys, this::withKeyPrefix);
-        getCacheProvider().del(keysWithPrefix);
+        cacheOperation.del(keysWithPrefix);
     }
 
-    @Override
-    public <T> T get(String cacheKey, Class<T> valueType) {
-        return getCacheProvider().get(withKeyPrefix(cacheKey), valueType);
+    public <T> T getValue(String cacheKey, Class<T> valueType) {
+        return cacheOperation.getValue(withKeyPrefix(cacheKey), valueType);
     }
 
-    @Override
-    public <T> void set(String cacheKey, T value, Duration expiration) {
+    public <T> void setValue(String cacheKey, T value, Duration expiration) {
         checkDuration(expiration);
-        getCacheProvider().set(withKeyPrefix(cacheKey), value, expiration);
+        cacheOperation.setValue(withKeyPrefix(cacheKey), value, expiration);
     }
 
-    @Override
     public <T> void multiSet(Map<String, T> data, Duration expiration) {
         if (MapUtils.isEmpty(data)) {
             return;
@@ -93,16 +83,15 @@ public class CacheProviderDelegate implements CacheProvider {
         for (Entry<String, T> entry : data.entrySet()) {
             dataWithPrefixedKey.put(withKeyPrefix(entry.getKey()), entry.getValue());
         }
-        getCacheProvider().multiSet(dataWithPrefixedKey, expiration);
+        cacheOperation.multiSet(dataWithPrefixedKey, expiration);
     }
 
-    @Override
     public <T> Map<String, T> multiGet(Collection<String> cacheKeys, Class<T> valueType, boolean discardIfValueIsNull) {
         if (CollectionUtils.isEmpty(cacheKeys)) {
             return Collections.emptyMap();
         }
         List<String> keysWithPrefix = StreamUtils.toList(cacheKeys, this::withKeyPrefix);
-        Map<String, T> dataWithPrefixedKey = getCacheProvider().multiGet(keysWithPrefix, valueType, discardIfValueIsNull);
+        Map<String, T> dataWithPrefixedKey = cacheOperation.multiGet(keysWithPrefix, valueType, discardIfValueIsNull);
         if (MapUtils.isEmpty(dataWithPrefixedKey)) {
             return Collections.emptyMap();
         } else {
@@ -115,13 +104,8 @@ public class CacheProviderDelegate implements CacheProvider {
         }
     }
 
-    @Override
     public <T> List<T> getList(String cacheKey, Class<T> valueType) {
-        return getCacheProvider().getList(withKeyPrefix(cacheKey), valueType);
-    }
-
-    public CacheProvider getCacheProvider() {
-        return cacheProvider;
+        return cacheOperation.getList(withKeyPrefix(cacheKey), valueType);
     }
 
     protected String withKeyPrefix(String cacheKey) {

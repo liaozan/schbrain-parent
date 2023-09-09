@@ -9,8 +9,13 @@ import java.util.Set;
 /**
  * @author zhuyf
  * @since 2020/9/24
- **/
-public interface CacheProvider {
+ */
+public interface CacheOperation {
+
+    /**
+     * 判断cacheKey是否存在
+     */
+    boolean hasKey(String cacheKey);
 
     /**
      * 查询key是否过期
@@ -28,11 +33,6 @@ public interface CacheProvider {
     Duration getExpire(String cacheKey);
 
     /**
-     * 判断cacheKey是否存在
-     */
-    boolean hasKey(String cacheKey);
-
-    /**
      * 模糊搜索 key, 默认采用 scan 实现
      */
     Set<String> keys(String pattern, long limit);
@@ -45,12 +45,12 @@ public interface CacheProvider {
     /**
      * 缓存获取
      */
-    <T> T get(String cacheKey, Class<T> valueType);
+    <T> T getValue(String cacheKey, Class<T> valueType);
 
     /**
      * 缓存放入并设置时间
      */
-    <T> void set(String cacheKey, T value, Duration expiration);
+    <T> void setValue(String cacheKey, T value, Duration expiration);
 
     /**
      * 缓存放入并设置时间

@@ -1,7 +1,7 @@
 package com.schbrain.framework.autoconfigure.cache;
 
 import com.schbrain.framework.autoconfigure.cache.exception.CacheException;
-import com.schbrain.framework.autoconfigure.cache.provider.CacheProvider;
+import com.schbrain.framework.autoconfigure.cache.provider.PrefixedCacheOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -12,45 +12,45 @@ import java.util.function.Supplier;
 @Slf4j
 public class CacheUtils {
 
-    private static CacheProvider cacheProvider;
+    private static PrefixedCacheOperation cacheOperation;
 
-    public static CacheProvider getCacheProvider() {
-        if (cacheProvider == null) {
-            throw new CacheException("CacheProvider is null, Please ensure the cache config is correct");
+    public static PrefixedCacheOperation getCacheOperation() {
+        if (cacheOperation == null) {
+            throw new CacheException("CacheOperation is null, Please ensure the cache config is correct");
         }
-        return cacheProvider;
+        return cacheOperation;
     }
 
-    public static void setCacheProvider(CacheProvider cacheProvider) {
-        CacheUtils.cacheProvider = cacheProvider;
+    public static void setCacheOperation(PrefixedCacheOperation cacheOperation) {
+        CacheUtils.cacheOperation = cacheOperation;
     }
 
     /**
      * 缓存是否存在
      */
     public static boolean hasKey(String cacheKey) {
-        return getCacheProvider().hasKey(cacheKey);
+        return getCacheOperation().hasKey(cacheKey);
     }
 
     /**
      * 缓存是否过期
      */
     public static boolean isExpired(String cacheKey) {
-        return getCacheProvider().isExpired(cacheKey);
+        return getCacheOperation().isExpired(cacheKey);
     }
 
     /**
      * 设置过期时间
      */
     public static void expire(String cacheKey, Duration expiration) {
-        getCacheProvider().expire(cacheKey, expiration);
+        getCacheOperation().expire(cacheKey, expiration);
     }
 
     /**
      * 获取过期时间
      */
     public static Duration getExpire(String cacheKey) {
-        return getCacheProvider().getExpire(cacheKey);
+        return getCacheOperation().getExpire(cacheKey);
     }
 
     /**
@@ -64,35 +64,35 @@ public class CacheUtils {
      * 模糊搜索 key, 默认采用 scan 实现
      */
     public static Set<String> keys(String pattern, long limit) {
-        return getCacheProvider().keys(pattern, limit);
+        return getCacheOperation().keys(pattern, limit);
     }
 
     /**
      * 获取缓存数据
      */
     public static <T> T getValue(String cacheKey, Class<T> valueType) {
-        return getCacheProvider().get(cacheKey, valueType);
+        return getCacheOperation().getValue(cacheKey, valueType);
     }
 
     /**
      * 设置缓存数据
      */
     public static <T> void putValue(String cacheKey, T value, Duration expiration) {
-        getCacheProvider().set(cacheKey, value, expiration);
+        getCacheOperation().setValue(cacheKey, value, expiration);
     }
 
     /**
      * 获取缓存数据列表
      */
     public static <T> List<T> getList(String cacheKey, Class<T> valueType) {
-        return getCacheProvider().getList(cacheKey, valueType);
+        return getCacheOperation().getList(cacheKey, valueType);
     }
 
     /**
      * 设置缓存数据列表
      */
     public static <T> void putList(String cacheKey, List<T> value, Duration expiration) {
-        getCacheProvider().set(cacheKey, value, expiration);
+        getCacheOperation().setValue(cacheKey, value, expiration);
     }
 
     /**
@@ -158,14 +158,14 @@ public class CacheUtils {
      * 批量获取
      */
     public static <T> Map<String, T> multiGet(Collection<String> cacheKeys, Class<T> valueType, boolean discardIfValueIsNull) {
-        return getCacheProvider().multiGet(cacheKeys, valueType, discardIfValueIsNull);
+        return getCacheOperation().multiGet(cacheKeys, valueType, discardIfValueIsNull);
     }
 
     /**
      * 批量设置
      */
     public static <T> void multiSet(Map<String, T> data, Duration expiration) {
-        getCacheProvider().multiSet(data, expiration);
+        getCacheOperation().multiSet(data, expiration);
     }
 
     /**
@@ -179,7 +179,7 @@ public class CacheUtils {
      * 删除缓存
      */
     public static void del(List<String> cacheKeys) {
-        getCacheProvider().del(cacheKeys);
+        getCacheOperation().del(cacheKeys);
     }
 
 }

@@ -674,6 +674,11 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>flatten-maven-plugin</artifactId>
                     <version>${flatten-maven-plugin.version}</version>
+                    <configuration>
+                        <updatePomFile>true</updatePomFile>
+                        <outputDirectory>${project.build.directory}</outputDirectory>
+                        <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                    </configuration>
                     <executions>
                         <execution>
                             <id>flatten</id>
@@ -681,31 +686,33 @@
                                 <goal>flatten</goal>
                             </goals>
                             <phase>process-resources</phase>
-                            <configuration>
-                                <updatePomFile>true</updatePomFile>
-                                <outputDirectory>${project.build.directory}</outputDirectory>
-                                <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>clean</id>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                            <phase>clean</phase>
                         </execution>
                     </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
+                    <configuration>
+                        <rules>
+                            <requireJavaVersion>
+                                <version>${java.version}</version>
+                                <message>需要 Java${java.version} 及以上的版本, 请检查 Java 版本设置</message>
+                            </requireJavaVersion>
+                        </rules>
+                    </configuration>
                     <executions>
                         <execution>
                             <id>enforce-java</id>
                             <goals>
                                 <goal>enforce</goal>
                             </goals>
-                            <configuration>
-                                <rules>
-                                    <requireJavaVersion>
-                                        <version>${java.version}</version>
-                                        <message>需要 Java${java.version} 及以上的版本, 请检查 Java 版本设置</message>
-                                    </requireJavaVersion>
-                                </rules>
-                            </configuration>
                         </execution>
                     </executions>
                 </plugin>

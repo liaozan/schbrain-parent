@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
  * @author liaozan
  * @since 2023/8/22
  */
-public class WrappedByteArrayInputStream extends ServletInputStream {
+class WrappedByteArrayInputStream extends ServletInputStream {
 
     private final ByteArrayInputStreamWrapper delegate;
 

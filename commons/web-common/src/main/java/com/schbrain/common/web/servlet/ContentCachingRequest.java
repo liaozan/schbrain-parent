@@ -3,6 +3,7 @@ package com.schbrain.common.web.servlet;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StreamUtils;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class ContentCachingRequest extends HttpServletRequestWrapper {
     }
 
     @Override
-    public WrappedByteArrayInputStream getInputStream() {
+    public ServletInputStream getInputStream() {
         return inputStream;
     }
 

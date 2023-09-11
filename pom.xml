@@ -68,7 +68,7 @@
         <cglib.version>3.3.0</cglib.version>
         <curator.version>5.5.0</curator.version>
         <commons-collections4.version>4.4</commons-collections4.version>
-        <commons-compress.version>1.23.0</commons-compress.version>
+        <commons-compress.version>1.24.0</commons-compress.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-io.version>2.13.0</commons-io.version>
         <dubbo.version>3.2.6</dubbo.version>

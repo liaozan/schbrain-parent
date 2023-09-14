@@ -2,7 +2,15 @@ package com.schbrain.framework.autoconfigure.mybatis.sql.injector;
 
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.injector.AbstractSqlInjector;
-import com.baomidou.mybatisplus.core.injector.methods.*;
+import com.baomidou.mybatisplus.core.injector.methods.Insert;
+import com.baomidou.mybatisplus.core.injector.methods.SelectBatchByIds;
+import com.baomidou.mybatisplus.core.injector.methods.SelectById;
+import com.baomidou.mybatisplus.core.injector.methods.SelectCount;
+import com.baomidou.mybatisplus.core.injector.methods.SelectList;
+import com.baomidou.mybatisplus.core.injector.methods.SelectMaps;
+import com.baomidou.mybatisplus.core.injector.methods.SelectObjs;
+import com.baomidou.mybatisplus.core.injector.methods.Update;
+import com.baomidou.mybatisplus.core.injector.methods.UpdateById;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.extension.injector.methods.AlwaysUpdateSomeColumnById;
 import com.google.common.collect.Lists;

@@ -15,7 +15,12 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static com.ctrip.framework.apollo.core.ApolloClientSystemConsts.*;
+import static com.ctrip.framework.apollo.core.ApolloClientSystemConsts.APOLLO_CACHE_FILE_ENABLE;
+import static com.ctrip.framework.apollo.core.ApolloClientSystemConsts.APOLLO_META;
+import static com.ctrip.framework.apollo.core.ApolloClientSystemConsts.APOLLO_OVERRIDE_SYSTEM_PROPERTIES;
+import static com.ctrip.framework.apollo.core.ApolloClientSystemConsts.APOLLO_PROPERTY_NAMES_CACHE_ENABLE;
+import static com.ctrip.framework.apollo.core.ApolloClientSystemConsts.APOLLO_PROPERTY_ORDER_ENABLE;
+import static com.ctrip.framework.apollo.core.ApolloClientSystemConsts.APP_ID;
 import static com.ctrip.framework.apollo.core.ConfigConsts.APOLLO_META_KEY;
 import static com.ctrip.framework.apollo.spring.config.PropertySourcesConstants.APOLLO_BOOTSTRAP_EAGER_LOAD_ENABLED;
 import static com.ctrip.framework.apollo.spring.config.PropertySourcesConstants.APOLLO_BOOTSTRAP_ENABLED;

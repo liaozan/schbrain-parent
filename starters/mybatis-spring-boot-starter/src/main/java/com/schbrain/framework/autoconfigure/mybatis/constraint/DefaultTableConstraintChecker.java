@@ -5,7 +5,14 @@ import com.schbrain.framework.autoconfigure.mybatis.biz.BizIdColumnField;
 import com.schbrain.framework.autoconfigure.mybatis.biz.BizIdHelper;
 import com.schbrain.framework.autoconfigure.mybatis.exception.TableConstraintException;
 
-import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants.*;
+import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants.AUTO_INCREMENT;
+import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants.CREATE_TIME;
+import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants.CURRENT_TIMESTAMP;
+import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants.DELETED;
+import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants.DELETE_VERSION;
+import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants.ID;
+import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants.MODIFY_TIME;
+import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants.UPDATE_WITH_CURRENT_TIMESTAMP;
 
 /**
  * @author liaozan

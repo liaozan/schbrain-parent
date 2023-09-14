@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.schbrain.common.constants.PageConstants.DEFAULT_PAGE_INDEX;
-import static com.schbrain.common.constants.PageConstants.DEFAULT_PAGE_SIZE;
-import static com.schbrain.common.constants.PageConstants.DEFAULT_TOTAL_COUNT;
-import static com.schbrain.common.constants.PageConstants.DEFAULT_TOTAL_PAGE_COUNT;
+import static com.schbrain.common.constants.PageConstants.*;
 
 /**
  * @author liaozan

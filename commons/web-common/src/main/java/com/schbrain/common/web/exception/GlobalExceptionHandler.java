@@ -28,10 +28,8 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.schbrain.common.constants.ResponseCodeConstants.PARAM_INVALID;
-import static com.schbrain.common.constants.ResponseCodeConstants.SERVER_ERROR;
-import static com.schbrain.common.util.support.ValidationMessageBuilder.buildBindingErrorMsg;
-import static com.schbrain.common.util.support.ValidationMessageBuilder.buildConstraintViolationErrorMsg;
+import static com.schbrain.common.constants.ResponseCodeConstants.*;
+import static com.schbrain.common.util.support.ValidationMessageBuilder.*;
 
 /**
  * @author liaozan

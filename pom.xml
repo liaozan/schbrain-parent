@@ -100,8 +100,8 @@
         <aliyun-sdk-oss.version>3.17.1</aliyun-sdk-oss.version>
 
         <!-- alibabacloud new sdk -->
-        <aliyun-java-core.version>0.2.0-beta</aliyun-java-core.version>
-        <aliyun-gateway-pop.version>0.2.0-beta</aliyun-gateway-pop.version>
+        <aliyun-java-core.version>0.2.1-beta</aliyun-java-core.version>
+        <aliyun-gateway-pop.version>0.2.1-beta</aliyun-gateway-pop.version>
         <alibabacloud-sts20150401.version>1.0.3</alibabacloud-sts20150401.version>
         <alibabacloud-oss20190517.version>1.0.2</alibabacloud-oss20190517.version>
         <alibabacloud-vod20170321.version>1.0.6</alibabacloud-vod20170321.version>
@@ -110,7 +110,7 @@
         <!-- dingtalk -->
         <alibaba-dingtalk-service-sdk.version>2.0.0</alibaba-dingtalk-service-sdk.version>
         <cube-sdk-java.version>1.0.2-RELEASE</cube-sdk-java.version>
-        <dingtalk.version>2.0.35</dingtalk.version>
+        <dingtalk.version>2.0.36</dingtalk.version>
 
         <!-- maven settings -->
         <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>

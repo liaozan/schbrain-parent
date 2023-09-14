@@ -64,18 +64,14 @@ public class BodyParamMethodArgumentResolver extends AbstractNamedValueMethodArg
         return objectMapper.constructType(parameterType);
     }
 
-    private JsonNode getRequestBody(NativeWebRequest nativeWebRequest) throws IOException {
-        JsonNode requestBody = (JsonNode) nativeWebRequest.getAttribute(REQUEST_BODY_CACHE, SCOPE_REQUEST);
+    private JsonNode getRequestBody(NativeWebRequest webRequest) throws IOException {
+        JsonNode requestBody = (JsonNode) webRequest.getAttribute(REQUEST_BODY_CACHE, SCOPE_REQUEST);
         if (requestBody == null) {
-            HttpServletRequest request = wrapRequest(nativeWebRequest);
+            HttpServletRequest request = wrapIfRequired(webRequest.getNativeRequest(HttpServletRequest.class));
             requestBody = objectMapper.readTree(request.getInputStream());
-            nativeWebRequest.setAttribute(REQUEST_BODY_CACHE, requestBody, SCOPE_REQUEST);
+            webRequest.setAttribute(REQUEST_BODY_CACHE, requestBody, SCOPE_REQUEST);
         }
         return requestBody;
-    }
-
-    private HttpServletRequest wrapRequest(NativeWebRequest request) {
-        return wrapIfRequired(request.getNativeRequest(HttpServletRequest.class));
     }
 
 }

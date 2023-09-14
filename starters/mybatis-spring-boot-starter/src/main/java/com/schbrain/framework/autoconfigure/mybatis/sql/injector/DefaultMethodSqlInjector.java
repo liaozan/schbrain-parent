@@ -14,9 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 import java.util.Set;
 
-import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants.CREATE_TIME;
-import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants.DELETE_VERSION;
-import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants.MODIFY_TIME;
+import static com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants.*;
 
 /**
  * @author liaozan

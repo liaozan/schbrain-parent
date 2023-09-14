@@ -21,6 +21,7 @@ import com.schbrain.framework.autoconfigure.oss.bean.*;
 import com.schbrain.framework.autoconfigure.oss.exception.OssException;
 import com.schbrain.framework.autoconfigure.oss.properties.OssProperties;
 import com.schbrain.framework.autoconfigure.oss.properties.OssProperties.StsProperties;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -47,6 +48,7 @@ public class OssUtils {
 
     private static DefaultAcsClient stsAcsClient;
 
+    @Getter
     private static OssProperties ossProperties;
 
     private static StsProperties stsProperties;
@@ -70,10 +72,6 @@ public class OssUtils {
         } catch (Exception e) {
             log.warn("oss initialize fail, OssUtils will not available until reinitialize with the correct configuration", e);
         }
-    }
-
-    public static OssProperties getOssProperties() {
-        return ossProperties;
     }
 
     public static OSSClient getOssClient() {

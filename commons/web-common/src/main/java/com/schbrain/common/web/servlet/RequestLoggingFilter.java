@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.schbrain.common.web.utils.RequestContentCachingUtils.getRequestBody;
-import static com.schbrain.common.web.utils.RequestContentCachingUtils.wrapIfRequired;
+import static com.schbrain.common.web.utils.RequestContentCachingUtils.*;
 
 /**
  * 请求日志拦截器

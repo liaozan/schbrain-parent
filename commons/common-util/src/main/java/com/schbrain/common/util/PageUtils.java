@@ -9,8 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
-import static com.schbrain.common.constants.PageConstants.DEFAULT_SEARCH_COUNT;
-import static com.schbrain.common.constants.PageConstants.DEFAULT_TOTAL_COUNT;
+import static com.schbrain.common.constants.PageConstants.*;
 
 /**
  * @author liaozan

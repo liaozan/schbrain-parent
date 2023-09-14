@@ -11,8 +11,7 @@ import org.springframework.boot.logging.LoggingSystem;
 
 import java.util.Set;
 
-import static com.ctrip.framework.apollo.enums.PropertyChangeType.ADDED;
-import static com.ctrip.framework.apollo.enums.PropertyChangeType.MODIFIED;
+import static com.ctrip.framework.apollo.enums.PropertyChangeType.*;
 import static org.springframework.boot.logging.LoggingSystem.ROOT_LOGGER_NAME;
 
 /**

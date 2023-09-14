@@ -58,8 +58,8 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
         // mvc
         defaultProperties.put("spring.mvc.throw-exception-if-no-handler-found", true);
         // datetime
-        defaultProperties.put("spring.mvc.format.date", DatePattern.NORM_DATE_PATTERN);
-        defaultProperties.put("spring.mvc.format.time", DatePattern.NORM_TIME_PATTERN);
+        defaultProperties.put("spring.mvc.format.date", DatePattern.NORM_DATETIME_PATTERN);
+        defaultProperties.put("spring.mvc.format.time", DatePattern.NORM_DATETIME_PATTERN);
         defaultProperties.put("spring.mvc.format.date-time", DatePattern.NORM_DATETIME_PATTERN);
         defaultProperties.put("spring.jackson.date-format", DatePattern.NORM_DATETIME_PATTERN);
         defaultProperties.put("spring.jackson.time-zone", TimeZone.getDefault().getID());

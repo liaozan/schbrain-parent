@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.ctrip.framework.apollo.spring.config.PropertySourcesConstants.APOLLO_BOOTSTRAP_PROPERTY_SOURCE_NAME;
-import static com.ctrip.framework.apollo.spring.config.PropertySourcesConstants.APOLLO_PROPERTY_SOURCE_NAME;
+import static com.ctrip.framework.apollo.spring.config.PropertySourcesConstants.*;
 
 /**
  * @author liaozan

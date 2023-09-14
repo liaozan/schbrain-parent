@@ -7,11 +7,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author liaozan
  * @since 2023/8/16
  */
-public class Jsr310DateTimeWebMvcConfigurer implements WebMvcConfigurer {
+public class DateTimeConvertersWebMvcConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        Jsr310Converters.getConverters().forEach(registry::addConverter);
+        DateTimeConverters.getConverters().forEach(registry::addConverter);
     }
 
 }

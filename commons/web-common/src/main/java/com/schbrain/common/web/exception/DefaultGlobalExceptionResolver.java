@@ -1,7 +1,6 @@
 package com.schbrain.common.web.exception;
 
 import com.schbrain.common.web.annotation.ResponseWrapOption;
-import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.method.HandlerMethod;
@@ -30,7 +29,6 @@ import static com.schbrain.common.web.utils.HandlerMethodAnnotationUtils.getAnno
  * @since 2022/8/30
  */
 @Slf4j
-@EqualsAndHashCode(callSuper = true)
 public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExceptionResolver {
 
     private final GlobalExceptionHandler exceptionHandler;
@@ -49,6 +47,9 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
 
     @Override
     protected boolean shouldApplyTo(HttpServletRequest request, @Nullable Object handler) {
+        if (handler == null) {
+            return super.shouldApplyTo(request, null);
+        }
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             ResponseWrapOption responseWrapOption = getAnnotation(handlerMethod, ResponseWrapOption.class);

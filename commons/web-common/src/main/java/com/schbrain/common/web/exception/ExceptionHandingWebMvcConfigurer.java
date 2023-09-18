@@ -39,12 +39,13 @@ public class ExceptionHandingWebMvcConfigurer implements WebMvcConfigurer {
             }
         }
 
+        int index;
         if (adviceExceptionResolver == null) {
-            log.warn("ExceptionHandlerExceptionResolver is not exist, ignore global exception handing");
-            return;
+            index = 0;
+        } else {
+            index = resolvers.indexOf(adviceExceptionResolver) + 1;
         }
 
-        int index = resolvers.indexOf(adviceExceptionResolver) + 1;
         resolvers.add(index, createExceptionResolver(adviceExceptionResolver));
     }
 

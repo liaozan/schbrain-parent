@@ -3,16 +3,16 @@ package com.schbrain.framework.autoconfigure.oss.bean;
 import com.aliyun.oss.model.OSSObject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * @author liaozan
  * @since 2021/12/3
  */
 @Data
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class DownloadResult extends OssOperationResult {
-
-    private static final long serialVersionUID = -9010079317621184645L;
 
     private OSSObject ossObject;
 

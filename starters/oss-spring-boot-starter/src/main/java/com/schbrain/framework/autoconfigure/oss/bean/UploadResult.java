@@ -2,16 +2,16 @@ package com.schbrain.framework.autoconfigure.oss.bean;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * @author liaozan
  * @since 2021/12/3
  */
 @Data
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class UploadResult extends OssOperationResult {
-
-    private static final long serialVersionUID = 7408490108665799098L;
 
     private String url;
 

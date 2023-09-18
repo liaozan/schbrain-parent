@@ -2,6 +2,7 @@ package com.schbrain.framework.autoconfigure.oss.bean;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -10,10 +11,9 @@ import java.util.List;
  * @since 2022/9/6
  */
 @Data
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class DeleteResult extends OssOperationResult {
-
-    private static final long serialVersionUID = -1964404722922995469L;
 
     private List<String> deleteObjectKeys;
 

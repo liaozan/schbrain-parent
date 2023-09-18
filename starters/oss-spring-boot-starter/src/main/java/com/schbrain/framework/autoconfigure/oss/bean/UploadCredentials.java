@@ -3,6 +3,8 @@ package com.schbrain.framework.autoconfigure.oss.bean;
 import com.aliyuncs.auth.sts.AssumeRoleResponse.Credentials;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -14,10 +16,10 @@ import java.time.format.DateTimeFormatter;
  * @since 2021/12/4
  */
 @Data
+@NoArgsConstructor
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class UploadCredentials extends OssOperationResult {
-
-    private static final long serialVersionUID = 5546792221041679671L;
 
     private String accessKeyId;
 
@@ -26,11 +28,6 @@ public class UploadCredentials extends OssOperationResult {
     private String securityToken;
 
     private LocalDateTime expiration;
-
-    // for json deserialize
-    public UploadCredentials() {
-
-    }
 
     public UploadCredentials(Credentials credentials) {
         this.success = true;

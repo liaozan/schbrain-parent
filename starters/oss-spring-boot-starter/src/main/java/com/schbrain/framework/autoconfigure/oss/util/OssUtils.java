@@ -16,6 +16,7 @@ import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.schbrain.common.util.ApplicationName;
+import com.schbrain.common.util.StreamUtils;
 import com.schbrain.common.util.ValidateUtils;
 import com.schbrain.framework.autoconfigure.oss.bean.*;
 import com.schbrain.framework.autoconfigure.oss.exception.OssException;
@@ -23,6 +24,7 @@ import com.schbrain.framework.autoconfigure.oss.properties.OssProperties;
 import com.schbrain.framework.autoconfigure.oss.properties.OssProperties.StsProperties;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -33,7 +35,6 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author liaozan
@@ -265,8 +266,8 @@ public class OssUtils {
     public static DeleteResult deleteObject(String bucket, List<String> objectKeys) {
         ValidateUtils.notEmpty(bucket, "bucket can not be empty");
         ValidateUtils.notEmpty(objectKeys, "objectKeys can not be empty");
-        String notExistKeys = objectKeys.stream().filter(key -> !exist(bucket, key)).collect(Collectors.joining(","));
-        if (StringUtils.isNotBlank(notExistKeys)) {
+        List<String> notExistKeys = StreamUtils.filterToList(objectKeys, key -> !exist(bucket, key));
+        if (CollectionUtils.isNotEmpty(notExistKeys)) {
             String errorMsg = StrFormatter.format("objectKeys:[{}] not exist", notExistKeys);
             return DeleteResult.fail(bucket, objectKeys, errorMsg);
         }
@@ -286,8 +287,12 @@ public class OssUtils {
 
     private static DownloadResult download0(String bucket, String objectKey) {
         GetObjectRequest request = new GetObjectRequest(bucket, objectKey);
-        OSSObject ossObject = getOssClient().getObject(request);
-        return DownloadResult.success(bucket, objectKey, ossObject);
+        try {
+            OSSObject ossObject = getOssClient().getObject(request);
+            return DownloadResult.success(bucket, objectKey, ossObject);
+        } catch (Exception e) {
+            return DownloadResult.fail(bucket, objectKey, e.getMessage());
+        }
     }
 
     private static UploadResult upload0(Object object, String bucket, String objectKey, boolean allowOverwrite, boolean appendPrefix, ObjectMetadata metadata) {

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.schbrain.framework.autoconfigure.mybatis.core.MybatisXmlLanguageDriver;
 import com.schbrain.framework.autoconfigure.mybatis.properties.MybatisProperties;
 import com.schbrain.framework.autoconfigure.mybatis.type.InstantToLongTypeHandler;
+import org.apache.ibatis.session.LocalCacheScope;
 import org.apache.ibatis.type.EnumOrdinalTypeHandler;
 
 import java.time.Instant;
@@ -24,6 +25,7 @@ public class MybatisConfigurationCustomizer implements ConfigurationCustomizer {
     @Override
     public void customize(MybatisConfiguration configuration) {
         configuration.setCacheEnabled(false);
+        configuration.setLocalCacheScope(LocalCacheScope.STATEMENT);
         configuration.setDefaultEnumTypeHandler(EnumOrdinalTypeHandler.class);
         configuration.setUseActualParamName(true);
         configuration.setMapUnderscoreToCamelCase(true);

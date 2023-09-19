@@ -3,7 +3,6 @@ package com.schbrain.common.web.support.authentication;
 import cn.hutool.extra.spring.SpringUtil;
 import com.schbrain.common.annotation.IgnoreLogin;
 import com.schbrain.common.web.properties.WebProperties;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
@@ -19,7 +18,6 @@ import static com.schbrain.common.web.utils.HandlerMethodAnnotationUtils.hasAnno
  * @author liaozan
  * @since 2022/11/12
  */
-@Data
 @Slf4j
 public abstract class AbstractAuthenticator implements Authenticator {
 
@@ -55,7 +53,7 @@ public abstract class AbstractAuthenticator implements Authenticator {
             authentication = request.getParameter(authenticationVariableName);
         }
         if (StringUtils.isBlank(authentication)) {
-            log.warn("Can not get authentication from request, authenticationVariableName: {}", authenticationVariableName);
+            log.warn("Can not get {} from request", authenticationVariableName);
         }
         return authentication;
     }

@@ -13,14 +13,25 @@ import lombok.Data;
 @Data
 public class ResponseDTO<T> {
 
+    /**
+     * 错误码
+     */
     private int code;
-
+    /**
+     * 前端需要执行的动作
+     */
     private int action;
-
+    /**
+     * 错误信息
+     */
     private String message;
-
+    /**
+     * 返回数据
+     */
     private T data;
-
+    /**
+     * 请求ID
+     */
     private String requestId = TraceIdUtils.get();
 
     public static <T> ResponseDTO<T> success() {

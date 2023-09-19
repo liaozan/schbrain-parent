@@ -16,7 +16,6 @@ import java.util.List;
 public class ExceptionHandingWebMvcConfigurer implements WebMvcConfigurer {
 
     private final WebProperties webProperties;
-
     private final GlobalExceptionHandler globalExceptionHandler;
 
     public ExceptionHandingWebMvcConfigurer(WebProperties webProperties, GlobalExceptionHandler globalExceptionHandler) {

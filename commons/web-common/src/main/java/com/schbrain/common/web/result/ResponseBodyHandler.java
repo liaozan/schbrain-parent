@@ -24,7 +24,6 @@ import static org.springframework.core.annotation.AnnotationUtils.getAnnotation;
 public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
 
     private final List<String> basePackages;
-
     private final Map<Method, Boolean> methodCache = new ConcurrentHashMap<>();
 
     public ResponseBodyHandler(List<String> basePackages) {

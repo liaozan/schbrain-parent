@@ -1,6 +1,7 @@
 package com.schbrain.common.web.support.authentication;
 
 import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.http.ContentType;
 import com.schbrain.common.util.JacksonUtils;
 import com.schbrain.common.util.ValidateUtils;
 import com.schbrain.common.web.result.ResponseDTO;
@@ -8,11 +9,11 @@ import com.schbrain.common.web.support.BaseHandlerInterceptor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.core.Ordered;
-import org.springframework.http.MediaType;
 import org.springframework.web.method.HandlerMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.nio.charset.StandardCharsets;
 
 import static com.schbrain.common.constants.ResponseActionConstants.ALERT;
 import static com.schbrain.common.constants.ResponseCodeConstants.LOGIN_REQUIRED;
@@ -53,7 +54,7 @@ public class AuthenticationInterceptor extends BaseHandlerInterceptor implements
 
     protected void writeResult(HttpServletResponse response, ResponseDTO<?> result) {
         String resultString = JacksonUtils.toJsonString(result);
-        ServletUtil.write(response, resultString, MediaType.APPLICATION_JSON_VALUE);
+        ServletUtil.write(response, resultString, ContentType.JSON.toString(StandardCharsets.UTF_8));
     }
 
     protected <T> ResponseDTO<T> buildAccessDeniedResponse() {

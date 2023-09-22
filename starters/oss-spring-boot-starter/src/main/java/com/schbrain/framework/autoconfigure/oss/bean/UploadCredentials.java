@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
  * @since 2021/12/4
  */
 @Data
-@NoArgsConstructor
+@NoArgsConstructor // for json deserialize
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class UploadCredentials extends OssOperationResult {

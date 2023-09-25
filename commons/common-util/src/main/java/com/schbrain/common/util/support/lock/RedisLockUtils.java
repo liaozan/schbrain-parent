@@ -22,33 +22,47 @@ public class RedisLockUtils {
 
     private static final String APPLICATION_NAME = ApplicationName.get();
 
+    private static final Duration DEFAULT_WAIT_TIME = Duration.ofSeconds(3);
+    /**
+     * if -1, then lock will be renew automatically by watchdog thread
+     */
+    private static final Duration DEFAULT_LEASE_TIME = Duration.ofSeconds(-1);
+
     private static RedissonClient CLIENT;
 
     public static void executeWithLock(String lockName, Runnable action) {
-        executeWithLock(lockName, Duration.ofSeconds(3), action);
+        executeWithLock(lockName, DEFAULT_WAIT_TIME, action);
     }
 
-    public static void executeWithLock(String lockName, Duration timeout, Runnable action) {
-        executeWithLock(lockName, timeout, () -> {
+    public static void executeWithLock(String lockName, Duration waitTime, Runnable action) {
+        executeWithLock(lockName, waitTime, DEFAULT_LEASE_TIME, action);
+    }
+
+    public static void executeWithLock(String lockName, Duration waitTime, Duration leaseTime, Runnable action) {
+        executeWithLock(lockName, waitTime, leaseTime, () -> {
             action.run();
             return null;
         });
     }
 
     public static <T> T executeWithLock(String lockName, Callable<T> action) {
-        return executeWithLock(lockName, Duration.ofSeconds(3), action);
+        return executeWithLock(lockName, DEFAULT_WAIT_TIME, action);
     }
 
-    public static <T> T executeWithLock(String lockName, Duration timeout, Callable<T> action) {
+    public static <T> T executeWithLock(String lockName, Duration waitTime, Callable<T> action) {
+        return executeWithLock(lockName, waitTime, DEFAULT_LEASE_TIME, action);
+    }
+
+    public static <T> T executeWithLock(String lockName, Duration waitTime, Duration leaseTime, Callable<T> action) {
         RLock lock = getClient().getLock(withPrefix(lockName));
         boolean locked;
         try {
-            locked = lock.tryLock(timeout.toMillis(), TimeUnit.MILLISECONDS);
+            locked = lock.tryLock(waitTime.toMillis(), leaseTime.toMillis(), TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             throw new BaseException("Lock thread has been interrupted", e);
         }
         if (!locked) {
-            throw new BaseException(String.format("Lock cannot be acquired within %d seconds", timeout.toSeconds()));
+            throw new BaseException(String.format("Lock cannot be acquired within %d mills", waitTime.toMillis()));
         }
 
         try {

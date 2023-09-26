@@ -100,7 +100,7 @@
         <aliyun-sdk-oss.version>3.17.1</aliyun-sdk-oss.version>
 
         <!-- alibabacloud new sdk -->
-        <aliyun-java-core.version>0.2.3-beta</aliyun-java-core.version>
+        <aliyun-java-core.version>0.2.4-beta</aliyun-java-core.version>
         <aliyun-gateway-pop.version>0.2.4-beta</aliyun-gateway-pop.version>
         <alibabacloud-sts20150401.version>1.0.3</alibabacloud-sts20150401.version>
         <alibabacloud-oss20190517.version>1.0.2</alibabacloud-oss20190517.version>

@@ -9,9 +9,9 @@ import java.util.Date;
  * @author liaozan
  * @since 2023/9/16
  */
-class StringToDateConverter extends DateTimeConditionalConverter<Date> {
+class StringToDateConditionalConverter extends DateTimeConditionalConverter<Date> {
 
-    static final StringToDateConverter INSTANCE = new StringToDateConverter();
+    static final StringToDateConditionalConverter INSTANCE = new StringToDateConditionalConverter();
 
     @Override
     protected Date doConvert(Long source) {

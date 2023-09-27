@@ -11,10 +11,10 @@ public class DateTimeConvertersWebMvcConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(StringToDateConverter.INSTANCE);
-        registry.addConverter(StringToLocalTimeConverter.INSTANCE);
-        registry.addConverter(StringToLocalDateConverter.INSTANCE);
-        registry.addConverter(StringToLocalDateTimeConverter.INSTANCE);
+        registry.addConverter(StringToDateConditionalConverter.INSTANCE);
+        registry.addConverter(StringToLocalTimeConditionalConverter.INSTANCE);
+        registry.addConverter(StringToLocalDateConditionalConverter.INSTANCE);
+        registry.addConverter(StringToLocalDateTimeConditionalConverter.INSTANCE);
     }
 
 }

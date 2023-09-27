@@ -10,9 +10,9 @@ import java.time.format.DateTimeFormatter;
  * @author liaozan
  * @since 2023/9/16
  */
-class StringToLocalTimeConverter extends DateTimeConditionalConverter<LocalTime> {
+class StringToLocalTimeConditionalConverter extends DateTimeConditionalConverter<LocalTime> {
 
-    static final StringToLocalTimeConverter INSTANCE = new StringToLocalTimeConverter();
+    static final StringToLocalTimeConditionalConverter INSTANCE = new StringToLocalTimeConditionalConverter();
 
     @Override
     protected String defaultPattern() {

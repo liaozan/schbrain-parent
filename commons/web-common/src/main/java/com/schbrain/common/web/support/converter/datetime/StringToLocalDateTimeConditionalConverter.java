@@ -1,5 +1,6 @@
 package com.schbrain.common.web.support.converter.datetime;
 
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.LocalDateTimeUtil;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,11 @@ import java.time.format.DateTimeFormatter;
 class StringToLocalDateTimeConditionalConverter extends DateTimeConditionalConverter<LocalDateTime> {
 
     static final StringToLocalDateTimeConditionalConverter INSTANCE = new StringToLocalDateTimeConditionalConverter();
+
+    @Override
+    protected String defaultPattern() {
+        return DatePattern.NORM_DATETIME_PATTERN;
+    }
 
     @Override
     protected LocalDateTime doConvert(Long source) {

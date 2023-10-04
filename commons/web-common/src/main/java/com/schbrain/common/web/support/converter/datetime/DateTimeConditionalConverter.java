@@ -23,7 +23,7 @@ abstract class DateTimeConditionalConverter<T> implements ConditionalGenericConv
     private final TypeDescriptor stringType = TypeDescriptor.valueOf(String.class);
     private final Map<String, DateTimeFormatter> formatters = new ConcurrentHashMap<>();
 
-    public DateTimeConditionalConverter() {
+    DateTimeConditionalConverter() {
         this.targetType = TypeDescriptor.valueOf(ResolvableType.forClass(getClass()).getSuperType().getGeneric(0).getRawClass());
     }
 
@@ -45,7 +45,7 @@ abstract class DateTimeConditionalConverter<T> implements ConditionalGenericConv
         return convert((String) source, targetType);
     }
 
-    protected final T convert(String source, TypeDescriptor targetType) {
+    protected T convert(String source, TypeDescriptor targetType) {
         if (StringUtils.isBlank(source)) {
             return null;
         }
@@ -69,13 +69,11 @@ abstract class DateTimeConditionalConverter<T> implements ConditionalGenericConv
         return pattern;
     }
 
-    protected String defaultPattern() {
-        return DatePattern.NORM_DATETIME_PATTERN;
-    }
-
     protected DateTimeFormatter ofPattern(String pattern) {
         return formatters.computeIfAbsent(pattern, ignore -> DatePattern.createFormatter(pattern));
     }
+
+    protected abstract String defaultPattern();
 
     protected abstract T doConvert(Long source);
 

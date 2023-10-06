@@ -9,13 +9,13 @@ import org.apache.dubbo.rpc.*;
  * @author liaozan
  * @since 2021/10/10
  */
-@Activate(group = CommonConstants.CONSUMER)
-public class TraceConsumerRpcFilter implements Filter {
+@Activate(group = CommonConstants.PROVIDER)
+public class TraceProviderFilter implements Filter {
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        String traceId = TraceIdUtils.get();
-        RpcContext.getClientAttachment().setAttachment(TraceIdUtils.TRACE_ID, traceId);
+        String traceId = RpcContext.getServerAttachment().getAttachment(TraceIdUtils.TRACE_ID);
+        TraceIdUtils.set(traceId);
         return invoker.invoke(invocation);
     }
 

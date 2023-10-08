@@ -1,8 +1,6 @@
 package com.schbrain.framework.autoconfigure.oss.bean;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * @author liaozan

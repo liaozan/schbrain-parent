@@ -9,9 +9,7 @@ import com.schbrain.framework.dao.BaseDao;
 import com.schbrain.framework.dao.util.SQLUtil;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author hzchengyi

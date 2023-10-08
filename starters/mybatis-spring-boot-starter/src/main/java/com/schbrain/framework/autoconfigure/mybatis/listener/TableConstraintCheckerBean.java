@@ -6,9 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.schbrain.common.exception.BaseException;
 import com.schbrain.common.util.StreamUtils;
-import com.schbrain.framework.autoconfigure.mybatis.base.BaseEntity;
-import com.schbrain.framework.autoconfigure.mybatis.base.BaseEntityWithLogicDelete;
-import com.schbrain.framework.autoconfigure.mybatis.base.BaseMapper;
+import com.schbrain.framework.autoconfigure.mybatis.base.*;
 import com.schbrain.framework.autoconfigure.mybatis.constraint.*;
 import com.schbrain.framework.autoconfigure.mybatis.constraint.Table.FieldInfo;
 import com.schbrain.framework.autoconfigure.mybatis.exception.TableConstraintException;
@@ -18,9 +16,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.beans.factory.SmartInitializingSingleton;
+import org.springframework.beans.factory.*;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.Assert;
@@ -28,9 +24,7 @@ import org.springframework.util.ClassUtils;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 

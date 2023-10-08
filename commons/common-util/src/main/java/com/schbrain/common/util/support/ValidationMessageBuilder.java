@@ -2,14 +2,10 @@ package com.schbrain.common.util.support;
 
 import cn.hutool.core.text.StrPool;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.*;
 
 import javax.validation.ConstraintViolation;
-import java.util.Optional;
-import java.util.Set;
-import java.util.StringJoiner;
+import java.util.*;
 
 /**
  * @author liaozan

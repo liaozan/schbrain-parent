@@ -3,9 +3,7 @@ package com.schbrain.framework.autoconfigure.mybatis.base;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 
 public interface BaseService<T extends BaseEntity> extends IService<T> {

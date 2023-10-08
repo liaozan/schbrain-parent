@@ -1,9 +1,7 @@
 package com.schbrain.framework.autoconfigure.apollo.event.listener;
 
 import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.*;
 import org.springframework.core.Ordered;
 
 /**

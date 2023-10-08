@@ -3,9 +3,7 @@ package com.schbrain.framework.autoconfigure.kafka;
 import com.schbrain.common.util.EnvUtils;
 import com.schbrain.framework.autoconfigure.kafka.properties.KafkaProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.config.KafkaListenerContainerFactory;
-import org.springframework.kafka.config.KafkaListenerEndpoint;
-import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
+import org.springframework.kafka.config.*;
 
 /**
  * @author liaozan

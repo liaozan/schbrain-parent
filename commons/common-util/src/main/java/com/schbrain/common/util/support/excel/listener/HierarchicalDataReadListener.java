@@ -5,14 +5,13 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.schbrain.common.util.support.excel.exception.ExcelException;
 import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 层级数据 excel 读取类
@@ -23,6 +22,7 @@ import java.util.Map;
 @Slf4j
 public class HierarchicalDataReadListener extends ExcelReadListenerBase<Map<Integer, String>> {
 
+    @Getter
     private final List<ImportedRecord> importedRecords = new LinkedList<>();
 
     private final Table<Integer, Integer, ImportedRecord> coordinateTable = HashBasedTable.create();
@@ -50,10 +50,6 @@ public class HierarchicalDataReadListener extends ExcelReadListenerBase<Map<Inte
             }
         }
         return true;
-    }
-
-    public List<ImportedRecord> getImportedRecords() {
-        return importedRecords;
     }
 
     protected void buildImportedRow(Integer rowIndex, Integer columnIndex, String text) {

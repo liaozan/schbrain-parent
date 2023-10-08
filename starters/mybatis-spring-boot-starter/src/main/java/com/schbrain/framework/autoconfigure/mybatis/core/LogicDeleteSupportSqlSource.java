@@ -1,8 +1,6 @@
 package com.schbrain.framework.autoconfigure.mybatis.core;
 
-import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.ParameterMapping;
-import org.apache.ibatis.mapping.SqlSource;
+import org.apache.ibatis.mapping.*;
 
 import java.util.List;
 

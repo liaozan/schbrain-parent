@@ -64,6 +64,10 @@ public class ExcelReadListenerBase<T> extends AnalysisEventListener<T> {
         return readResult;
     }
 
+    protected void addErrorMsg(String sheetName, Integer rowIndex, String errorMsg) {
+        errors.put(sheetName, rowIndex, errorMsg);
+    }
+
     protected String getErrorMsg() {
         StringBuilder msgBuilder = new StringBuilder();
         errors.rowMap().forEach((sheetName, rows) -> {

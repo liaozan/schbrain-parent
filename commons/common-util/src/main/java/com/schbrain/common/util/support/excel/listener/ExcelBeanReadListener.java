@@ -30,7 +30,7 @@ public class ExcelBeanReadListener<T> extends ExcelReadListenerBase<T> {
     protected void collectErrorMsg(AnalysisContext context, Set<ConstraintViolation<T>> violations) {
         String sheetName = context.readSheetHolder().getSheetName();
         Integer rowIndex = context.readRowHolder().getRowIndex();
-        getErrors().put(sheetName, rowIndex + 1, buildErrorMsg(violations));
+        addErrorMsg(sheetName, rowIndex + 1, buildErrorMsg(violations));
     }
 
     protected String buildErrorMsg(Set<ConstraintViolation<T>> violations) {

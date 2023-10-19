@@ -3,8 +3,7 @@ package com.schbrain.framework.autoconfigure.mybatis.base;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.schbrain.framework.autoconfigure.mybatis.constant.MybatisConstants;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 /**
  * 带逻辑删除的基础实体类, 此类属性不需要显式设置, 框架会自动处理
@@ -13,6 +12,7 @@ import lombok.EqualsAndHashCode;
  * @since 2021/11/25
  */
 @Data
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class BaseEntityWithLogicDelete extends BaseEntity {
 

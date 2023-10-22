@@ -95,7 +95,6 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
         if (isEmpty(ids)) {
             return emptyMap();
         }
-        // noinspection unchecked
         List<T> dataList = lambdaQuery().select(T::getId, column).in(T::getId, ids).list();
         return StreamUtils.toMap(dataList, T::getId, column);
     }

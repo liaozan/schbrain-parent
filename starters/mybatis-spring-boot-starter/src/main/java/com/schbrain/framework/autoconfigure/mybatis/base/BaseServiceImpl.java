@@ -59,8 +59,31 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
     }
 
     @Override
+    public <V> V getById(Long id, SFunction<T, V> column) {
+        return getById(id, column, false);
+    }
+
+    @Override
+    public <V> V getById(Long id, SFunction<T, V> column, boolean throwIfNotFound) {
+        Supplier<? extends RuntimeException> notFoundSupplier = null;
+        if (throwIfNotFound) {
+            notFoundSupplier = () -> new NoSuchRecordException(entityClass);
+        }
+        return getById(id, column, notFoundSupplier);
+    }
+
+    @Override
+    public <V> V getById(Long id, SFunction<T, V> column, Supplier<? extends RuntimeException> notFoundSupplier) {
+        T entity = lambdaQuery().select(column).eq(T::getId, id).one();
+        if (entity == null && notFoundSupplier != null) {
+            throw notFoundSupplier.get();
+        }
+        return entity == null ? null : column.apply(entity);
+    }
+
+    @Override
     public Map<Long, T> getMapByIds(Collection<Long> ids) {
-        // Cannot call the override method here, because override method use mapper to judge the fields to select
+        // Cannot call the override method here, because override method use column to judge the fields to select
         if (isEmpty(ids)) {
             return emptyMap();
         }
@@ -68,13 +91,13 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
     }
 
     @Override
-    public <V> Map<Long, V> getMapByIds(Collection<Long> ids, SFunction<T, V> mapper) {
+    public <V> Map<Long, V> getMapByIds(Collection<Long> ids, SFunction<T, V> column) {
         if (isEmpty(ids)) {
             return emptyMap();
         }
         // noinspection unchecked
-        List<T> dataList = lambdaQuery().select(T::getId, mapper).in(T::getId, ids).list();
-        return StreamUtils.toMap(dataList, T::getId, mapper);
+        List<T> dataList = lambdaQuery().select(T::getId, column).in(T::getId, ids).list();
+        return StreamUtils.toMap(dataList, T::getId, column);
     }
 
     @Override
@@ -101,7 +124,43 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
     }
 
     @Override
+    public <V> V getByBizId(Object bizId, SFunction<T, V> column) {
+        return getByBizId(bizId, column, false);
+    }
+
+    @Override
+    public <V> V getByBizId(Object bizId, SFunction<T, V> column, boolean throwIfNotFound) {
+        Supplier<? extends RuntimeException> notFoundSupplier = null;
+        if (throwIfNotFound) {
+            notFoundSupplier = () -> new NoSuchRecordException(entityClass);
+        }
+        return getByBizId(bizId, column, notFoundSupplier);
+    }
+
+    @Override
+    public <V> V getByBizId(Object bizId, SFunction<T, V> column, Supplier<? extends RuntimeException> notFoundSupplier) {
+        T entity = query()
+                .select(LambdaUtils.getColumnName(column))
+                .eq(getBidColumnField().getColumnName(), bizId)
+                .one();
+        if (entity == null && notFoundSupplier != null) {
+            throw notFoundSupplier.get();
+        }
+        return entity == null ? null : column.apply(entity);
+    }
+
+    @Override
+    public <V> List<V> listByIds(Collection<Long> ids, SFunction<T, V> column) {
+        if (isEmpty(ids)) {
+            return emptyList();
+        }
+        List<T> dataList = lambdaQuery().select(column).in(T::getId, ids).list();
+        return StreamUtils.toList(dataList, column);
+    }
+
+    @Override
     public <K> List<T> listByBizIds(Collection<K> bizIds) {
+        // Cannot call the override method here, because override method use column to judge the fields to select
         if (isEmpty(bizIds)) {
             return emptyList();
         }
@@ -109,8 +168,20 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
     }
 
     @Override
+    public <K, V> List<V> listByBizIds(Collection<K> bizIds, SFunction<T, V> column) {
+        if (isEmpty(bizIds)) {
+            return emptyList();
+        }
+        List<T> dataList = query()
+                .select(LambdaUtils.getColumnName(column))
+                .in(getBidColumnField().getColumnName(), bizIds)
+                .list();
+        return StreamUtils.toList(dataList, column);
+    }
+
+    @Override
     public <K> Map<K, T> getMapByBizIds(Collection<K> bizIds) {
-        // Cannot call the override method here, because override method use mapper to judge the fields to select
+        // Cannot call the override method here, because override method use column to judge the fields to select
         if (isEmpty(bizIds)) {
             return emptyMap();
         }
@@ -118,16 +189,16 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
     }
 
     @Override
-    public <K, V> Map<K, V> getMapByBizIds(Collection<K> bizIds, SFunction<T, V> mapper) {
+    public <K, V> Map<K, V> getMapByBizIds(Collection<K> bizIds, SFunction<T, V> column) {
         if (isEmpty(bizIds)) {
             return emptyMap();
         }
         String bizIdColumnName = getBidColumnField().getColumnName();
         List<T> dataList = query()
-                .select(bizIdColumnName, LambdaUtils.getColumnName(mapper))
+                .select(bizIdColumnName, LambdaUtils.getColumnName(column))
                 .in(bizIdColumnName, bizIds)
                 .list();
-        return StreamUtils.toMap(dataList, entity -> getBidColumnField().getValue(entity), mapper);
+        return StreamUtils.toMap(dataList, entity -> getBidColumnField().getValue(entity), column);
     }
 
     @Override

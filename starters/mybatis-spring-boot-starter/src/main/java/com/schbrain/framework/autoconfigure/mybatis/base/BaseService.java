@@ -23,6 +23,25 @@ public interface BaseService<T extends BaseEntity> extends IService<T> {
     T getById(Long id, Supplier<? extends RuntimeException> notFoundSupplier);
 
     /**
+     * 根据 id 获取记录
+     */
+    <V> V getById(Long id, SFunction<T, V> column);
+
+    /**
+     * 根据 id 获取记录
+     *
+     * @param throwIfNotFound 未获取到记录时是否抛异常
+     */
+    <V> V getById(Long id, SFunction<T, V> column, boolean throwIfNotFound);
+
+    /**
+     * 根据 id 获取记录
+     *
+     * @param notFoundSupplier 未获取到记录时的异常处理
+     */
+    <V> V getById(Long id, SFunction<T, V> column, Supplier<? extends RuntimeException> notFoundSupplier);
+
+    /**
      * 根据 id 获取
      */
     Map<Long, T> getMapByIds(Collection<Long> ids);
@@ -30,7 +49,7 @@ public interface BaseService<T extends BaseEntity> extends IService<T> {
     /**
      * 根据 id 获取
      */
-    <V> Map<Long, V> getMapByIds(Collection<Long> ids, SFunction<T, V> mapper);
+    <V> Map<Long, V> getMapByIds(Collection<Long> ids, SFunction<T, V> column);
 
     /**
      * 根据业务主键获取记录
@@ -40,16 +59,40 @@ public interface BaseService<T extends BaseEntity> extends IService<T> {
     /**
      * 根据业务主键获取记录
      *
-     * @param throwIfNotFound 未获取到记录时是否抛异常
+     * @param throwsIfNotFound 未获取到记录时是否抛异常
      */
-    T getByBizId(Object bizId, boolean throwIfNotFound);
+    T getByBizId(Object bizId, boolean throwsIfNotFound);
 
     /**
      * 根据业务主键获取记录
      *
-     * @param notFoundSupplier 未获取到记录时是否抛异常
+     * @param notFoundSupplier 未获取到记录时的异常处理
      */
     T getByBizId(Object bizId, Supplier<? extends RuntimeException> notFoundSupplier);
+
+    /**
+     * 根据业务主键获取记录
+     */
+    <V> V getByBizId(Object bizId, SFunction<T, V> column);
+
+    /**
+     * 根据业务主键获取记录
+     *
+     * @param throwsIfNotFound 未获取到记录时是否抛异常
+     */
+    <V> V getByBizId(Object bizId, SFunction<T, V> column, boolean throwsIfNotFound);
+
+    /**
+     * 根据业务主键获取记录
+     *
+     * @param notFoundSupplier 未获取到记录时的异常处理
+     */
+    <V> V getByBizId(Object bizId, SFunction<T, V> column, Supplier<? extends RuntimeException> notFoundSupplier);
+
+    /**
+     * 根据业务主键获取
+     */
+    <V> List<V> listByIds(Collection<Long> ids, SFunction<T, V> column);
 
     /**
      * 根据业务主键获取
@@ -59,12 +102,17 @@ public interface BaseService<T extends BaseEntity> extends IService<T> {
     /**
      * 根据业务主键获取
      */
+    <K, V> List<V> listByBizIds(Collection<K> bizIds, SFunction<T, V> column);
+
+    /**
+     * 根据业务主键获取
+     */
     <K> Map<K, T> getMapByBizIds(Collection<K> bizIds);
 
     /**
      * 根据业务主键获取
      */
-    <K, V> Map<K, V> getMapByBizIds(Collection<K> bizIds, SFunction<T, V> mapper);
+    <K, V> Map<K, V> getMapByBizIds(Collection<K> bizIds, SFunction<T, V> column);
 
     /**
      * 根据 id 更新,null 会被更新为 null

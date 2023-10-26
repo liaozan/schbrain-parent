@@ -32,13 +32,17 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
 
     private static final String SPRING_PROFILE_ACTIVE = "spring.profiles.active";
 
+    private final Map<String, Object> defaultProperties = new LinkedHashMap<>();
+
     public DefaultPropertiesEnvironmentPostProcessor(DeferredLogFactory logFactory, ConfigurableBootstrapContext bootstrapContext) {
         super(logFactory, bootstrapContext);
     }
 
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-        Map<String, Object> defaultProperties = new LinkedHashMap<>();
+        // active profile
+        configureActiveProfileIfPresent(environment, defaultProperties);
+        environment.setDefaultProfiles(EnvUtils.DEVELOPMENT);
         // management
         defaultProperties.put("management.trace.http.enabled", false);
         defaultProperties.put("management.endpoints.web.exposure.include", "*");
@@ -46,6 +50,7 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
         defaultProperties.put("management.endpoint.health.show-details", Show.ALWAYS.name());
         defaultProperties.put("management.endpoint.health.show-components", Show.ALWAYS.name());
         defaultProperties.put("management.info.git.mode", Mode.FULL.name());
+        defaultProperties.put("management.info.env.enabled", true);
         defaultProperties.put("management.server.port", PortUtils.findAvailablePort(1024));
         // servlet
         defaultProperties.put("spring.servlet.multipart.max-file-size", DataSize.ofBytes(-1).toString());
@@ -64,9 +69,9 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
         defaultProperties.put("spring.main.allow-circular-references", true);
         defaultProperties.put("spring.main.banner-mode", Banner.Mode.OFF.name());
         defaultProperties.put("server.shutdown", Shutdown.GRACEFUL.name());
-        // active profile
-        configureActiveProfileIfPresent(environment, defaultProperties);
-        environment.setDefaultProfiles(EnvUtils.DEVELOPMENT);
+        if (EnvUtils.runningOnCloudPlatform(environment)) {
+            defaultProperties.put("spring.boot.admin.client.url", "http://spring-boot-admin-server.devops:8019");
+        }
         DefaultPropertiesPropertySource.addOrMerge(defaultProperties, environment.getPropertySources());
     }
 

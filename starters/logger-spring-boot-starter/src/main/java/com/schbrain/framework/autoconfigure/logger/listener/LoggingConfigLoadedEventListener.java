@@ -5,9 +5,7 @@ import cn.hutool.system.SystemUtil;
 import com.ctrip.framework.apollo.ConfigFile;
 import com.ctrip.framework.apollo.ConfigService;
 import com.ctrip.framework.apollo.core.enums.ConfigFileFormat;
-import com.google.common.collect.Maps;
-import com.schbrain.common.util.HostInfoHolder;
-import com.schbrain.common.util.HostInfoHolder.HostInfo;
+import com.schbrain.common.util.IpAddressHolder;
 import com.schbrain.framework.autoconfigure.apollo.event.ConfigLoadedEvent;
 import com.schbrain.framework.autoconfigure.apollo.event.listener.ConfigLoadedEventListenerAdaptor;
 import com.schbrain.framework.autoconfigure.logger.JSONLoggingInitializer;
@@ -33,7 +31,7 @@ public class LoggingConfigLoadedEventListener extends ConfigLoadedEventListenerA
 
     @Override
     protected void onConfigLoaded(ConfigLoadedEvent event, LoggingProperties properties) {
-        event.getPropertySource().addProperties(buildHostInfoProperties());
+        event.getPropertySource().addProperties(buildIpAddressProperties());
         configLoggingFileLocation(event.getEnvironment(), properties.getLogConfigNamespace());
     }
 
@@ -45,12 +43,8 @@ public class LoggingConfigLoadedEventListener extends ConfigLoadedEventListenerA
     /**
      * hostInfo properties, for logging pattern, used in logback-spring.xml
      */
-    private Map<String, Object> buildHostInfoProperties() {
-        HostInfo hostInfo = HostInfoHolder.getHostInfo();
-        Map<String, Object> properties = Maps.newHashMapWithExpectedSize(2);
-        properties.put("application.hostname", hostInfo.getHostname());
-        properties.put("application.ipAddress", hostInfo.getIpAddress());
-        return properties;
+    private Map<String, Object> buildIpAddressProperties() {
+        return Map.of("application.ipAddress", IpAddressHolder.getIpAddress());
     }
 
     /**

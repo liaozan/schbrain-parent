@@ -87,6 +87,7 @@
         <pagehelper.version>5.3.3</pagehelper.version>
         <redisson.version>3.18.0</redisson.version>
         <skywalking-tooklit.version>9.0.0</skywalking-tooklit.version>
+        <spring-boot-admin.version>2.7.11</spring-boot-admin.version>
         <vavr.version>0.10.4</vavr.version>
         <xxl-job.version>2.0.2</xxl-job.version>
         <zookeeper.version>3.9.1</zookeeper.version>
@@ -421,6 +422,16 @@
                 <groupId>org.apache.skywalking</groupId>
                 <artifactId>apm-toolkit-logback-1.x</artifactId>
                 <version>${skywalking-tooklit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>${spring-boot-admin.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.vavr</groupId>

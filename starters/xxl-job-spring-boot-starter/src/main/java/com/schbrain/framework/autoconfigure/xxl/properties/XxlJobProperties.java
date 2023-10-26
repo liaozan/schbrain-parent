@@ -1,6 +1,6 @@
 package com.schbrain.framework.autoconfigure.xxl.properties;
 
-import com.schbrain.common.util.HostInfoHolder;
+import com.schbrain.common.util.IpAddressHolder;
 import com.schbrain.common.util.support.ConfigurableProperties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,7 +15,7 @@ public class XxlJobProperties implements ConfigurableProperties {
 
     private String adminAddresses;
 
-    private String ip = HostInfoHolder.getHostInfo().getIpAddress();
+    private String ip = IpAddressHolder.getIpAddress();
 
     private int port = -1;
 

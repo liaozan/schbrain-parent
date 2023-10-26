@@ -8,7 +8,6 @@ import ch.qos.logback.core.rolling.RollingFileAppender;
 import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
 import cn.hutool.json.JSONObject;
 import com.schbrain.common.util.*;
-import com.schbrain.common.util.HostInfoHolder.HostInfo;
 import com.schbrain.framework.autoconfigure.logger.logstash.EnhancedLogstashEncoder;
 import com.schbrain.framework.autoconfigure.logger.properties.LoggingProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -126,11 +125,9 @@ public class JSONLoggingInitializer {
     }
 
     private String getCustomFields() {
-        HostInfo hostInfo = HostInfoHolder.getHostInfo();
         JSONObject customFields = new JSONObject();
         customFields.set("appName", applicationName);
-        customFields.set("hostName", hostInfo.getHostname());
-        customFields.set("podIp", hostInfo.getIpAddress());
+        customFields.set("podIp", IpAddressHolder.getIpAddress());
         return customFields.toString();
     }
 

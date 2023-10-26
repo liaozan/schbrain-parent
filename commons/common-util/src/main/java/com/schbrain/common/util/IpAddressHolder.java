@@ -1,35 +1,24 @@
 package com.schbrain.common.util;
 
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.*;
 import java.util.Enumeration;
+import java.util.Optional;
 
 /**
  * @author liaozan
  * @since 2021/11/19
  */
 @Slf4j
-public class HostInfoHolder {
+public class IpAddressHolder {
 
-    private static final HostInfo HOST_INFO = findFirstNonLoopBackHostInfo();
+    private static final String POD_IP = System.getenv("POD_IP");
+    private static final String LOCAL_IP = Optional.ofNullable(findFirstNonLoopBackAddress()).map(InetAddress::getHostAddress).orElse("127.0.0.1");
 
-    public static HostInfo getHostInfo() {
-        return HOST_INFO;
-    }
-
-    private static HostInfo findFirstNonLoopBackHostInfo() {
-        InetAddress address = findFirstNonLoopBackAddress();
-        if (address != null) {
-            return convertAddress(address);
-        }
-        log.warn("Cannot find first non-loopBack address, fallback to localhost");
-        HostInfo hostInfo = new HostInfo();
-        hostInfo.setHostname("localhost");
-        hostInfo.setIpAddress("127.0.0.1");
-        return hostInfo;
+    public static String getIpAddress() {
+        return POD_IP == null ? LOCAL_IP : POD_IP;
     }
 
     private static InetAddress findFirstNonLoopBackAddress() {
@@ -70,23 +59,6 @@ public class HostInfoHolder {
         }
 
         return null;
-    }
-
-    private static HostInfo convertAddress(final InetAddress address) {
-        HostInfo hostInfo = new HostInfo();
-        String hostname = address.getHostName();
-        hostInfo.setHostname(hostname);
-        hostInfo.setIpAddress(address.getHostAddress());
-        return hostInfo;
-    }
-
-    @Data
-    public static class HostInfo {
-
-        private String ipAddress;
-
-        private String hostname;
-
     }
 
 }

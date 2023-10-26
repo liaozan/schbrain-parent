@@ -9,11 +9,11 @@ import java.util.concurrent.ThreadFactory;
  * @author liaozan
  * @since 2022/1/11
  */
-public class UnCaughtExceptionHandleThreadFactory implements ThreadFactory {
+public class UnCaughtExceptionHandlerThreadFactory implements ThreadFactory {
 
     private final ThreadFactory delegate;
 
-    public UnCaughtExceptionHandleThreadFactory(ThreadFactory delegate) {
+    public UnCaughtExceptionHandlerThreadFactory(ThreadFactory delegate) {
         this.delegate = delegate;
     }
 
@@ -25,7 +25,7 @@ public class UnCaughtExceptionHandleThreadFactory implements ThreadFactory {
     }
 
     @Slf4j
-    public static class LoggingUnCaughtExceptionHandler implements UncaughtExceptionHandler {
+    private static class LoggingUnCaughtExceptionHandler implements UncaughtExceptionHandler {
 
         @Override
         public void uncaughtException(Thread thread, Throwable throwable) {

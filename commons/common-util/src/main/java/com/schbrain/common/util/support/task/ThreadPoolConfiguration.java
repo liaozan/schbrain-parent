@@ -13,16 +13,16 @@ import org.springframework.context.annotation.Configuration;
 public class ThreadPoolConfiguration {
 
     @Bean
-    public TaskExecutorCustomizer mdcSupportTaskExecutorCustomizer() {
+    public TaskExecutorCustomizer exceptionHandlerAwareTaskExecutorCustomizer() {
         return taskExecutor -> {
             taskExecutor.setTaskDecorator(new MdcContextPropagationTaskDecorator());
-            taskExecutor.setThreadFactory(new UnCaughtExceptionHandleThreadFactory(taskExecutor));
+            taskExecutor.setThreadFactory(new UnCaughtExceptionHandlerThreadFactory(taskExecutor));
         };
     }
 
     @Bean
-    public TaskSchedulerCustomizer mdcSupportTaskSchedulerCustomizer() {
-        return taskScheduler -> taskScheduler.setThreadFactory(new UnCaughtExceptionHandleThreadFactory(taskScheduler));
+    public TaskSchedulerCustomizer exceptionHandlerAwareTaskSchedulerCustomizer() {
+        return taskScheduler -> taskScheduler.setThreadFactory(new UnCaughtExceptionHandlerThreadFactory(taskScheduler));
     }
 
 }

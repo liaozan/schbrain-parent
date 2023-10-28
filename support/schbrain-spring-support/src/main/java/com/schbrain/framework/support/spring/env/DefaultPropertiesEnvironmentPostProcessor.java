@@ -32,14 +32,13 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
 
     private static final String SPRING_PROFILE_ACTIVE = "spring.profiles.active";
 
-    private final Map<String, Object> defaultProperties = new LinkedHashMap<>();
-
     public DefaultPropertiesEnvironmentPostProcessor(DeferredLogFactory logFactory, ConfigurableBootstrapContext bootstrapContext) {
         super(logFactory, bootstrapContext);
     }
 
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
+        Map<String, Object> defaultProperties = new LinkedHashMap<>();
         // active profile
         configureActiveProfileIfPresent(environment, defaultProperties);
         environment.setDefaultProfiles(EnvUtils.DEVELOPMENT);

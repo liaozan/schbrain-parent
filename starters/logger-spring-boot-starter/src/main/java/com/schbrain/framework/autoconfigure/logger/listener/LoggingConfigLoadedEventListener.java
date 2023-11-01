@@ -44,7 +44,7 @@ public class LoggingConfigLoadedEventListener extends ConfigLoadedEventListenerA
      * hostInfo properties, for logging pattern, used in logback-spring.xml
      */
     private Map<String, Object> buildIpAddressProperties() {
-        return Map.of("application.ipAddress", IpAddressHolder.getIpAddress());
+        return Map.of("application.ipAddress", IpAddressHolder.getLocalIp());
     }
 
     /**

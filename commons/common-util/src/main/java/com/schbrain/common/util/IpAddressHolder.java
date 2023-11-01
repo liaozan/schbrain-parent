@@ -17,8 +17,12 @@ public class IpAddressHolder {
     private static final String POD_IP = System.getenv("POD_IP");
     private static final String LOCAL_IP = Optional.ofNullable(findFirstNonLoopBackAddress()).map(InetAddress::getHostAddress).orElse("127.0.0.1");
 
-    public static String getIpAddress() {
-        return POD_IP == null ? LOCAL_IP : POD_IP;
+    public static String getLocalIp() {
+        return getLocalIp(LOCAL_IP);
+    }
+
+    public static String getLocalIp(String fallback) {
+        return POD_IP == null ? fallback : POD_IP;
     }
 
     private static InetAddress findFirstNonLoopBackAddress() {

@@ -1,3 +1,2 @@
-com.schbrain.framework.support.spring.admin.SpringBootAdminFeatureAutoConfiguration
 com.schbrain.framework.support.spring.elasticsearch.ElasticsearchFeatureAutoConfiguration
 com.schbrain.framework.support.spring.redisson.RedissonFeatureAutoConfiguration

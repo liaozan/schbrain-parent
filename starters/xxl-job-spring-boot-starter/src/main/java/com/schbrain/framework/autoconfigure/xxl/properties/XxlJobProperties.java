@@ -15,7 +15,7 @@ public class XxlJobProperties implements ConfigurableProperties {
 
     private String adminAddresses;
 
-    private String ip = IpAddressHolder.getIpAddress();
+    private String ip = IpAddressHolder.getLocalIp();
 
     private int port = -1;
 

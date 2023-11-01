@@ -68,9 +68,6 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
         defaultProperties.put("spring.main.allow-circular-references", true);
         defaultProperties.put("spring.main.banner-mode", Banner.Mode.OFF.name());
         defaultProperties.put("server.shutdown", Shutdown.GRACEFUL.name());
-        if (EnvUtils.runningOnCloudPlatform(environment)) {
-            defaultProperties.put("spring.boot.admin.client.url", "http://spring-boot-admin-server.devops:8019");
-        }
         DefaultPropertiesPropertySource.addOrMerge(defaultProperties, environment.getPropertySources());
     }
 

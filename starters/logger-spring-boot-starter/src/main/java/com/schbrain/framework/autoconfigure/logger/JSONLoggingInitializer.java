@@ -127,7 +127,7 @@ public class JSONLoggingInitializer {
     private String getCustomFields() {
         JSONObject customFields = new JSONObject();
         customFields.set("appName", applicationName);
-        customFields.set("podIp", IpAddressHolder.getIpAddress());
+        customFields.set("podIp", IpAddressHolder.getLocalIp());
         return customFields.toString();
     }
 

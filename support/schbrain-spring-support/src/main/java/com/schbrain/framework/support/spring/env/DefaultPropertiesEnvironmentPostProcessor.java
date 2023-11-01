@@ -49,7 +49,6 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
         defaultProperties.put("management.endpoint.health.show-details", Show.ALWAYS.name());
         defaultProperties.put("management.endpoint.health.show-components", Show.ALWAYS.name());
         defaultProperties.put("management.info.git.mode", Mode.FULL.name());
-        defaultProperties.put("management.info.env.enabled", true);
         defaultProperties.put("management.server.port", PortUtils.findAvailablePort(1024));
         // servlet
         defaultProperties.put("spring.servlet.multipart.max-file-size", DataSize.ofBytes(-1).toString());

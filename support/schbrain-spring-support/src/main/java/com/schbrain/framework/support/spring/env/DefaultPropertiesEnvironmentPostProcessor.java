@@ -3,8 +3,7 @@ package com.schbrain.framework.support.spring.env;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.text.StrFormatter;
 import cn.hutool.core.util.ArrayUtil;
-import com.schbrain.common.util.EnvUtils;
-import com.schbrain.common.util.PortUtils;
+import com.schbrain.common.util.*;
 import com.schbrain.framework.support.spring.LoggerAwareEnvironmentPostProcessor;
 import org.springframework.boot.*;
 import org.springframework.boot.actuate.autoconfigure.health.HealthProperties.Show;
@@ -43,13 +42,14 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
         configureActiveProfileIfPresent(environment, defaultProperties);
         environment.setDefaultProfiles(EnvUtils.DEVELOPMENT);
         // management
-        defaultProperties.put("management.trace.http.enabled", false);
         defaultProperties.put("management.endpoints.web.exposure.include", "*");
         defaultProperties.put("management.endpoints.enabled-by-default", true);
         defaultProperties.put("management.endpoint.health.show-details", Show.ALWAYS.name());
         defaultProperties.put("management.endpoint.health.show-components", Show.ALWAYS.name());
         defaultProperties.put("management.info.git.mode", Mode.FULL.name());
+        defaultProperties.put("management.metrics.tags.application", ApplicationName.get(environment));
         defaultProperties.put("management.server.port", PortUtils.findAvailablePort(1024));
+        defaultProperties.put("management.trace.http.enabled", false);
         // servlet
         defaultProperties.put("spring.servlet.multipart.max-file-size", DataSize.ofBytes(-1).toString());
         defaultProperties.put("spring.servlet.multipart.max-request-size", DataSize.ofBytes(-1).toString());

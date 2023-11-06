@@ -82,7 +82,7 @@
         <logstash-logback-encoder.version>7.3</logstash-logback-encoder.version>
         <mybatis.version>3.5.14</mybatis.version>
         <mybatis.starter.version>2.3.0</mybatis.starter.version>
-        <mybatis-plus.version>3.5.4</mybatis-plus.version>
+        <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
         <pagehelper.version>6.0.0</pagehelper.version>
         <redisson.version>3.18.0</redisson.version>

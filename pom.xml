@@ -43,7 +43,7 @@
     </distributionManagement>
 
     <properties>
-        <revision>3.0.8</revision>
+        <revision>3.0.9-SNAPSHOT</revision>
         <java.version>11</java.version>
         <!-- 2th part versions -->
         <schbrain-apollo.version>${revision}</schbrain-apollo.version>
@@ -110,7 +110,7 @@
         <!-- dingtalk -->
         <alibaba-dingtalk-service-sdk.version>2.0.0</alibaba-dingtalk-service-sdk.version>
         <cube-sdk-java.version>1.0.5.1-RELEASE</cube-sdk-java.version>
-        <dingtalk.version>2.0.59</dingtalk.version>
+        <dingtalk.version>2.0.58</dingtalk.version>
 
         <!-- maven plugins -->
         <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>

@@ -4,8 +4,10 @@ import com.schbrain.framework.autoconfigure.cache.properties.CacheProperties;
 import com.schbrain.framework.autoconfigure.cache.provider.CacheOperation;
 import com.schbrain.framework.autoconfigure.cache.provider.PrefixedCacheOperation;
 import com.schbrain.framework.autoconfigure.cache.provider.redis.RedisCacheConfiguration;
+import io.lettuce.core.metrics.MicrometerOptions;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +30,12 @@ public class CacheAutoConfiguration {
         PrefixedCacheOperation operation = new PrefixedCacheOperation(cacheProperties, cacheOperation);
         CacheUtils.setCacheOperation(operation);
         return operation;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public MicrometerOptions disableLettuceMetrics() {
+        return MicrometerOptions.disabled();
     }
 
 }

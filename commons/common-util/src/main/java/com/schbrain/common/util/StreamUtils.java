@@ -146,12 +146,20 @@ public class StreamUtils {
         return join(data, delimiter, Objects::toString);
     }
 
+    public static <T> String join(Iterable<T> data, Function<T, String> toStringFunction) {
+        return join(data, StrPool.COMMA, toStringFunction);
+    }
+
     public static <T> String join(Iterable<T> data, String delimiter, Function<T, String> toStringFunction) {
         return from(data).map(toStringFunction).collect(joining(delimiter));
     }
 
     public static List<String> split(String data) {
-        return split(data, Function.identity());
+        return split(data, StrPool.COMMA);
+    }
+
+    public static List<String> split(String data, String delimiter) {
+        return split(data, delimiter, Function.identity());
     }
 
     public static <T> List<T> split(String data, Function<String, T> mapper) {

@@ -1,11 +1,11 @@
 package com.schbrain.framework.dao.util;
 
+import com.schbrain.common.util.StreamUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.ClassUtils;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * description
@@ -14,35 +14,27 @@ import java.util.stream.Collectors;
  */
 public class SQLUtil {
 
-    public static String buidInClause(String columnName, Class<?> valueType, List<?> valueList) {
+    public static <T> String buildInClause(String columnName, Class<T> valueType, List<T> values) {
+        Set<T> valueList = StreamUtils.filterToSet(values, Objects::nonNull);
         if (CollectionUtils.isEmpty(valueList)) {
             throw new IllegalArgumentException("Value list can not be empty.");
         }
-        valueList = valueList.stream().filter(Objects::nonNull).collect(Collectors.toList());
-        if (CollectionUtils.isEmpty(valueList)) {
-            throw new IllegalArgumentException("Value list can not be empty.");
-        }
-        StringBuilder sb = new StringBuilder(" ");
-        sb.append(columnName).append(" in (");
-        if (Integer.class.isAssignableFrom(valueType) || Long.class.isAssignableFrom(valueType) ||
-                Short.class.isAssignableFrom(valueType) || Byte.class.isAssignableFrom(valueType) ||
-                Double.class.isAssignableFrom(valueType) || Float.class.isAssignableFrom(valueType)) {
-            sb.append(StringUtils.join(valueList, ',')).append(")");
+        StringBuilder builder = new StringBuilder(" ");
+        builder.append(columnName).append(" in (");
+        if (ClassUtils.isPrimitiveWrapper(valueType)) {
+            builder.append(StreamUtils.join(valueList)).append(")");
         } else {
-            valueList.forEach(e -> {
-                sb.append("'").append(escapeSql(e)).append("',");
-            });
-            sb.deleteCharAt(sb.length() - 1).append(")");
+            builder.append(StreamUtils.join(valueList, SQLUtil::escapeSql)).append(")");
         }
-        sb.append(" ");
-        return sb.toString();
+        builder.append(" ");
+        return builder.toString();
     }
 
-    private static String escapeSql(Object o) {
-        if (o instanceof String) {
-            return StringUtils.replace((String) o, "'", "''");
+    private static String escapeSql(Object value) {
+        if (value instanceof String) {
+            return StringUtils.replace((String) value, "'", "''");
         } else {
-            return String.valueOf(o);
+            return String.valueOf(value);
         }
     }
 

@@ -32,7 +32,7 @@ public class TreeNodeDao<NODE extends TreeNode> {
     }
 
     public List<NODE> listByIds(List<Long> ids) {
-        return baseDao.listByCondition("validate = #{validate} AND " + SQLUtil.buidInClause("id", Long.class, ids), ValidateEnum.VALID.getValue());
+        return baseDao.listByCondition("validate = #{validate} AND " + SQLUtil.buildInClause("id", Long.class, ids), ValidateEnum.VALID.getValue());
     }
 
     public Integer countParent(Long relateId, NODE node, TreeQueryOption option) {
@@ -242,7 +242,7 @@ public class TreeNodeDao<NODE extends TreeNode> {
     }
 
     public int updateParentId(List<Long> nodeIds, Long parentId) {
-        String sql = "UPDATE " + baseDao.getTableName() + " SET parent_id = #{parentId} WHERE " + SQLUtil.buidInClause("id", Long.class, nodeIds);
+        String sql = "UPDATE " + baseDao.getTableName() + " SET parent_id = #{parentId} WHERE " + SQLUtil.buildInClause("id", Long.class, nodeIds);
         return baseDao.updateByCompleteSql(sql, parentId);
     }
 
@@ -267,7 +267,7 @@ public class TreeNodeDao<NODE extends TreeNode> {
     }
 
     public int updateNodeByIds(NODE updateNode, List<Long> nodeIds) {
-        return baseDao.updateByCondition(updateNode, SQLUtil.buidInClause("id", Long.class, nodeIds));
+        return baseDao.updateByCondition(updateNode, SQLUtil.buildInClause("id", Long.class, nodeIds));
     }
 
     private String getParentLeftRange(NODE node, TreeQueryOption option, List<Object> params) {

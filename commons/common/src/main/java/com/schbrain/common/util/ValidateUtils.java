@@ -16,7 +16,7 @@ public class ValidateUtils {
     }
 
     public static void isTrue(boolean expression) {
-        isTrue(expression, "操作有误");
+        isTrue(expression, "The validated object is false");
     }
 
     public static void isTrue(boolean expression, String message) {
@@ -30,7 +30,7 @@ public class ValidateUtils {
     }
 
     public static void isFalse(boolean expression) {
-        isFalse(expression, "操作有误");
+        isFalse(expression, "The validated object is true");
     }
 
     public static void isFalse(boolean expression, String message) {

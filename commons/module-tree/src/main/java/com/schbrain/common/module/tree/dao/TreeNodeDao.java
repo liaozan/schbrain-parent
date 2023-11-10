@@ -101,7 +101,7 @@ public class TreeNodeDao<NODE extends TreeNode> {
             newNode.setDepth(parent.getDepth() + 1);
             newNode.setParentId(parent.getId());
             // 增加父节点右边所有节点的left和right，留出空位
-            increaseNodesLeftAndRight(newNode.getRelateId(), parent.getLft(), parent.getLft(), false, 2);
+            increaseNodesLeftAndRight(newNode.getRelateId(), parent.getLft(), parent.getLft());
             // 添加节点
             return baseDao.add(newNode);
         }
@@ -111,7 +111,7 @@ public class TreeNodeDao<NODE extends TreeNode> {
         newNode.setDepth(preBroNode.getDepth());
         newNode.setParentId(preBroNode.getParentId());
         // 增加兄弟节点右边所有节点的left和right，留出空位
-        increaseNodesLeftAndRight(preBroNode.getRelateId(), preBroNode.getRgt(), preBroNode.getRgt(), false, 2);
+        increaseNodesLeftAndRight(preBroNode.getRelateId(), preBroNode.getRgt(), preBroNode.getRgt());
         // 添加节点
         return baseDao.add(newNode);
     }
@@ -330,20 +330,20 @@ public class TreeNodeDao<NODE extends TreeNode> {
      * 如果是父节点的left和right，则includeRight为true，因为父节点的right值也需要更新；
      * 如果是兄弟节点的left和right，则include为false，因为系统节点的right值不需要更新。
      */
-    private int increaseNodesLeftAndRight(Long relateId, Integer left, Integer right, boolean includeRight, Integer increment) {
+    private void increaseNodesLeftAndRight(Long relateId, Integer left, Integer right) {
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE ")
                 .append(baseDao.getTableName())
-                .append(" SET lft = lft + ").append(increment)
+                .append(" SET lft = lft + ").append(2)
                 .append(" WHERE relate_id = #{relateId} AND lft > #{lft} AND validate = #{validate}");
         baseDao.updateByCompleteSql(sql.toString(), relateId, left, ValidateEnum.VALID.getValue());
         sql.delete(0, sql.length());
         sql.append("UPDATE ").append(baseDao.getTableName())
-                .append(" SET rgt = rgt + ").append(increment)
+                .append(" SET rgt = rgt + ").append(2)
                 .append(" WHERE relate_id = #{relateId} AND rgt ")
-                .append(includeRight ? ">=" : ">")
+                .append(">")
                 .append(" #{rgt} AND validate = #{validate}");
-        return baseDao.updateByCompleteSql(sql.toString(), relateId, right, ValidateEnum.VALID.getValue());
+        baseDao.updateByCompleteSql(sql.toString(), relateId, right, ValidateEnum.VALID.getValue());
     }
 
     private int decreaseNodesLeftAndRight(Long relateId, Integer left, Integer right, Integer decrement) {

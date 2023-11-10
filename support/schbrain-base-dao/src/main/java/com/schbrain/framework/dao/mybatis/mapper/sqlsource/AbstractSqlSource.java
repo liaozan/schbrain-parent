@@ -34,8 +34,7 @@ public abstract class AbstractSqlSource implements SqlSource {
         if (StringUtils.isBlank(sql)) {
             return "1=1";
         }
-        Object[] params = ((Object[]) args[1]);
-        int paramCount = null == params ? 0 : params.length;
+        int paramCount = getParamCount(args);
         Matcher matcher = pattern.matcher(sql);
         int i = 0;
         StringBuilder result = new StringBuilder();
@@ -76,6 +75,11 @@ public abstract class AbstractSqlSource implements SqlSource {
 
     protected String replacePlaceholder(String sql) {
         return PropertyParser.parse(sql, configuration.getVariables());
+    }
+
+    private int getParamCount(Object[] args) {
+        Object[] params = ((Object[]) args[1]);
+        return null == params ? 0 : params.length;
     }
 
 }

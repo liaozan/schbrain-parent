@@ -88,10 +88,7 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
         if (targetMethod == null) {
             return null;
         }
-        ServletInvocableHandlerMethod exceptionHandlerMethod = new ServletInvocableHandlerMethod(handler, targetMethod);
-        exceptionHandlerMethod.setHandlerMethodArgumentResolvers(argumentResolverComposite);
-        exceptionHandlerMethod.setHandlerMethodReturnValueHandlers(returnValueHandlerComposite);
-        return exceptionHandlerMethod;
+        return createInvocableHandlerMethod(handler, targetMethod);
     }
 
     @Nullable
@@ -112,11 +109,26 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
         // nothing to do
     }
 
+    private ServletInvocableHandlerMethod createInvocableHandlerMethod(Object handler, Method targetMethod) {
+        ServletInvocableHandlerMethod exceptionHandlerMethod = new ServletInvocableHandlerMethod(handler, targetMethod);
+        exceptionHandlerMethod.setHandlerMethodArgumentResolvers(argumentResolverComposite);
+        exceptionHandlerMethod.setHandlerMethodReturnValueHandlers(returnValueHandlerComposite);
+        return exceptionHandlerMethod;
+    }
+
     private ExceptionHandlerMethodResolver getHandlerMethodResolver(Class<?> handlerType) {
         return exceptionHandlerMethodResolvers.computeIfAbsent(handlerType, key -> new ExceptionHandlerMethodResolver(handlerType));
     }
 
     private Object[] getArguments(Exception exception, HandlerMethod handlerMethod) {
+        List<Throwable> exceptions = getExceptions(exception);
+        Object[] arguments = new Object[exceptions.size() + 1];
+        exceptions.toArray(arguments);
+        arguments[arguments.length - 1] = handlerMethod;
+        return arguments;
+    }
+
+    private List<Throwable> getExceptions(Exception exception) {
         List<Throwable> exceptions = new ArrayList<>();
         Throwable exToExpose = exception;
         while (exToExpose != null) {
@@ -124,10 +136,7 @@ public class DefaultGlobalExceptionResolver extends AbstractHandlerMethodExcepti
             Throwable cause = exToExpose.getCause();
             exToExpose = (cause != exToExpose ? cause : null);
         }
-        Object[] arguments = new Object[exceptions.size() + 1];
-        exceptions.toArray(arguments);
-        arguments[arguments.length - 1] = handlerMethod;
-        return arguments;
+        return exceptions;
     }
 
 }

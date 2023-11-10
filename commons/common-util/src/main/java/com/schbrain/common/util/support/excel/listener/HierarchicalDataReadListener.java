@@ -52,9 +52,8 @@ public class HierarchicalDataReadListener extends ExcelReadListenerBase<Map<Inte
         return true;
     }
 
-    protected void buildImportedRow(Integer rowIndex, Integer columnIndex, String text) {
-        ImportedRecord importedRecord = new ImportedRecord();
-        importedRecord.setText(text);
+    protected void buildImportedRow(Integer rowIndex, Integer columnIndex, String content) {
+        ImportedRecord importedRecord = createImportedRecord(content);
         coordinateTable.put(rowIndex, columnIndex, importedRecord);
         if (columnIndex == 0) {
             importedRecords.add(importedRecord);
@@ -74,10 +73,16 @@ public class HierarchicalDataReadListener extends ExcelReadListenerBase<Map<Inte
         }
     }
 
+    private ImportedRecord createImportedRecord(String text) {
+        ImportedRecord importedRecord = new ImportedRecord();
+        importedRecord.setContent(text);
+        return importedRecord;
+    }
+
     @Data
     public static class ImportedRecord {
 
-        private String text;
+        private String content;
 
         private List<ImportedRecord> children = new LinkedList<>();
 

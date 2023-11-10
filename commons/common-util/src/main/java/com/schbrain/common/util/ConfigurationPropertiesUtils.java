@@ -46,13 +46,13 @@ public class ConfigurationPropertiesUtils {
 
     public static String getPrefix(Class<?> sourceClass) {
         ConfigurationProperties annotation = sourceClass.getAnnotation(ConfigurationProperties.class);
-        if (annotation == null) {
-            String className = ConfigurationProperties.class.getName();
-            String errorDetail = sourceClass.getSimpleName() + " must annotated @" + className + " or overwrite getPropertiesPrefix method";
-            throw new IllegalStateException(errorDetail);
-        }
+        ValidateUtils.notNull(annotation, getErrorDetail(sourceClass));
         MergedAnnotation<ConfigurationProperties> mergedAnnotation = MergedAnnotation.from(annotation);
         return mergedAnnotation.getString(MergedAnnotation.VALUE);
+    }
+
+    private static String getErrorDetail(Class<?> sourceClass) {
+        return sourceClass.getSimpleName() + " must annotated @" + ConfigurationProperties.class.getName() + " or overwrite getPropertiesPrefix method";
     }
 
 }

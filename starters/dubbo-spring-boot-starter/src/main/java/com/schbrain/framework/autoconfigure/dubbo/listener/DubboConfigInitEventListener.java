@@ -44,6 +44,10 @@ class DubboConfigInitEventListener extends OnceApplicationContextEventListener<D
 
     private ConfigCenterConfig buildConfigCenterConfig() {
         Map<String, String> externalConfiguration = filterDubboProperties(environment);
+        return buildConfigCenterConfig(externalConfiguration);
+    }
+
+    private ConfigCenterConfig buildConfigCenterConfig(Map<String, String> externalConfiguration) {
         ConfigCenterConfig configCenterConfig = new ConfigCenterConfig();
         configCenterConfig.setAppExternalConfig(externalConfiguration);
         return configCenterConfig;

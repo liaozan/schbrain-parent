@@ -87,10 +87,7 @@ public class BaseMapper {
     }
 
     private void parseMapperClass() {
-        MapperConfig mapperConfig = mapperInterface.getAnnotation(MapperConfig.class);
-        if (null == mapperConfig) {
-            throw new MapperParseException(String.format("Can not find MapperConfig annotation in mapper class %s ", mapperInterface.getName()));
-        }
+        MapperConfig mapperConfig = getMapperConfig();
         tableName = mapperConfig.tableName();
         if (StringUtils.isBlank(tableName)) {
             throw new MapperParseException(String.format("Table name is blank in MapperConfig annotation in mapper class %s ", mapperInterface.getName()));
@@ -103,6 +100,14 @@ public class BaseMapper {
         if (fields.length < 1) {
             throw new MapperParseException(String.format("Domain class %s has no fields", domainClass.getName()));
         }
+    }
+
+    private MapperConfig getMapperConfig() {
+        MapperConfig mapperConfig = mapperInterface.getAnnotation(MapperConfig.class);
+        if (null == mapperConfig) {
+            throw new MapperParseException(String.format("Can not find MapperConfig annotation in mapper class %s ", mapperInterface.getName()));
+        }
+        return mapperConfig;
     }
 
     private Object getById(Object[] args) {

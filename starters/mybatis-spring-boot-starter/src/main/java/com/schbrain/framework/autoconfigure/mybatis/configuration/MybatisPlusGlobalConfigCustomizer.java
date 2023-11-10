@@ -30,14 +30,17 @@ public class MybatisPlusGlobalConfigCustomizer implements MybatisPlusPropertiesC
 
     @Override
     public void customize(MybatisPlusProperties properties) {
-        GlobalConfig globalConfig = properties.getGlobalConfig();
-        globalConfig.setBanner(false);
-
-        DbConfig dbConfig = globalConfig.getDbConfig();
+        DbConfig dbConfig = buildDbConfig(properties);
         dbConfig.setIdType(IdType.AUTO);
         dbConfig.setInsertStrategy(FieldStrategy.NOT_NULL);
         dbConfig.setUpdateStrategy(FieldStrategy.NOT_NULL);
         dbConfig.setWhereStrategy(FieldStrategy.NOT_NULL);
+    }
+
+    private DbConfig buildDbConfig(MybatisPlusProperties properties) {
+        GlobalConfig globalConfig = properties.getGlobalConfig();
+        globalConfig.setBanner(false);
+        return globalConfig.getDbConfig();
     }
 
 }

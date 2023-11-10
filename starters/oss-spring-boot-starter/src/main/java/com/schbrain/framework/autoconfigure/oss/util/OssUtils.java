@@ -171,14 +171,9 @@ public class OssUtils {
     }
 
     public static UploadCredentials generateUploadToken() {
-        AssumeRoleRequest request = new AssumeRoleRequest();
-        request.setSysMethod(MethodType.POST);
-        request.setRoleArn(stsProperties.getRoleArn());
-        request.setRoleSessionName(stsProperties.getRoleSessionName());
-        request.setDurationSeconds(stsProperties.getDurationSeconds());
         AssumeRoleResponse response;
         try {
-            response = getStsAcsClient().getAcsResponse(request);
+            response = getStsAcsClient().getAcsResponse(createAssumeRoleRequest());
         } catch (com.aliyuncs.exceptions.ClientException e) {
             return new UploadCredentials(e.getErrMsg());
         }
@@ -281,6 +276,15 @@ public class OssUtils {
 
     public static boolean exist(String bucket, String key) {
         return getOssClient().doesObjectExist(bucket, key);
+    }
+
+    private static AssumeRoleRequest createAssumeRoleRequest() {
+        AssumeRoleRequest request = new AssumeRoleRequest();
+        request.setSysMethod(MethodType.POST);
+        request.setRoleArn(stsProperties.getRoleArn());
+        request.setRoleSessionName(stsProperties.getRoleSessionName());
+        request.setDurationSeconds(stsProperties.getDurationSeconds());
+        return request;
     }
 
     private static DownloadResult download0(String bucket, String objectKey) {

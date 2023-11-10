@@ -17,12 +17,7 @@ public class ValidationMessageBuilder {
         StringJoiner joiner = new StringJoiner(", ");
         for (ObjectError error : bindingResult.getAllErrors()) {
             String errorMessage = Optional.ofNullable(error.getDefaultMessage()).orElse("验证失败");
-            String source;
-            if (error instanceof FieldError) {
-                source = ((FieldError) error).getField();
-            } else {
-                source = error.getObjectName();
-            }
+            String source = getSourceName(error);
             joiner.add(source + " " + errorMessage);
         }
         return joiner.toString();
@@ -35,6 +30,14 @@ public class ValidationMessageBuilder {
             joiner.add(getActualProperty(propertyPath) + " " + violation.getMessage());
         }
         return joiner.toString();
+    }
+
+    private static String getSourceName(ObjectError error) {
+        if (error instanceof FieldError) {
+            return ((FieldError) error).getField();
+        } else {
+            return error.getObjectName();
+        }
     }
 
     private static String getActualProperty(String propertyPath) {

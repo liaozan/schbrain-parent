@@ -5,7 +5,8 @@ import com.schbrain.common.module.tree.TreeNode;
 import java.util.List;
 
 /**
- * Created by hzchengyi on 2019/1/21.
+ * @author hzchengyi
+ * @since 2019/1/21
  */
 public interface TreeOperationAware<NODE extends TreeNode> {
 

@@ -11,7 +11,7 @@ import java.util.Properties;
  */
 public interface DataSourcePropertiesExtractor {
 
-    boolean support(DataSource dataSource) throws SQLException;
+    boolean support(DataSource dataSource);
 
     Properties extract(DataSource dataSource, Map<String, String> properties) throws SQLException;
 

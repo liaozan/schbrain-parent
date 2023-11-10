@@ -20,7 +20,7 @@ public class UpdateByCompleteSqlSource extends AbstractSqlSource {
 
     @Override
     public BoundSql getBoundSql(Object parameterObject) {
-        Object[] args = (Object[]) ((Map) parameterObject).get("array");
+        Object[] args = (Object[]) ((Map<?, ?>) parameterObject).get("array");
         SqlSourceBuilder sqlSourceParser = new SqlSourceBuilder(configuration);
         String sql = replacePlaceholder(getGenericParamSqlAndCheckParamCount(args));
         Map<String, Object> paramMap = getSqlCommandParam((Object[]) args[1]);

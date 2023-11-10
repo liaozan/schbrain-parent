@@ -31,7 +31,7 @@ public class UpdateByConditionSqlSource extends AbstractSqlSource {
 
     @Override
     protected BoundSql getBoundSql(String scriptSql, Object parameterObject) {
-        Object[] args = (Object[]) ((Map) parameterObject).get("array");
+        Object[] args = (Object[]) ((Map<?, ?>) parameterObject).get("array");
         Object[] conditionArgs = new Object[]{args[1], args[2]};
         Map<String, Object> paramMap = getSqlCommandParam((Object[]) args[2]);
         paramMap.put("obj", args[0]);

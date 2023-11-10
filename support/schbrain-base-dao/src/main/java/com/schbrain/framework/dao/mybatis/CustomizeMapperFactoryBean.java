@@ -35,13 +35,17 @@ public class CustomizeMapperFactoryBean<T> extends MapperFactoryBean<T> {
         List<Interceptor> interceptorList = configuration.getInterceptors();
         boolean hasPageInterceptor = interceptorList.stream().anyMatch(PageInterceptor.class::isInstance);
         if (!hasPageInterceptor) {
-            PageInterceptor pageInterceptor = new PageInterceptor();
-            pageInterceptor.setProperties(new Properties());
-            configuration.addInterceptor(pageInterceptor);
+            configuration.addInterceptor(createPageInterceptor());
         }
         // 创建代理
         BaseDaoInvocationHandler<T> handler = new BaseDaoInvocationHandler<>(originMapperProxy, sqlSession, mapperInterface);
         return ProxyUtil.newProxyInstance(mapperInterface.getClassLoader(), handler, mapperInterface);
+    }
+
+    private PageInterceptor createPageInterceptor() {
+        PageInterceptor pageInterceptor = new PageInterceptor();
+        pageInterceptor.setProperties(new Properties());
+        return pageInterceptor;
     }
 
 }

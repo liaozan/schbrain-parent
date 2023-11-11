@@ -223,6 +223,19 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
     }
 
     @Override
+    public <K> boolean removeByBizId(K bizId) {
+        return update().eq(getBidColumnField().getColumnName(), bizId).remove();
+    }
+
+    @Override
+    public <K> boolean removeBatchByBizIds(Collection<K> bizIds) {
+        if (isEmpty(bizIds)) {
+            return false;
+        }
+        return update().in(getBidColumnField().getColumnName(), bizIds).remove();
+    }
+
+    @Override
     public void afterPropertiesSet() {
         ReflectionUtils.doWithFields(entityClass, bizId -> {
             if (this.bizIdColumnField != null) {

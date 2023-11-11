@@ -10,15 +10,11 @@ public interface BaseService<T extends BaseEntity> extends IService<T> {
 
     /**
      * 根据 id 获取记录
-     *
-     * @param throwIfNotFound 未获取到记录时是否抛异常
      */
     T getById(Long id, boolean throwIfNotFound);
 
     /**
      * 根据 id 获取记录
-     *
-     * @param notFoundSupplier 未获取到记录时的异常处理
      */
     T getById(Long id, Supplier<? extends RuntimeException> notFoundSupplier);
 
@@ -29,15 +25,11 @@ public interface BaseService<T extends BaseEntity> extends IService<T> {
 
     /**
      * 根据 id 获取记录
-     *
-     * @param throwIfNotFound 未获取到记录时是否抛异常
      */
     <V> V getById(Long id, SFunction<T, V> column, boolean throwIfNotFound);
 
     /**
      * 根据 id 获取记录
-     *
-     * @param notFoundSupplier 未获取到记录时的异常处理
      */
     <V> V getById(Long id, SFunction<T, V> column, Supplier<? extends RuntimeException> notFoundSupplier);
 
@@ -58,15 +50,11 @@ public interface BaseService<T extends BaseEntity> extends IService<T> {
 
     /**
      * 根据业务主键获取记录
-     *
-     * @param throwsIfNotFound 未获取到记录时是否抛异常
      */
     T getByBizId(Object bizId, boolean throwsIfNotFound);
 
     /**
      * 根据业务主键获取记录
-     *
-     * @param notFoundSupplier 未获取到记录时的异常处理
      */
     T getByBizId(Object bizId, Supplier<? extends RuntimeException> notFoundSupplier);
 
@@ -77,15 +65,11 @@ public interface BaseService<T extends BaseEntity> extends IService<T> {
 
     /**
      * 根据业务主键获取记录
-     *
-     * @param throwsIfNotFound 未获取到记录时是否抛异常
      */
     <V> V getByBizId(Object bizId, SFunction<T, V> column, boolean throwsIfNotFound);
 
     /**
      * 根据业务主键获取记录
-     *
-     * @param notFoundSupplier 未获取到记录时的异常处理
      */
     <V> V getByBizId(Object bizId, SFunction<T, V> column, Supplier<? extends RuntimeException> notFoundSupplier);
 
@@ -128,5 +112,15 @@ public interface BaseService<T extends BaseEntity> extends IService<T> {
      * 根据 id 批量更新,null 会被更新为 null
      */
     boolean updateBatchByIdsWithNull(Collection<T> entityList, int batchSize);
+
+    /**
+     * 根据业务主键删除
+     */
+    <K> boolean removeByBizId(K bizId);
+
+    /**
+     * 根据业务主键删除
+     */
+    <K> boolean removeBatchByBizIds(Collection<K> bizIds);
 
 }

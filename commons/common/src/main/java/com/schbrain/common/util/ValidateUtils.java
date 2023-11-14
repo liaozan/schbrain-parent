@@ -37,24 +37,25 @@ public class ValidateUtils {
         isFalse(expression, () -> new ParamInvalidException(message));
     }
 
-    public static <T extends BaseException> void isFalse(boolean expression, Supplier<T> errorSupplier) {
+    public static <E extends BaseException> void isFalse(boolean expression, Supplier<E> errorSupplier) {
         if (expression) {
             throw errorSupplier.get();
         }
     }
 
-    public static void notNull(Object object) {
-        notNull(object, "The validated object is null");
+    public static <T> T notNull(T object) {
+        return notNull(object, "The validated object is null");
     }
 
-    public static void notNull(Object object, String message) {
-        notNull(object, () -> new ParamInvalidException(message));
+    public static <T> T notNull(T object, String message) {
+        return notNull(object, () -> new ParamInvalidException(message));
     }
 
-    public static <T extends BaseException> void notNull(Object object, Supplier<T> errorSupplier) {
+    public static <T, E extends BaseException> T notNull(T object, Supplier<E> errorSupplier) {
         if (object == null) {
             throw errorSupplier.get();
         }
+        return object;
     }
 
     public static void isNull(Object object) {
@@ -71,18 +72,19 @@ public class ValidateUtils {
         }
     }
 
-    public static void notEmpty(String value) {
-        notEmpty(value, "The validated string is empty");
+    public static String notEmpty(String value) {
+        return notEmpty(value, "The validated string is empty");
     }
 
-    public static void notEmpty(String value, String message) {
-        notEmpty(value, () -> new ParamInvalidException(message));
+    public static String notEmpty(String value, String message) {
+        return notEmpty(value, () -> new ParamInvalidException(message));
     }
 
-    public static <T extends BaseException> void notEmpty(String value, Supplier<T> errorSupplier) {
+    public static <E extends BaseException> String notEmpty(String value, Supplier<E> errorSupplier) {
         if (value == null || value.isBlank()) {
             throw errorSupplier.get();
         }
+        return value;
     }
 
     public static void isEmpty(String value) {
@@ -99,18 +101,19 @@ public class ValidateUtils {
         }
     }
 
-    public static void notEmpty(Object[] array) {
-        notEmpty(array, "The validated array is empty");
+    public static <T> T[] notEmpty(T[] array) {
+        return notEmpty(array, "The validated array is empty");
     }
 
-    public static void notEmpty(Object[] array, String message) {
-        notEmpty(array, () -> new ParamInvalidException(message));
+    public static <T> T[] notEmpty(T[] array, String message) {
+        return notEmpty(array, () -> new ParamInvalidException(message));
     }
 
-    public static <T extends BaseException> void notEmpty(Object[] array, Supplier<T> errorSupplier) {
+    public static <T, E extends BaseException> T[] notEmpty(T[] array, Supplier<E> errorSupplier) {
         if (array == null || array.length == 0) {
             throw errorSupplier.get();
         }
+        return array;
     }
 
     public static void isEmpty(Object[] array) {
@@ -121,24 +124,25 @@ public class ValidateUtils {
         isEmpty(array, () -> new ParamInvalidException(message));
     }
 
-    public static <T extends BaseException> void isEmpty(Object[] array, Supplier<T> errorSupplier) {
+    public static <E extends BaseException> void isEmpty(Object[] array, Supplier<E> errorSupplier) {
         if (array != null && array.length != 0) {
             throw errorSupplier.get();
         }
     }
 
-    public static void notEmpty(Collection<?> collection) {
-        notEmpty(collection, "The validated collection is empty");
+    public static <T, C extends Collection<T>> C notEmpty(C collection) {
+        return notEmpty(collection, "The validated collection is empty");
     }
 
-    public static void notEmpty(Collection<?> collection, String message) {
-        notEmpty(collection, () -> new ParamInvalidException(message));
+    public static <T, C extends Collection<T>> C notEmpty(C collection, String message) {
+        return notEmpty(collection, () -> new ParamInvalidException(message));
     }
 
-    public static <T extends BaseException> void notEmpty(Collection<?> collection, Supplier<T> errorSupplier) {
+    public static <T, C extends Collection<T>, E extends BaseException> C notEmpty(C collection, Supplier<E> errorSupplier) {
         if (collection == null || collection.isEmpty()) {
             throw errorSupplier.get();
         }
+        return collection;
     }
 
     public static void isEmpty(Collection<?> collection) {
@@ -155,18 +159,19 @@ public class ValidateUtils {
         }
     }
 
-    public static void notEmpty(Map<?, ?> map) {
-        notEmpty(map, "The validated map is empty");
+    public static <K, V> Map<K, V> notEmpty(Map<K, V> map) {
+        return notEmpty(map, "The validated map is empty");
     }
 
-    public static void notEmpty(Map<?, ?> map, String message) {
-        notEmpty(map, () -> new ParamInvalidException(message));
+    public static <K, V> Map<K, V> notEmpty(Map<K, V> map, String message) {
+        return notEmpty(map, () -> new ParamInvalidException(message));
     }
 
-    public static <T extends BaseException> void notEmpty(Map<?, ?> map, Supplier<T> errorSupplier) {
+    public static <K, V, E extends BaseException> Map<K, V> notEmpty(Map<K, V> map, Supplier<E> errorSupplier) {
         if (map == null || map.isEmpty()) {
             throw errorSupplier.get();
         }
+        return map;
     }
 
     public static void isEmpty(Map<?, ?> map) {

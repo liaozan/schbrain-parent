@@ -1,12 +1,9 @@
 package com.schbrain.common.web.servlet;
 
 import cn.hutool.core.text.CharPool;
+import com.schbrain.common.web.support.BaseOncePerRequestFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.web.servlet.filter.OrderedFilter;
-import org.springframework.core.Ordered;
-import org.springframework.web.cors.CorsUtils;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -18,25 +15,15 @@ import static com.schbrain.common.web.utils.RequestContentCachingUtils.getReques
 import static com.schbrain.common.web.utils.RequestContentCachingUtils.wrapIfRequired;
 
 /**
- * 请求日志拦截器
+ * @author liaozan
+ * @since 2023/11/15
  */
 @Slf4j
-public class RequestLoggingFilter extends OncePerRequestFilter implements OrderedFilter {
+public class RequestLoggingFilter extends BaseOncePerRequestFilter {
 
     @Override
-    public int getOrder() {
-        return Ordered.HIGHEST_PRECEDENCE + 10;
-    }
-
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        if (shouldSkip(request)) {
-            chain.doFilter(request, response);
-            return;
-        }
-
+    protected void filterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         request = wrapIfRequired(request);
-
         long startTime = System.currentTimeMillis();
         try {
             chain.doFilter(request, response);
@@ -46,12 +33,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter implements Ordere
         }
     }
 
-    protected boolean shouldSkip(HttpServletRequest request) {
-        return CorsUtils.isPreFlightRequest(request);
-    }
-
     protected String buildLogContent(HttpServletRequest request, long startTime, long endTime) {
-        long cost = endTime - startTime;
         String method = request.getMethod();
         String requestUri = request.getRequestURI();
         String queryString = request.getQueryString();
@@ -59,14 +41,14 @@ public class RequestLoggingFilter extends OncePerRequestFilter implements Ordere
         StringBuilder builder = new StringBuilder();
         builder.append("requestUri: ").append(method).append(CharPool.SPACE).append(requestUri);
         if (StringUtils.isNotBlank(queryString)) {
-            builder.append(", queryString: ").append(queryString);
+            builder.append(", query: ").append(queryString);
         }
         if (StringUtils.isNotBlank(requestBody)) {
             builder.append(", body: ").append(requestBody);
         }
-        builder.append(", startTime: ").append(startTime);
-        builder.append(", endTime: ").append(endTime);
-        builder.append(", cost: ").append(cost).append("ms");
+        builder.append(", start: ").append(startTime);
+        builder.append(", end: ").append(endTime);
+        builder.append(", cost: ").append(endTime - startTime).append("ms");
         return builder.toString();
     }
 

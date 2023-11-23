@@ -2,8 +2,8 @@ package com.schbrain.framework.autoconfigure.oss.util;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.net.url.UrlBuilder;
 import cn.hutool.core.text.StrFormatter;
-import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.HttpUtil;
 import com.aliyun.oss.*;
 import com.aliyun.oss.common.comm.ResponseMessage;
@@ -27,8 +27,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -193,8 +191,8 @@ public class OssUtils {
 
     public static String withBucketPrefix(String objectKey, String bucket) {
         // oss supports https by default
-        String prefix = "https://" + bucket + "." + ossProperties.getEndpoint();
-        return URLUtil.completeUrl(prefix, objectKey);
+        String httpUrl = "https://" + bucket + "." + ossProperties.getEndpoint();
+        return UrlBuilder.ofHttp(httpUrl).addPath(objectKey).build();
     }
 
     public static String replaceWithDefaultDomain(String ossUrl) {
@@ -205,15 +203,11 @@ public class OssUtils {
         if (StringUtils.isBlank(domain)) {
             return ossUrl;
         }
-        domain = URLUtil.normalize(domain);
-        URL originUrl = URLUtil.url(ossUrl);
-        URL domainUrl = URLUtil.url(domain);
-        try {
-            return new URL(domainUrl.getProtocol(), domainUrl.getHost(), domainUrl.getPort(), originUrl.getPath()).toString();
-        } catch (MalformedURLException e) {
-            log.warn("replace domain fail, return the default url instead", e);
-            return ossUrl;
-        }
+        UrlBuilder originUrlBuilder = UrlBuilder.ofHttp(ossUrl);
+        return UrlBuilder.ofHttp(domain)
+                .setPath(originUrlBuilder.getPath())
+                .setQuery(originUrlBuilder.getQuery())
+                .build();
     }
 
     public static CopyResult copyObject(String sourceKey, String destinationKey) {

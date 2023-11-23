@@ -9,6 +9,8 @@ import org.apache.maven.project.MavenProject;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -23,6 +25,7 @@ import java.util.Map.Entry;
         requiresDependencyCollection = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class PrepareMojo extends AbstractMojo {
 
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
     private static final String DOCKER_BUILD_INFO = "dockerBuildInfo";
 
     /**
@@ -139,6 +142,7 @@ public class PrepareMojo extends AbstractMojo {
         variables.put("VERSION", version);
         variables.put("REGISTRY", dockerRegistry);
         variables.put("PROFILE", springProfile);
+        variables.put("BUILD_TIME", FORMATTER.format(LocalDateTime.now()));
         // add additionalProperties
         if (additionalProperties != null) {
             variables.putAll(additionalProperties);

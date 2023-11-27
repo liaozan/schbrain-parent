@@ -24,6 +24,7 @@
         <module>mybatis-spring-boot-starter</module>
         <module>oss-spring-boot-starter</module>
         <module>xxl-job-spring-boot-starter</module>
+        <module>starrocks-spring-boot-starter</module>
     </modules>
 
 </project>

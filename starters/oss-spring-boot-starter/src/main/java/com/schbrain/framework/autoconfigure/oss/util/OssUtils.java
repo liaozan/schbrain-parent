@@ -203,8 +203,8 @@ public class OssUtils {
         if (StringUtils.isBlank(domain)) {
             return ossUrl;
         }
-        UrlBuilder originUrlBuilder = UrlBuilder.ofHttp(ossUrl);
-        return UrlBuilder.ofHttp(domain)
+        UrlBuilder originUrlBuilder = UrlBuilder.ofHttpWithoutEncode(ossUrl);
+        return UrlBuilder.ofHttpWithoutEncode(domain)
                 .setPath(originUrlBuilder.getPath())
                 .setQuery(originUrlBuilder.getQuery())
                 .build();

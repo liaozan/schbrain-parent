@@ -45,22 +45,6 @@
     <properties>
         <revision>3.0.9-SNAPSHOT</revision>
         <java.version>11</java.version>
-        <!-- 2th part versions -->
-        <schbrain-apollo.version>${revision}</schbrain-apollo.version>
-        <schbrain-base-dao.version>${revision}</schbrain-base-dao.version>
-        <schbrain-cache.version>${revision}</schbrain-cache.version>
-        <schbrain-common.version>${revision}</schbrain-common.version>
-        <schbrain-common-util.version>${revision}</schbrain-common-util.version>
-        <schbrain-dubbo.version>${revision}</schbrain-dubbo.version>
-        <schbrain-elasticsearch.version>${revision}</schbrain-elasticsearch.version>
-        <schbrain-kafka.version>${revision}</schbrain-kafka.version>
-        <schbrain-logger.version>${revision}</schbrain-logger.version>
-        <schbrain-module-tree.version>${revision}</schbrain-module-tree.version>
-        <schbrain-mybatis.version>${revision}</schbrain-mybatis.version>
-        <schbrain-oss.version>${revision}</schbrain-oss.version>
-        <schbrain-spring-support.version>${revision}</schbrain-spring-support.version>
-        <schbrain-web-common.version>${revision}</schbrain-web-common.version>
-        <schbrain-xxl.version>${revision}</schbrain-xxl.version>
 
         <!--  3th part versions -->
         <apollo.version>2.1.0</apollo.version>
@@ -129,79 +113,84 @@
         <dependencies>
             <!-- 2th part versions -->
             <dependency>
-                <groupId>com.schbrain.framework</groupId>
-                <artifactId>apollo-spring-boot-starter</artifactId>
-                <version>${schbrain-apollo.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.schbrain.framework</groupId>
-                <artifactId>schbrain-base-dao</artifactId>
-                <version>${schbrain-base-dao.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.schbrain.framework</groupId>
-                <artifactId>cache-spring-boot-starter</artifactId>
-                <version>${schbrain-cache.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.schbrain.common</groupId>
                 <artifactId>common</artifactId>
-                <version>${schbrain-common.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.schbrain.common</groupId>
-                <artifactId>common-util</artifactId>
-                <version>${schbrain-common-util.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.schbrain.framework</groupId>
-                <artifactId>dubbo-spring-boot-starter</artifactId>
-                <version>${schbrain-dubbo.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.schbrain.framework</groupId>
-                <artifactId>elasticsearch-spring-boot-starter</artifactId>
-                <version>${schbrain-elasticsearch.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.schbrain.framework</groupId>
-                <artifactId>kafka-spring-boot-starter</artifactId>
-                <version>${schbrain-kafka.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.schbrain.framework</groupId>
-                <artifactId>logger-spring-boot-starter</artifactId>
-                <version>${schbrain-logger.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.schbrain.common</groupId>
-                <artifactId>module-tree</artifactId>
-                <version>${schbrain-module-tree.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.schbrain.framework</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${schbrain-mybatis.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.schbrain.framework</groupId>
-                <artifactId>oss-spring-boot-starter</artifactId>
-                <version>${schbrain-oss.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.schbrain.framework</groupId>
-                <artifactId>schbrain-spring-support</artifactId>
-                <version>${schbrain-spring-support.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.schbrain.common</groupId>
                 <artifactId>web-common</artifactId>
-                <version>${schbrain-web-common.version}</version>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.common</groupId>
+                <artifactId>common-util</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.common</groupId>
+                <artifactId>module-tree</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.framework</groupId>
+                <artifactId>apollo-spring-boot-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.framework</groupId>
+                <artifactId>cache-spring-boot-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.framework</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.framework</groupId>
+                <artifactId>elasticsearch-spring-boot-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.framework</groupId>
+                <artifactId>kafka-spring-boot-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.framework</groupId>
+                <artifactId>logger-spring-boot-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.framework</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.framework</groupId>
+                <artifactId>oss-spring-boot-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.framework</groupId>
+                <artifactId>starrocks-spring-boot-starter</artifactId>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.schbrain.framework</groupId>
                 <artifactId>xxl-job-spring-boot-starter</artifactId>
-                <version>${schbrain-xxl.version}</version>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.framework</groupId>
+                <artifactId>schbrain-spring-support</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.schbrain.framework</groupId>
+                <artifactId>schbrain-base-dao</artifactId>
+                <version>${revision}</version>
             </dependency>
 
             <!--  3th part versions -->

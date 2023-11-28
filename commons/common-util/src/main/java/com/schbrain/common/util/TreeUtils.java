@@ -51,34 +51,19 @@ public class TreeUtils {
         return doBuildTree(keyExtractor, childrenSetter, childMapper, parentWithSubNodes, childrenComparator, parentId);
     }
 
-    private static <T, K, C extends Collection<T>> Map<K, List<T>> buildParentWithSubNodes(C nodes,
-                                                                                           Function<T, K> parentKeyExtractor,
-                                                                                           @Nullable K parentId) {
-        Map<K, List<T>> parentWithSubNodes = StreamUtils.groupBy(nodes, parentKeyExtractor, true);
-        if (parentId == null) {
-            // groupBy 不允许 key 为空，当 parentId 为空时，单独处理下
-            List<T> subNodes = StreamUtils.filterToList(nodes, node -> parentKeyExtractor.apply(node) == null);
-            parentWithSubNodes.put(null, subNodes);
-        }
-        return parentWithSubNodes;
-    }
-
-    /**
-     * @param preBrotherFlag true: previousId false:nextId
-     */
     public static <T, K, C extends Collection<T>> List<T> buildTree(C nodes,
                                                                     Function<T, K> keyExtractor,
                                                                     Function<T, K> parentKeyExtractor,
                                                                     Function<T, K> brotherKeyExtractor,
                                                                     BiConsumer<T, List<T>> childrenSetter,
-                                                                    @Nullable K parentId, @Nullable K rootBrotherId,
+                                                                    @Nullable K parentId,
+                                                                    @Nullable K rootBrotherId,
                                                                     boolean preBrotherFlag) {
         if (CollectionUtils.isEmpty(nodes)) {
             return new ArrayList<>();
         }
         Map<K, List<T>> parentWithSubNodes = buildParentWithSubNodes(nodes, parentKeyExtractor, parentId);
-        return doBuildTree(keyExtractor, brotherKeyExtractor, childrenSetter, parentWithSubNodes, parentId,
-                rootBrotherId, preBrotherFlag);
+        return doBuildTree(keyExtractor, brotherKeyExtractor, childrenSetter, parentWithSubNodes, parentId, rootBrotherId, preBrotherFlag);
     }
 
     public static <T, E> List<E> getParents(E self, Collection<T> nodes, Function<T, E> keyMapper, Function<T, E> parentMapper, boolean includeSelf) {
@@ -105,6 +90,16 @@ public class TreeUtils {
         List<E> nodes = new ArrayList<>();
         doBuildNodeList(tree, childGetter, mapper, nodes);
         return nodes;
+    }
+
+    private static <T, K, C extends Collection<T>> Map<K, List<T>> buildParentWithSubNodes(C nodes, Function<T, K> parentKeyExtractor, @Nullable K parentId) {
+        Map<K, List<T>> parentWithSubNodes = StreamUtils.groupBy(nodes, parentKeyExtractor, true);
+        if (parentId == null) {
+            // groupBy 不允许 key 为空，当 parentId 为空时，单独处理下
+            List<T> subNodes = StreamUtils.filterToList(nodes, node -> parentKeyExtractor.apply(node) == null);
+            parentWithSubNodes.put(null, subNodes);
+        }
+        return parentWithSubNodes;
     }
 
     private static <E, T> void doBuildNodeList(Collection<T> tree, Function<T, Collection<T>> childGetter, Function<T, E> mapper, List<E> nodes) {
@@ -144,32 +139,31 @@ public class TreeUtils {
         return treeList;
     }
 
-    private static <E> void sort(List<E> data, Comparator<E> comparator) {
-        if (comparator != null && CollectionUtils.isNotEmpty(data)) {
-            ListUtil.sort(data, comparator);
-        }
-    }
-
     private static <K, T> List<T> doBuildTree(Function<T, K> keyExtractor,
                                               Function<T, K> brotherKeyExtractor,
                                               BiConsumer<T, List<T>> childrenSetter,
                                               Map<K, List<T>> parentWithSubNodes,
-                                              K parentId, K rootBrotherId, boolean preBrotherFlag) {
+                                              K parentId, K rootBrotherId,
+                                              boolean preBrotherFlag) {
         List<T> subNodes = parentWithSubNodes.remove(parentId);
         if (CollectionUtils.isEmpty(subNodes)) {
             return Collections.emptyList();
         }
         subNodes.forEach(subNode -> {
-            List<T> children = doBuildTree(keyExtractor, brotherKeyExtractor, childrenSetter,
-                    parentWithSubNodes, keyExtractor.apply(subNode), rootBrotherId, preBrotherFlag);
+            List<T> children = doBuildTree(keyExtractor, brotherKeyExtractor, childrenSetter, parentWithSubNodes, keyExtractor.apply(subNode), rootBrotherId, preBrotherFlag);
             childrenSetter.accept(subNode, children);
         });
         sort(subNodes, keyExtractor, brotherKeyExtractor, rootBrotherId, preBrotherFlag);
         return subNodes;
     }
 
-    private static <K, T> void sort(List<T> dataList, Function<T, K> keyExtractor, Function<T, K> brotherKeyExtractor,
-                                    K rootBrotherId, boolean preBrotherFlag) {
+    private static <E> void sort(List<E> data, Comparator<E> comparator) {
+        if (comparator != null && CollectionUtils.isNotEmpty(data)) {
+            ListUtil.sort(data, comparator);
+        }
+    }
+
+    private static <K, T> void sort(List<T> dataList, Function<T, K> keyExtractor, Function<T, K> brotherKeyExtractor, K rootBrotherId, boolean preBrotherFlag) {
         if (CollectionUtils.isEmpty(dataList)) {
             return;
         }
@@ -185,11 +179,10 @@ public class TreeUtils {
                 break;
             }
         }
-        //避免脏数据，则直接返回原列表
+        // 避免脏数据，则直接返回原列表
         if (sortList.size() != dataList.size()) {
-            System.out.println(JacksonUtils.toJsonString(sortList));
             log.warn("Sort Warning:{}", JacksonUtils.toJsonString(dataList));
-            return ;
+            return;
         }
         if (!preBrotherFlag) {
             Collections.reverse(sortList);

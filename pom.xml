@@ -362,6 +362,11 @@
                 <version>${logstash-logback-encoder.version}</version>
             </dependency>
             <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>
                 <version>${mybatis.version}</version>
@@ -523,13 +528,6 @@
                 <groupId>com.aliyun</groupId>
                 <artifactId>dingtalk</artifactId>
                 <version>${dingtalk.version}</version>
-            </dependency>
-
-            <!-- minio -->
-            <dependency>
-                <groupId>io.minio</groupId>
-                <artifactId>minio</artifactId>
-                <version>${minio.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

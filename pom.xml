@@ -71,7 +71,7 @@
         <pinyin4j.version>2.5.1</pinyin4j.version>
         <pagehelper.version>6.0.0</pagehelper.version>
         <redisson.version>3.18.0</redisson.version>
-        <skywalking-tooklit.version>9.0.0</skywalking-tooklit.version>
+        <skywalking-tooklit.version>9.1.0</skywalking-tooklit.version>
         <vavr.version>0.10.4</vavr.version>
         <xxl-job.version>2.0.2</xxl-job.version>
         <zookeeper.version>3.9.1</zookeeper.version>

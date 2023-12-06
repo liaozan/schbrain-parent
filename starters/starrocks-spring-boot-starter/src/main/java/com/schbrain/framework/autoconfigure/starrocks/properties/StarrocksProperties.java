@@ -60,6 +60,12 @@ public class StarrocksProperties implements ConfigurableProperties {
     @NotBlank
     private String password;
 
+    /**
+     * 数据库连接池大小
+     */
+    @NotNull
+    private Integer maxPoolSize = 2;
+
     @Override
     public String getNamespace() {
         return "starrocks-common";

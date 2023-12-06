@@ -1,5 +1,7 @@
 package com.schbrain.framework.autoconfigure.starrocks.operation;
 
+import org.springframework.jdbc.core.PreparedStatementCreator;
+
 import java.util.List;
 
 /**
@@ -37,5 +39,10 @@ public interface StarrocksService<T> {
      * 批量删除
      */
     void deleteBatch(List<T> entityList);
+
+    /**
+     * 根据 sql 查询
+     */
+    List<T> search(PreparedStatementCreator creator);
 
 }

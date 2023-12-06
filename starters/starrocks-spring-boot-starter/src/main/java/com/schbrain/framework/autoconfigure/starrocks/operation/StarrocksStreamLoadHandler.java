@@ -1,9 +1,9 @@
 package com.schbrain.framework.autoconfigure.starrocks.operation;
 
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.http.HttpRequest;
 import com.schbrain.common.exception.ParamInvalidException;
 import com.schbrain.common.util.JacksonUtils;
-import com.schbrain.common.util.TraceIdUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -61,7 +61,7 @@ public class StarrocksStreamLoadHandler {
 
     private HttpRequest createCommonRequest(String content) {
         return HttpRequest.put(streamLoadUrl)
-                .header("label", TraceIdUtils.get())
+                .header("label", IdUtil.getSnowflakeNextIdStr())
                 .header("strict_mode", Boolean.TRUE.toString())
                 .header("Expect", "100-continue")
                 .header("format", "json")

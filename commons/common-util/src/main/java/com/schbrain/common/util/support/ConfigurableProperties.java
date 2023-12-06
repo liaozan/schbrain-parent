@@ -4,7 +4,7 @@ import com.schbrain.common.util.ConfigurationPropertiesUtils;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.core.Ordered;
-import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.Environment;
 
 /**
  * @author liaozan
@@ -20,7 +20,7 @@ public interface ConfigurableProperties extends Ordered {
     /**
      * bind properties
      */
-    default ConfigurableProperties bind(ConfigurableEnvironment environment) {
+    default ConfigurableProperties bind(Environment environment) {
         return Binder.get(environment).bindOrCreate(getPropertiesPrefix(), Bindable.ofInstance(this));
     }
 

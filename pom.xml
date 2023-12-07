@@ -47,7 +47,7 @@
         <java.version>11</java.version>
 
         <!--  3th part versions -->
-        <apollo.version>2.1.0</apollo.version>
+        <apollo.version>2.2.0</apollo.version>
         <bcprov-jdk18on.version>1.77</bcprov-jdk18on.version>
         <cglib.version>3.3.0</cglib.version>
         <curator.version>5.5.0</curator.version>

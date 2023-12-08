@@ -1,8 +1,7 @@
 package com.schbrain.framework.autoconfigure.starrocks.operation;
 
-import org.springframework.jdbc.core.PreparedStatementCreator;
-
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author liaozan
@@ -16,17 +15,17 @@ public interface StarrocksService<T> {
     void upsert(T entity);
 
     /**
-     * 单个保存/更新,传入 columns 只会处理响应的 column
-     */
-    void upsert(T entity, List<String> columns);
-
-    /**
      * 批量保存/更新
      */
     void upsertBatch(List<T> entityList);
 
     /**
-     * 批量保存/更新,传入 columns 只会处理响应的 column
+     * 单个保存/更新,传入 columns 只会处理相应的 columns
+     */
+    void upsert(T entity, List<String> columns);
+
+    /**
+     * 批量保存/更新,传入 columns 只会处理相应的 columns
      */
     void upsertBatch(List<T> entityList, List<String> columns);
 
@@ -43,6 +42,6 @@ public interface StarrocksService<T> {
     /**
      * 根据 sql 查询
      */
-    List<T> search(PreparedStatementCreator creator);
+    List<T> search(String sql, Map<String, Object> params);
 
 }

@@ -28,17 +28,26 @@ public class StarrocksStreamLoadHandler {
     }
 
     public <T> void upsertBatch(List<T> entityList, List<String> columns) {
+        log.info("Starrocks upsert, dataSize: {}, sample data: {}", entityList.size(), entityList.get(0));
+
         String content = JacksonUtils.toJsonString(entityList);
         String upsertResult = createUpsertRequest(content, columns).execute().body();
-        log.debug("Starrocks streamLoad upsert result: {}", upsertResult);
+
+        if (log.isDebugEnabled()) {
+            log.debug("Starrocks streamLoad upsert result: {}", upsertResult);
+        }
 
         checkResponse(upsertResult);
     }
 
     public <T> void deleteBatch(List<T> entityList) {
+        log.info("Starrocks delete, dataSize: {}, sample data: {}", entityList.size(), entityList.get(0));
         String content = JacksonUtils.toJsonString(entityList);
         String deleteResult = createCommonRequest(content).header("columns", "__op='delete'").execute().body();
-        log.debug("Starrocks streamLoad delete result: {}", deleteResult);
+
+        if (log.isDebugEnabled()) {
+            log.debug("Starrocks streamLoad delete result: {}", deleteResult);
+        }
 
         checkResponse(deleteResult);
     }

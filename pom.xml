@@ -89,7 +89,7 @@
         <aliyun-gateway-pop.version>0.2.4-beta</aliyun-gateway-pop.version>
         <alibabacloud-sts20150401.version>1.0.4</alibabacloud-sts20150401.version>
         <alibabacloud-oss20190517.version>1.0.2</alibabacloud-oss20190517.version>
-        <alibabacloud-vod20170321.version>1.0.8</alibabacloud-vod20170321.version>
+        <alibabacloud-vod20170321.version>1.0.9</alibabacloud-vod20170321.version>
         <alibabacloud-dysmsapi20170525.version>2.0.24</alibabacloud-dysmsapi20170525.version>
 
         <!-- dingtalk -->

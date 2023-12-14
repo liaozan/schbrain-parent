@@ -65,7 +65,7 @@
         <jsr305.version>3.0.2</jsr305.version>
         <logstash-logback-encoder.version>7.3</logstash-logback-encoder.version>
         <minio.version>8.5.7</minio.version>
-        <mybatis.version>3.5.14</mybatis.version>
+        <mybatis.version>3.5.15</mybatis.version>
         <mybatis.starter.version>2.3.0</mybatis.starter.version>
         <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>

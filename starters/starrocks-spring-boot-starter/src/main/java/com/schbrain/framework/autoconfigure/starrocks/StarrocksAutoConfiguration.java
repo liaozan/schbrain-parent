@@ -26,6 +26,7 @@ public class StarrocksAutoConfiguration {
         hikariConfig.setJdbcUrl(String.format(JDBC_URL_TEMPLATE, config.getHost(), config.getPort(), config.getDatabase()));
         hikariConfig.setUsername(config.getUsername());
         hikariConfig.setPassword(config.getPassword());
+        hikariConfig.setMaximumPoolSize(config.getMaxPoolSize());
         return new NamedParameterJdbcTemplate(new HikariDataSource(hikariConfig));
     }
 

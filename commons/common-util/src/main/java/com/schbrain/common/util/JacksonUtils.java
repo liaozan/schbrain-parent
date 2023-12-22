@@ -1,5 +1,6 @@
 package com.schbrain.common.util;
 
+import cn.hutool.core.lang.Singleton;
 import cn.hutool.extra.spring.SpringUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
@@ -27,17 +28,19 @@ public class JacksonUtils {
     private static ObjectMapper PRETTY_OBJECT_MAPPER;
 
     public static ObjectMapper getObjectMapper() {
-        if (OBJECT_MAPPER == null) {
-            // Delay to get ObjectMapper from spring container to keep the same behavior with application
-            try {
-                OBJECT_MAPPER = SpringUtil.getBean(ObjectMapper.class).copy();
-            } catch (Exception e) {
-                log.warn("Could not get ObjectMapper from Spring Container, return new instance for use");
-                OBJECT_MAPPER = new ObjectMapper();
+        return Singleton.get(JacksonUtils.class.getName(), () -> {
+            if (OBJECT_MAPPER == null) {
+                // Delay to get ObjectMapper from spring container to keep the same behavior with application
+                try {
+                    OBJECT_MAPPER = SpringUtil.getBean(ObjectMapper.class).copy();
+                } catch (Exception e) {
+                    log.warn("Could not get ObjectMapper from Spring Container, return new instance for use");
+                    OBJECT_MAPPER = new ObjectMapper();
+                }
+                OBJECT_MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
             }
-            OBJECT_MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        }
-        return OBJECT_MAPPER;
+            return OBJECT_MAPPER;
+        });
     }
 
     public static ObjectMapper getPrettyObjectMapper() {

@@ -18,12 +18,20 @@ public class ConvertUtils {
 
     private static final ObjectMapper DESERIALIZER = JacksonUtils.getObjectMapper().copy().setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
 
-    public static <Source, Target> Target convertTo(ConsumerRecord<String, String> record, Class<Source> sourceType, Class<Target> targetType) {
+    public static <Target> Target convertTo(ConsumerRecord<String, String> record, Class<Target> targetType) {
         CanalChangedEvent event = JacksonUtils.getObjectFromJson(record.value(), CanalChangedEvent.class);
         if (event == null) {
             throw new BaseException("CanalChangedEvent is null");
         }
-        Source source = DESERIALIZER.convertValue(event.getAfter(), sourceType);
+        return DESERIALIZER.convertValue(event.getAfter(), targetType);
+    }
+
+    public static <Target> List<Target> convertToList(ConsumerRecords<String, String> records, Class<Target> targetType) {
+        return StreamUtils.toList(records, record -> convertTo(record, targetType));
+    }
+
+    public static <Source, Target> Target convertTo(ConsumerRecord<String, String> record, Class<Source> sourceType, Class<Target> targetType) {
+        Source source = convertTo(record, sourceType);
         return BeanCopyUtils.copy(source, targetType);
     }
 

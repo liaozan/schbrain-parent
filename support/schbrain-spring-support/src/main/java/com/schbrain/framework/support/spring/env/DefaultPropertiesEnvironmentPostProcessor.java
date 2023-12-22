@@ -61,6 +61,8 @@ public class DefaultPropertiesEnvironmentPostProcessor extends LoggerAwareEnviro
         defaultProperties.put("spring.mvc.format.date-time", DatePattern.NORM_DATETIME_PATTERN);
         defaultProperties.put("spring.jackson.date-format", DatePattern.NORM_DATETIME_PATTERN);
         defaultProperties.put("spring.jackson.time-zone", TimeZone.getDefault().getID());
+        // kafka
+        defaultProperties.put("spring.kafka.consumer.group-id", ApplicationName.get(environment));
         // others
         defaultProperties.put("spring.mandatory-file-encoding", StandardCharsets.UTF_8.name());
         defaultProperties.put("spring.web.resources.add-mappings", false);

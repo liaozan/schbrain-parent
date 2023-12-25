@@ -58,7 +58,7 @@
         <dubbo.version>3.2.10</dubbo.version>
         <druid.version>1.2.20</druid.version>
         <easyexcel.version>3.3.3</easyexcel.version>
-        <fastjson.version>2.0.43</fastjson.version>
+        <fastjson.version>2.0.44</fastjson.version>
         <fastjson2.version>2.0.43</fastjson2.version>
         <guava.version>33.0.0-jre</guava.version>
         <hutool.version>5.8.23</hutool.version>

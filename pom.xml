@@ -67,7 +67,7 @@
         <minio.version>8.5.7</minio.version>
         <mybatis.version>3.5.15</mybatis.version>
         <mybatis.starter.version>2.3.0</mybatis.starter.version>
-        <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
         <pagehelper.version>6.1.0</pagehelper.version>
         <redisson.version>3.18.0</redisson.version>

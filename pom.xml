@@ -61,7 +61,7 @@
         <fastjson.version>2.0.43</fastjson.version>
         <fastjson2.version>2.0.43</fastjson2.version>
         <guava.version>33.0.0-jre</guava.version>
-        <hutool.version>5.8.23</hutool.version>
+        <hutool.version>5.8.24</hutool.version>
         <jsr305.version>3.0.2</jsr305.version>
         <logstash-logback-encoder.version>7.3</logstash-logback-encoder.version>
         <minio.version>8.5.7</minio.version>

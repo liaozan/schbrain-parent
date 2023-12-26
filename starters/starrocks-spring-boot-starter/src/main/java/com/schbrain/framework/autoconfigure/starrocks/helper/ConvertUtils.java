@@ -20,6 +20,10 @@ public class ConvertUtils {
 
     public static <Target> Target convertTo(ConsumerRecord<String, String> record, Class<Target> targetType) {
         CanalChangedEvent event = JacksonUtils.getObjectFromJson(record.value(), CanalChangedEvent.class);
+        return convertTo(event, targetType);
+    }
+
+    public static <Target> Target convertTo(CanalChangedEvent event, Class<Target> targetType) {
         if (event == null) {
             throw new BaseException("CanalChangedEvent is null");
         }

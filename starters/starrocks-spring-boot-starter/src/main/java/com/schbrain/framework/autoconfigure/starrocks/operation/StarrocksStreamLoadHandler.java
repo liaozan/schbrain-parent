@@ -7,8 +7,7 @@ import com.schbrain.common.util.JacksonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author liaozan
@@ -27,8 +26,8 @@ public class StarrocksStreamLoadHandler {
         this.password = password;
     }
 
-    public <T> void upsertBatch(List<T> entityList, List<String> columns) {
-        log.info("Starrocks upsert, dataSize: {}, sample data: {}", entityList.size(), entityList.get(0));
+    public <T> void upsertBatch(Collection<T> entityList, List<String> columns) {
+        log.info("Starrocks upsert, dataSize: {}, sample data: {}", entityList.size(), entityList.iterator().next());
 
         String content = JacksonUtils.toJsonString(entityList);
         String upsertResult = createUpsertRequest(content, columns).execute().body();
@@ -40,8 +39,8 @@ public class StarrocksStreamLoadHandler {
         checkResponse(upsertResult);
     }
 
-    public <T> void deleteBatch(List<T> entityList) {
-        log.info("Starrocks delete, dataSize: {}, sample data: {}", entityList.size(), entityList.get(0));
+    public <T> void deleteBatch(Collection<T> entityList) {
+        log.info("Starrocks delete, dataSize: {}, sample data: {}", entityList.size(), entityList.iterator().next());
         String content = JacksonUtils.toJsonString(entityList);
         String deleteResult = createCommonRequest(content).header("columns", "__op='delete'").execute().body();
 

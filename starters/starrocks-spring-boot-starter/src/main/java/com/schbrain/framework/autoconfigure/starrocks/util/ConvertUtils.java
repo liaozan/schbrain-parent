@@ -1,4 +1,4 @@
-package com.schbrain.framework.autoconfigure.starrocks.helper;
+package com.schbrain.framework.autoconfigure.starrocks.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;

@@ -44,7 +44,7 @@ public class StarrocksServiceImpl<T> implements StarrocksService<T>, Initializin
     }
 
     @Override
-    public void upsertBatch(List<T> entityList) {
+    public void upsertBatch(Collection<T> entityList) {
         upsertBatch(entityList, Collections.emptyList());
     }
 
@@ -54,7 +54,7 @@ public class StarrocksServiceImpl<T> implements StarrocksService<T>, Initializin
     }
 
     @Override
-    public void upsertBatch(List<T> entityList, List<String> columns) {
+    public void upsertBatch(Collection<T> entityList, List<String> columns) {
         handler.upsertBatch(ValidateUtils.notEmpty(entityList, "entityList不能为空"), columns);
     }
 
@@ -64,7 +64,7 @@ public class StarrocksServiceImpl<T> implements StarrocksService<T>, Initializin
     }
 
     @Override
-    public void deleteBatch(List<T> entityList) {
+    public void deleteBatch(Collection<T> entityList) {
         handler.deleteBatch(ValidateUtils.notNull(entityList, "entityList不能为空"));
     }
 

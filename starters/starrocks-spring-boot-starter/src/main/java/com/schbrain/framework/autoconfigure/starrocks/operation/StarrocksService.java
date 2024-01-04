@@ -1,7 +1,6 @@
 package com.schbrain.framework.autoconfigure.starrocks.operation;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author liaozan
@@ -17,7 +16,7 @@ public interface StarrocksService<T> {
     /**
      * 批量保存/更新
      */
-    void upsertBatch(List<T> entityList);
+    void upsertBatch(Collection<T> entityList);
 
     /**
      * 单个保存/更新,传入 columns 只会处理相应的 columns
@@ -27,7 +26,7 @@ public interface StarrocksService<T> {
     /**
      * 批量保存/更新,传入 columns 只会处理相应的 columns
      */
-    void upsertBatch(List<T> entityList, List<String> columns);
+    void upsertBatch(Collection<T> entityList, List<String> columns);
 
     /**
      * 删除
@@ -37,7 +36,7 @@ public interface StarrocksService<T> {
     /**
      * 批量删除
      */
-    void deleteBatch(List<T> entityList);
+    void deleteBatch(Collection<T> entityList);
 
     /**
      * 根据 sql 查询

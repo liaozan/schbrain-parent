@@ -98,7 +98,7 @@
         <dingtalk.version>2.0.77</dingtalk.version>
 
         <!-- maven plugins -->
-        <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
+        <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
         <integration-maven-plugin.version>${revision}</integration-maven-plugin.version>
         <maven.repository.url>https://maven.schbrain.com/repository</maven.repository.url>
     </properties>

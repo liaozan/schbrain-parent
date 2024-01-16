@@ -39,4 +39,8 @@ public enum BooleanEnum {
         return Objects.equals(FALSE.value, value);
     }
 
+    public static int toInt(boolean value) {
+        return value ? TRUE.value : FALSE.value;
+    }
+
 }

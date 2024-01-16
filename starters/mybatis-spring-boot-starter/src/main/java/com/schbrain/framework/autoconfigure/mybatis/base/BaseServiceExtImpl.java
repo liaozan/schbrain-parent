@@ -1,6 +1,7 @@
 package com.schbrain.framework.autoconfigure.mybatis.base;
 
 import com.schbrain.common.util.BeanCopyUtils;
+import com.schbrain.common.util.StreamUtils;
 import org.springframework.core.ResolvableType;
 
 import java.util.List;
@@ -19,19 +20,39 @@ public class BaseServiceExtImpl<M extends BaseMapper<Source>, Source extends Bas
     }
 
     protected Target toTarget(Source entity) {
-        return BeanCopyUtils.copy(entity, targetType);
+        Target target = BeanCopyUtils.copy(entity, targetType);
+        return toTarget(entity, target);
+    }
+
+    protected Target toTarget(Source source, Target target) {
+        editTarget(source, target);
+        return target;
+    }
+
+    protected void editTarget(Source source, Target target) {
+
     }
 
     protected List<Target> toTargetList(List<Source> entityList) {
-        return BeanCopyUtils.copyList(entityList, targetType);
+        return StreamUtils.toList(entityList, this::toTarget);
     }
 
     protected Source fromTarget(Target target) {
-        return BeanCopyUtils.copy(target, entityClass);
+        Source source = BeanCopyUtils.copy(target, entityClass);
+        return fromTarget(source, target);
+    }
+
+    protected Source fromTarget(Source source, Target target) {
+        editSource(source, target);
+        return source;
+    }
+
+    protected void editSource(Source source, Target target) {
+
     }
 
     protected List<Source> fromTargetList(List<Target> targetList) {
-        return BeanCopyUtils.copyList(targetList, entityClass);
+        return StreamUtils.toList(targetList, this::fromTarget);
     }
 
 }

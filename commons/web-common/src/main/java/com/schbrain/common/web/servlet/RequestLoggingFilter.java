@@ -2,6 +2,7 @@ package com.schbrain.common.web.servlet;
 
 import cn.hutool.core.text.CharPool;
 import com.schbrain.common.web.support.BaseOncePerRequestFilter;
+import com.schbrain.common.web.utils.ServletUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -46,6 +47,7 @@ public class RequestLoggingFilter extends BaseOncePerRequestFilter {
         if (StringUtils.isNotBlank(requestBody)) {
             builder.append(", body: ").append(requestBody);
         }
+        builder.append(", clientIp: ").append(ServletUtils.getClientIP(request));
         builder.append(", start: ").append(startTime);
         builder.append(", end: ").append(endTime);
         builder.append(", cost: ").append(endTime - startTime).append("ms");

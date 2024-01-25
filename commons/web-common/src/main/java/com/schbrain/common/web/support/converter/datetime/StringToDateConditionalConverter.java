@@ -4,6 +4,7 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 /**
@@ -26,7 +27,11 @@ class StringToDateConditionalConverter extends DateTimeConditionalConverter<Date
 
     @Override
     protected Date doConvert(String source, DateTimeFormatter formatter) {
-        return DateUtil.parse(source, formatter);
+        try {
+            return DateUtil.parse(source, formatter);
+        } catch (DateTimeParseException e) {
+            return DateUtil.parse(source);
+        }
     }
 
 }

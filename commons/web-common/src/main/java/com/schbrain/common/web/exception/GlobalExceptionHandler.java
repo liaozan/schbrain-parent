@@ -72,6 +72,7 @@ public class GlobalExceptionHandler {
         return loggingThenBuildResponse(ex, SERVER_ERROR);
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoHandlerFoundException.class)
     public Object handleNoHandlerFoundException(NoHandlerFoundException ex) {
         return loggingThenBuildResponse(ex, PARAM_INVALID);

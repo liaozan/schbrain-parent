@@ -52,7 +52,6 @@ public class GlobalExceptionHandler {
     }
 
     /*************************************  Base Exception Handing  *************************************/
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(BaseException.class)
     public Object handleBaseException(BaseException ex) {
         logError(ex);
@@ -60,19 +59,16 @@ public class GlobalExceptionHandler {
     }
 
     /*************************************  Common Exception Handing  *************************************/
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Throwable.class)
     public Object handleAll(Throwable ex) {
         return loggingThenBuildResponse(ex, SERVER_ERROR);
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(NullPointerException.class)
     public Object handleNullPointerException(NullPointerException ex) {
         return loggingThenBuildResponse(ex, SERVER_ERROR);
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
     public Object handleIllegalArgumentException(IllegalArgumentException ex) {
         return loggingThenBuildResponse(ex, SERVER_ERROR);

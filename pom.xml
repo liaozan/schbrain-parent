@@ -75,7 +75,7 @@
         <vavr.version>0.10.4</vavr.version>
         <xxl-job.version>2.0.2</xxl-job.version>
         <zookeeper.version>3.9.1</zookeeper.version>
-        <zxing-core.version>3.5.2</zxing-core.version>
+        <zxing-core.version>3.5.3</zxing-core.version>
 
         <!-- aliyun -->
         <aliyun-java-sdk-core.version>4.6.4</aliyun-java-sdk-core.version>

@@ -43,7 +43,7 @@
     </distributionManagement>
 
     <properties>
-        <revision>3.0.12-SNAPSHOT</revision>
+        <revision>3.0.12</revision>
         <java.version>11</java.version>
 
         <!--  3th part versions -->

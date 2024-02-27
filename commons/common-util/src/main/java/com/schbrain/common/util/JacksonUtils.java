@@ -219,6 +219,14 @@ public class JacksonUtils {
         return getObjectMapper().getTypeFactory().constructType(TypeUtils.parameterize(genericsType, innerTypes));
     }
 
+    public static <T> T updateValue(Object overrides, T valueToUpdate) {
+        try {
+            return getObjectMapper().updateValue(valueToUpdate, overrides);
+        } catch (Exception e) {
+            throw new JSONException("JSON 转换出错", e);
+        }
+    }
+
     public static <T> T convertValue(Object fromValue, Class<T> toValueType) {
         return convertValue(fromValue, constructType(toValueType));
     }

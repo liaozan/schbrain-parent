@@ -25,6 +25,9 @@ public class BaseServiceExtImpl<M extends BaseMapper<Source>, Source extends Bas
     }
 
     protected Target toTarget(Source source, Target target) {
+        if (target == null) {
+            return null;
+        }
         editTarget(source, target);
         return target;
     }
@@ -43,6 +46,9 @@ public class BaseServiceExtImpl<M extends BaseMapper<Source>, Source extends Bas
     }
 
     protected Source fromTarget(Source source, Target target) {
+        if (target == null) {
+            return null;
+        }
         editSource(source, target);
         return source;
     }

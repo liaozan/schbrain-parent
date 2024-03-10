@@ -12,19 +12,14 @@ import org.springframework.kafka.support.LoggingProducerListener;
 @Slf4j
 public class KafkaLoggingProducerListener extends LoggingProducerListener<Object, Object> {
 
-    public KafkaLoggingProducerListener() {
-        this.setIncludeContents(false);
-    }
-
     @Override
     public void onSuccess(ProducerRecord<Object, Object> record, RecordMetadata metadata) {
-        log.debug("[{}] 消息发送成功, content: {}", record.topic(), record.value());
+        log.info("[{}] 消息发送成功, content: {}", record.topic(), record.value());
     }
 
     @Override
     public void onError(ProducerRecord<Object, Object> record, RecordMetadata metadata, Exception exception) {
         log.warn("[{}] 消息发送失败, content: {}", record.topic(), record.value());
-        super.onError(record, metadata, exception);
     }
 
 }

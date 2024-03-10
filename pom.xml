@@ -740,6 +740,12 @@
     </pluginRepositories>
 
     <profiles>
+        <profile>
+            <id>schbrain</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
         <!-- 开发环境 -->
         <profile>
             <id>dev</id>
